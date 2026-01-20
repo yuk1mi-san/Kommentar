@@ -115,13 +115,20 @@
       position:relative;
     }
 
-    /* 5 packs grid */
-    .grid5{
+    /* 2-column layout: left games, right reps */
+    .packs-2col{
       display:grid;
-      grid-template-columns: repeat(2, minmax(0, 1fr));
+      grid-template-columns: 1fr 1fr;
+      gap:16px;
+      align-items:start;
+    }
+    @media (max-width:880px){
+      .packs-2col{grid-template-columns:1fr;}
+    }
+    .col{
+      display:grid;
       gap:16px;
     }
-    @media (max-width:880px){ .grid5{grid-template-columns:1fr} }
 
     /* bottom 2 cards grid */
     .grid2{
@@ -160,6 +167,7 @@
       background: rgba(0,0,0,.25);
       object-fit:cover;
       flex:0 0 auto;
+      display:block;
     }
 
     .comment-list{
@@ -348,120 +356,126 @@
       </div>
     </header>
 
-    <!-- 5 COMMENT BLOCKS -->
+    <!-- COMMENTS -->
     <section class="section">
       <div data-lang="ru" class="section-title">🎀 Комментарии</div>
       <div data-lang="en" class="section-title">🎀 Comments</div>
 
-      <div class="grid5">
-        <!-- CS -->
-        <div class="card">
-          <div class="cat-head">
-            <div class="cat-left">
-              <h2 class="cat-title"><span data-lang="ru">🔫 CS (Counter-Strike)</span><span data-lang="en">🔫 CS (Counter-Strike)</span></h2>
-              <p class="cat-sub"><span data-lang="ru">6 нейтральных комментов</span><span data-lang="en">6 neutral comments</span></p>
+      <div class="packs-2col">
+        <!-- LEFT: CS / DOTA / RUST -->
+        <div class="col">
+          <!-- CS -->
+          <div class="card">
+            <div class="cat-head">
+              <div class="cat-left">
+                <h2 class="cat-title"><span data-lang="ru">🔫 CS (Counter-Strike)</span><span data-lang="en">🔫 CS (Counter-Strike)</span></h2>
+                <p class="cat-sub"><span data-lang="ru">6 нейтральных комментов</span><span data-lang="en">6 neutral comments</span></p>
+              </div>
+              <img class="cat-img" src="assets/games/cs2.png" alt="CS image" loading="lazy">
             </div>
-            <img class="cat-img" src="assets/games/cs2.png" alt="CS image" loading="lazy">
+            <ul class="comment-list">
+              <li class="cmt" data-copy="Чёткий тиммейт, приятно играть 🔥"><p class="cmt-text">Чёткий тиммейт, приятно играть 🔥</p><span class="cmt-btn">Копировать</span></li>
+              <li class="cmt" data-copy="Хорошие коллы и спокойная игра, респект ✅"><p class="cmt-text">Хорошие коллы и спокойная игра, респект ✅</p><span class="cmt-btn">Копировать</span></li>
+              <li class="cmt" data-copy="Отличная стрельба, тащит катку 💪"><p class="cmt-text">Отличная стрельба, тащит катку 💪</p><span class="cmt-btn">Копировать</span></li>
+              <li class="cmt" data-copy="Норм общение, без токсика, лайк 👍"><p class="cmt-text">Норм общение, без токсика, лайк 👍</p><span class="cmt-btn">Копировать</span></li>
+              <li class="cmt" data-copy="Стабильный игрок, сыграю ещё 🎯"><p class="cmt-text">Стабильный игрок, сыграю ещё 🎯</p><span class="cmt-btn">Копировать</span></li>
+              <li class="cmt" data-copy="Командная игра на уровне, спасибо за матч ✨"><p class="cmt-text">Командная игра на уровне, спасибо за матч ✨</p><span class="cmt-btn">Копировать</span></li>
+            </ul>
           </div>
-          <ul class="comment-list">
-            <li class="cmt" data-copy="Чёткий тиммейт, приятно играть 🔥"><p class="cmt-text">Чёткий тиммейт, приятно играть 🔥</p><span class="cmt-btn">Копировать</span></li>
-            <li class="cmt" data-copy="Хорошие коллы и спокойная игра, респект ✅"><p class="cmt-text">Хорошие коллы и спокойная игра, респект ✅</p><span class="cmt-btn">Копировать</span></li>
-            <li class="cmt" data-copy="Отличная стрельба, тащит катку 💪"><p class="cmt-text">Отличная стрельба, тащит катку 💪</p><span class="cmt-btn">Копировать</span></li>
-            <li class="cmt" data-copy="Норм общение, без токсика, лайк 👍"><p class="cmt-text">Норм общение, без токсика, лайк 👍</p><span class="cmt-btn">Копировать</span></li>
-            <li class="cmt" data-copy="Стабильный игрок, сыграю ещё 🎯"><p class="cmt-text">Стабильный игрок, сыграю ещё 🎯</p><span class="cmt-btn">Копировать</span></li>
-            <li class="cmt" data-copy="Командная игра на уровне, спасибо за матч ✨"><p class="cmt-text">Командная игра на уровне, спасибо за матч ✨</p><span class="cmt-btn">Копировать</span></li>
-          </ul>
+
+          <!-- DOTA -->
+          <div class="card">
+            <div class="cat-head">
+              <div class="cat-left">
+                <h2 class="cat-title"><span data-lang="ru">🧙 Dota 2</span><span data-lang="en">🧙 Dota 2</span></h2>
+                <p class="cat-sub"><span data-lang="ru">6 комментов для тимплея</span><span data-lang="en">6 teamwork comments</span></p>
+              </div>
+              <img class="cat-img" src="assets/games/dota2.png" alt="Dota 2 image" loading="lazy">
+            </div>
+            <ul class="comment-list">
+              <li class="cmt" data-copy="Крутой тимплей, играется легко ✅"><p class="cmt-text">Крутой тимплей, играется легко ✅</p><span class="cmt-btn">Копировать</span></li>
+              <li class="cmt" data-copy="Отличные решения по карте, респект 🗺️"><p class="cmt-text">Отличные решения по карте, респект 🗺️</p><span class="cmt-btn">Копировать</span></li>
+              <li class="cmt" data-copy="Спокойно и по делу, без лишних эмоций 👍"><p class="cmt-text">Спокойно и по делу, без лишних эмоций 👍</p><span class="cmt-btn">Копировать</span></li>
+              <li class="cmt" data-copy="Хорошо отыграл роль, приятно в пати ✨"><p class="cmt-text">Хорошо отыграл роль, приятно в пати ✨</p><span class="cmt-btn">Копировать</span></li>
+              <li class="cmt" data-copy="Сильный игрок, уверенно ведёт к победе 💪"><p class="cmt-text">Сильный игрок, уверенно ведёт к победе 💪</p><span class="cmt-btn">Копировать</span></li>
+              <li class="cmt" data-copy="Спасибо за катку, было кайфово 🎮"><p class="cmt-text">Спасибо за катку, было кайфово 🎮</p><span class="cmt-btn">Копировать</span></li>
+            </ul>
+          </div>
+
+          <!-- RUST -->
+          <div class="card">
+            <div class="cat-head">
+              <div class="cat-left">
+                <h2 class="cat-title"><span data-lang="ru">🛠️ RUST</span><span data-lang="en">🛠️ RUST</span></h2>
+                <p class="cat-sub"><span data-lang="ru">6 комментов для вайпов/рейдов</span><span data-lang="en">6 wipe/raid comments</span></p>
+              </div>
+              <img class="cat-img" src="assets/games/rust.png" alt="Rust image" loading="lazy">
+            </div>
+            <ul class="comment-list">
+              <li class="cmt" data-copy="Надёжный напарник, держит слово ✅"><p class="cmt-text">Надёжный напарник, держит слово ✅</p><span class="cmt-btn">Копировать</span></li>
+              <li class="cmt" data-copy="Сильная игра, хорошие мувы на рейде 💥"><p class="cmt-text">Сильная игра, хорошие мувы на рейде 💥</p><span class="cmt-btn">Копировать</span></li>
+              <li class="cmt" data-copy="Спокойный и адекватный, приятно в тиме 👍"><p class="cmt-text">Спокойный и адекватный, приятно в тиме 👍</p><span class="cmt-btn">Копировать</span></li>
+              <li class="cmt" data-copy="Фармит быстро, не бросает команду ⛏️"><p class="cmt-text">Фармит быстро, не бросает команду ⛏️</p><span class="cmt-btn">Копировать</span></li>
+              <li class="cmt" data-copy="Хорошая координация, всё по плану 🧠"><p class="cmt-text">Хорошая координация, всё по плану 🧠</p><span class="cmt-btn">Копировать</span></li>
+              <li class="cmt" data-copy="Спасибо за вайп, было весело 😄"><p class="cmt-text">Спасибо за вайп, было весело 😄</p><span class="cmt-btn">Копировать</span></li>
+            </ul>
+          </div>
         </div>
 
-        <!-- DOTA -->
-        <div class="card">
-          <div class="cat-head">
-            <div class="cat-left">
-              <h2 class="cat-title"><span data-lang="ru">🧙 Dota 2</span><span data-lang="en">🧙 Dota 2</span></h2>
-              <p class="cat-sub"><span data-lang="ru">6 комментов для тимплея</span><span data-lang="en">6 teamwork comments</span></p>
+        <!-- RIGHT: +REP / -REP -->
+        <div class="col">
+          <!-- +REP -->
+          <div class="card">
+            <div class="cat-head">
+              <div class="cat-left">
+                <h2 class="cat-title"><span data-lang="ru">✅ +rep</span><span data-lang="en">✅ +rep</span></h2>
+                <p class="cat-sub"><span data-lang="ru">6 коротких плюсовых отзывов</span><span data-lang="en">6 short positive reps</span></p>
+              </div>
+              <div class="cat-img" style="display:grid;place-items:center;font-weight:900;color:var(--accent2);background:rgba(167,139,250,.10);">
+                +REP
+              </div>
             </div>
-            <img class="cat-img" src="assets/games/dota2.png" alt="Dota 2 image" loading="lazy">
+            <ul class="comment-list">
+              <li class="cmt" data-copy="+rep быстро ответил и помог ✅"><p class="cmt-text">+rep быстро ответил и помог ✅</p><span class="cmt-btn">Копировать</span></li>
+              <li class="cmt" data-copy="+rep всё честно, рекомендую 👍"><p class="cmt-text">+rep всё честно, рекомендую 👍</p><span class="cmt-btn">Копировать</span></li>
+              <li class="cmt" data-copy="+rep адекватный и вежливый человек ✨"><p class="cmt-text">+rep адекватный и вежливый человек ✨</p><span class="cmt-btn">Копировать</span></li>
+              <li class="cmt" data-copy="+rep быстро и по делу, спасибо 🙌"><p class="cmt-text">+rep быстро и по делу, спасибо 🙌</p><span class="cmt-btn">Копировать</span></li>
+              <li class="cmt" data-copy="+rep топ сервис, всё ок ✅"><p class="cmt-text">+rep топ сервис, всё ок ✅</p><span class="cmt-btn">Копировать</span></li>
+              <li class="cmt" data-copy="+rep приятно общаться, лайк ❤️"><p class="cmt-text">+rep приятно общаться, лайк ❤️</p><span class="cmt-btn">Копировать</span></li>
+            </ul>
           </div>
-          <ul class="comment-list">
-            <li class="cmt" data-copy="Крутой тимплей, играется легко ✅"><p class="cmt-text">Крутой тимплей, играется легко ✅</p><span class="cmt-btn">Копировать</span></li>
-            <li class="cmt" data-copy="Отличные решения по карте, респект 🗺️"><p class="cmt-text">Отличные решения по карте, респект 🗺️</p><span class="cmt-btn">Копировать</span></li>
-            <li class="cmt" data-copy="Спокойно и по делу, без лишних эмоций 👍"><p class="cmt-text">Спокойно и по делу, без лишних эмоций 👍</p><span class="cmt-btn">Копировать</span></li>
-            <li class="cmt" data-copy="Хорошо отыграл роль, приятно в пати ✨"><p class="cmt-text">Хорошо отыграл роль, приятно в пати ✨</p><span class="cmt-btn">Копировать</span></li>
-            <li class="cmt" data-copy="Сильный игрок, уверенно ведёт к победе 💪"><p class="cmt-text">Сильный игрок, уверенно ведёт к победе 💪</p><span class="cmt-btn">Копировать</span></li>
-            <li class="cmt" data-copy="Спасибо за катку, было кайфово 🎮"><p class="cmt-text">Спасибо за катку, было кайфово 🎮</p><span class="cmt-btn">Копировать</span></li>
-          </ul>
-        </div>
 
-        <!-- RUST -->
-        <div class="card">
-          <div class="cat-head">
-            <div class="cat-left">
-              <h2 class="cat-title"><span data-lang="ru">🛠️ RUST</span><span data-lang="en">🛠️ RUST</span></h2>
-              <p class="cat-sub"><span data-lang="ru">6 комментов для вайпов/рейдов</span><span data-lang="en">6 wipe/raid comments</span></p>
+          <!-- -REP -->
+          <div class="card">
+            <div class="cat-head">
+              <div class="cat-left">
+                <h2 class="cat-title"><span data-lang="ru">⚠️ -rep</span><span data-lang="en">⚠️ -rep</span></h2>
+                <p class="cat-sub"><span data-lang="ru">6 мягких минусов (без жести)</span><span data-lang="en">6 mild negatives</span></p>
+              </div>
+              <div class="cat-img" style="display:grid;place-items:center;font-weight:900;color:#fbbf24;background:rgba(251,191,36,.10);">
+                -REP
+              </div>
             </div>
-            <img class="cat-img" src="assets/games/rust.png" alt="Rust image" loading="lazy">
+            <ul class="comment-list">
+              <li class="cmt" data-copy="-rep долго отвечает, неудобно"><p class="cmt-text">-rep долго отвечает, неудобно</p><span class="cmt-btn">Копировать</span></li>
+              <li class="cmt" data-copy="-rep не вышло договориться по времени"><p class="cmt-text">-rep не вышло договориться по времени</p><span class="cmt-btn">Копировать</span></li>
+              <li class="cmt" data-copy="-rep обещал, но затянул по срокам"><p class="cmt-text">-rep обещал, но затянул по срокам</p><span class="cmt-btn">Копировать</span></li>
+              <li class="cmt" data-copy="-rep ответил не сразу, пришлось ждать"><p class="cmt-text">-rep ответил не сразу, пришлось ждать</p><span class="cmt-btn">Копировать</span></li>
+              <li class="cmt" data-copy="-rep коммуникация слабая, мало информации"><p class="cmt-text">-rep коммуникация слабая, мало информации</p><span class="cmt-btn">Копировать</span></li>
+              <li class="cmt" data-copy="-rep не подошло, возможно, просто не мой формат"><p class="cmt-text">-rep не подошло, возможно, просто не мой формат</p><span class="cmt-btn">Копировать</span></li>
+            </ul>
           </div>
-          <ul class="comment-list">
-            <li class="cmt" data-copy="Надёжный напарник, держит слово ✅"><p class="cmt-text">Надёжный напарник, держит слово ✅</p><span class="cmt-btn">Копировать</span></li>
-            <li class="cmt" data-copy="Сильная игра, хорошие мувы на рейде 💥"><p class="cmt-text">Сильная игра, хорошие мувы на рейде 💥</p><span class="cmt-btn">Копировать</span></li>
-            <li class="cmt" data-copy="Спокойный и адекватный, приятно в тиме 👍"><p class="cmt-text">Спокойный и адекватный, приятно в тиме 👍</p><span class="cmt-btn">Копировать</span></li>
-            <li class="cmt" data-copy="Фармит быстро, не бросает команду ⛏️"><p class="cmt-text">Фармит быстро, не бросает команду ⛏️</p><span class="cmt-btn">Копировать</span></li>
-            <li class="cmt" data-copy="Хорошая координация, всё по плану 🧠"><p class="cmt-text">Хорошая координация, всё по плану 🧠</p><span class="cmt-btn">Копировать</span></li>
-            <li class="cmt" data-copy="Спасибо за вайп, было весело 😄"><p class="cmt-text">Спасибо за вайп, было весело 😄</p><span class="cmt-btn">Копировать</span></li>
-          </ul>
-        </div>
-
-        <!-- +REP -->
-        <div class="card">
-          <div class="cat-head">
-            <div class="cat-left">
-              <h2 class="cat-title"><span data-lang="ru">✅ +rep</span><span data-lang="en">✅ +rep</span></h2>
-              <p class="cat-sub"><span data-lang="ru">6 коротких плюсовых отзывов</span><span data-lang="en">6 short positive reps</span></p>
-            </div>
-            <div class="cat-img" style="display:grid;place-items:center;font-weight:900;color:var(--accent2);background:rgba(167,139,250,.10);object-fit:initial;">
-              +REP
-            </div>
-          </div>
-          <ul class="comment-list">
-            <li class="cmt" data-copy="+rep быстро ответил и помог ✅"><p class="cmt-text">+rep быстро ответил и помог ✅</p><span class="cmt-btn">Копировать</span></li>
-            <li class="cmt" data-copy="+rep всё честно, рекомендую 👍"><p class="cmt-text">+rep всё честно, рекомендую 👍</p><span class="cmt-btn">Копировать</span></li>
-            <li class="cmt" data-copy="+rep адекватный и вежливый человек ✨"><p class="cmt-text">+rep адекватный и вежливый человек ✨</p><span class="cmt-btn">Копировать</span></li>
-            <li class="cmt" data-copy="+rep быстро и по делу, спасибо 🙌"><p class="cmt-text">+rep быстро и по делу, спасибо 🙌</p><span class="cmt-btn">Копировать</span></li>
-            <li class="cmt" data-copy="+rep топ сервис, всё ок ✅"><p class="cmt-text">+rep топ сервис, всё ок ✅</p><span class="cmt-btn">Копировать</span></li>
-            <li class="cmt" data-copy="+rep приятно общаться, лайк ❤️"><p class="cmt-text">+rep приятно общаться, лайк ❤️</p><span class="cmt-btn">Копировать</span></li>
-          </ul>
-        </div>
-
-        <!-- -REP -->
-        <div class="card">
-          <div class="cat-head">
-            <div class="cat-left">
-              <h2 class="cat-title"><span data-lang="ru">⚠️ -rep</span><span data-lang="en">⚠️ -rep</span></h2>
-              <p class="cat-sub"><span data-lang="ru">6 мягких минусов (без жести)</span><span data-lang="en">6 mild negatives (no insults)</span></p>
-            </div>
-            <div class="cat-img" style="display:grid;place-items:center;font-weight:900;color:#fbbf24;background:rgba(251,191,36,.10);object-fit:initial;">
-              -REP
-            </div>
-          </div>
-          <ul class="comment-list">
-            <li class="cmt" data-copy="-rep долго отвечает, неудобно"><p class="cmt-text">-rep долго отвечает, неудобно</p><span class="cmt-btn">Копировать</span></li>
-            <li class="cmt" data-copy="-rep не вышло договориться по времени"><p class="cmt-text">-rep не вышло договориться по времени</p><span class="cmt-btn">Копировать</span></li>
-            <li class="cmt" data-copy="-rep обещал, но затянул по срокам"><p class="cmt-text">-rep обещал, но затянул по срокам</p><span class="cmt-btn">Копировать</span></li>
-            <li class="cmt" data-copy="-rep ответил не сразу, пришлось ждать"><p class="cmt-text">-rep ответил не сразу, пришлось ждать</p><span class="cmt-btn">Копировать</span></li>
-            <li class="cmt" data-copy="-rep коммуникация слабая, мало информации"><p class="cmt-text">-rep коммуникация слабая, мало информации</p><span class="cmt-btn">Копировать</span></li>
-            <li class="cmt" data-copy="-rep не подошло, возможно, просто не мой формат"><p class="cmt-text">-rep не подошло, возможно, просто не мой формат</p><span class="cmt-btn">Копировать</span></li>
-          </ul>
         </div>
       </div>
     </section>
 
-    <!-- MOVED DOWN: Товары + Внутрености -->
+    <!-- BOTTOM: SHOP + INFO -->
     <section class="section">
       <div data-lang="ru" class="section-title">🛒 Товары и информация</div>
       <div data-lang="en" class="section-title">🛒 Shop & info</div>
 
       <div class="grid2">
-        <!-- Товары -->
+        <!-- SHOP -->
         <section class="card">
           <div data-lang="ru">
             <h2 style="margin:0 0 8px;font-size:18px">🛒 Товары Юкими</h2>
@@ -544,13 +558,13 @@
           </div>
         </section>
 
-        <!-- Внутрености -->
+        <!-- INFO -->
         <aside class="card">
           <div data-lang="ru">
             <h2 style="margin:0 0 8px;font-size:18px">✨ Внутрености</h2>
             <ul class="bullet">
-              <li><span class="ic">📋</span><span>5 блоков: CS / Dota / Rust / +rep / -rep</span></li>
-              <li><span class="ic">🎀</span><span>В каждом блоке по <b>6</b> готовых комментов</span></li>
+              <li><span class="ic">📋</span><span>Слева: CS / Dota / Rust</span></li>
+              <li><span class="ic">📋</span><span>Справа: +rep / -rep</span></li>
               <li><span class="ic">🖱️</span><span>Нажми — и коммент копируется</span></li>
               <li>
                 <span class="ic">📌</span>
@@ -567,8 +581,8 @@
           <div data-lang="en">
             <h2 style="margin:0 0 8px;font-size:18px">✨ Info</h2>
             <ul class="bullet">
-              <li><span class="ic">📋</span><span>5 packs: CS / Dota / Rust / +rep / -rep</span></li>
-              <li><span class="ic">🎀</span><span><b>6</b> ready comments in each pack</span></li>
+              <li><span class="ic">📋</span><span>Left: CS / Dota / Rust</span></li>
+              <li><span class="ic">📋</span><span>Right: +rep / -rep</span></li>
               <li><span class="ic">🖱️</span><span>Click to copy</span></li>
               <li>
                 <span class="ic">📌</span>
@@ -650,6 +664,7 @@
   </script>
 </body>
 </html>
+
 
 
 
