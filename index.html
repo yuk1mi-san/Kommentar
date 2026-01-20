@@ -4,7 +4,7 @@
   <meta charset="utf-8" />
   <meta name="viewport" content="width=device-width,initial-scale=1" />
   <title>✨ Выбери комменты</title>
-  <meta name="description" content="RU/EN: витрина услуг/комментариев для Steam." />
+  <meta name="description" content="RU/EN: готовые комментарии по играм + репутация." />
 
   <!-- Favicon -->
   <link rel="icon" type="image/png" href="assets/favicon.jpg">
@@ -13,9 +13,10 @@
 
   <style>
     :root{
-      --bg:#0b0f17; --card:#111827; --card2:#0f172a; --text:#e5e7eb; --muted:#9ca3af;
-      --accent:#a78bfa; --accent2:#22d3ee; --warn:#fbbf24; --border:rgba(255,255,255,.08);
+      --bg:#0b0f17; --text:#e5e7eb; --muted:#9ca3af;
+      --accent:#a78bfa; --accent2:#22d3ee; --border:rgba(255,255,255,.08);
       --shadow: 0 10px 30px rgba(0,0,0,.35);
+      --cardgrad: linear-gradient(180deg, rgba(255,255,255,.04), rgba(255,255,255,.02));
     }
     *{box-sizing:border-box}
     body{
@@ -35,10 +36,9 @@
       border:1px solid var(--border);
       box-shadow: var(--shadow);
       border-radius:22px;
-      padding:18px 18px;
+      padding:18px;
       overflow:hidden;
     }
-
     .topbar{display:flex;gap:10px;flex-wrap:wrap;align-items:center;justify-content:space-between}
     .badge{
       display:inline-flex;gap:10px;align-items:center;
@@ -61,24 +61,16 @@
       overflow:hidden;
     }
     .lang button{
-      cursor:pointer;
-      border:0;
-      padding:8px 12px;
-      font-size:14px;
-      color:var(--muted);
-      background: transparent;
+      cursor:pointer;border:0;padding:8px 12px;font-size:14px;
+      color:var(--muted);background:transparent;
     }
-    .lang button.active{
-      color: var(--text);
-      background: rgba(167,139,250,.16);
-    }
+    .lang button.active{color:var(--text);background:rgba(167,139,250,.16)}
 
     h1{margin:10px 0 6px;font-size:26px}
     .subtitle{margin:0;color:var(--muted)}
     .meta{margin-top:10px;display:flex;flex-wrap:wrap;gap:10px;color:var(--muted);font-size:14px}
     .meta b{color:var(--text);font-weight:600}
 
-    /* текст + hero-картинка справа */
     .hero-head{
       display:grid;
       grid-template-columns: 1.35fr .65fr;
@@ -86,9 +78,7 @@
       margin-top:10px;
       align-items:start;
     }
-    @media (max-width:900px){
-      .hero-head{grid-template-columns:1fr}
-    }
+    @media (max-width:900px){ .hero-head{grid-template-columns:1fr} }
 
     .hero-img-card img{
       width:100%;
@@ -96,114 +86,141 @@
       display:block;
       border-radius:12px;
       border:1px solid rgba(255,255,255,.10);
-      object-fit: contain;
-      object-position: center;
+      object-fit:contain;
+      object-position:center;
       background: rgba(0,0,0,.35);
       box-shadow: 0 10px 25px rgba(0,0,0,.25);
     }
-    @media (max-width:900px){
-      .hero-img-card{max-width: 100%; justify-self: stretch;}
-    }
-    .hero-img-caption{
-      margin-top:8px;
-      font-size:12px;
-      color:var(--muted);
-    }
+    .hero-img-caption{margin-top:8px;font-size:12px;color:var(--muted)}
 
-    /* OUTSIDE GRID (moved down) */
-    .below-hero{ margin-top:16px; }
-
-    .grid{display:grid;grid-template-columns: 1.2fr .8fr;gap:16px}
-    @media (max-width:880px){ .grid{grid-template-columns:1fr} }
+    /* Cards */
+    .section{margin-top:16px}
+    .section-title{
+      margin:18px 0 10px;
+      font-weight:900;
+      letter-spacing:.3px;
+      font-size:16px;
+      color:var(--text);
+      opacity:.95;
+    }
+    .grid5{
+      display:grid;
+      grid-template-columns: repeat(2, minmax(0, 1fr));
+      gap:16px;
+    }
+    @media (max-width:880px){ .grid5{grid-template-columns:1fr} }
 
     .card{
-      background: linear-gradient(180deg, rgba(255,255,255,.04), rgba(255,255,255,.02));
+      background: var(--cardgrad);
       border:1px solid var(--border);
       border-radius:18px;
       padding:16px;
       box-shadow: var(--shadow);
+      overflow:hidden;
+      position:relative;
     }
-    .card h2{margin:0 0 8px;font-size:18px}
-    .card p{margin:0;color:var(--muted)}
 
-    /* bullet list */
-    .bullet{
-      list-style:none;
-      padding:0;
-      margin:10px 0 0;
-      display:grid;
-      gap:10px;
-      color:var(--muted);
-    }
-    .bullet li{
+    .cat-head{
       display:flex;
-      gap:10px;
+      gap:12px;
       align-items:flex-start;
+      justify-content:space-between;
+      margin-bottom:10px;
+    }
+    .cat-left{min-width:0}
+    .cat-title{
+      margin:0;
+      font-weight:900;
+      font-size:18px;
+      line-height:1.2;
+    }
+    .cat-sub{
+      margin:6px 0 0;
+      color:var(--muted);
+      font-size:13px;
       line-height:1.35;
     }
-    .bullet .ic{width:18px;flex:0 0 18px;opacity:.95}
-    .bullet b{color:var(--text)}
-    .credit-link{
-      color: var(--accent2);
-      text-decoration:none;
-      border-bottom:1px dashed rgba(34,211,238,.55);
-      padding-bottom:2px;
-      font-weight:800;
-    }
-    .credit-link:hover{opacity:.9}
 
-    /* product buttons */
-    .shop-grid{
-      margin-top:12px;
+    .cat-img{
+      width:92px;
+      height:56px;
+      border-radius:12px;
+      border:1px solid rgba(255,255,255,.10);
+      background: rgba(0,0,0,.25);
+      object-fit:cover;
+      flex:0 0 auto;
+    }
+
+    .comment-list{
+      margin:12px 0 0;
+      padding:0;
+      list-style:none;
       display:grid;
-      grid-template-columns:1fr;
       gap:10px;
     }
-    .shop-btn{
+
+    .cmt{
       display:flex;
-      align-items:center;
+      align-items:flex-start;
       justify-content:space-between;
       gap:10px;
-      padding:12px 12px;
+      padding:10px 10px;
       border-radius:14px;
       border:1px solid var(--border);
       background: rgba(255,255,255,.03);
-      text-decoration:none;
-      color:var(--text);
-      box-shadow: 0 10px 22px rgba(0,0,0,.20);
+      cursor:pointer;
       transition: transform .08s ease, opacity .08s ease;
+      user-select:none;
     }
-    .shop-btn:hover{opacity:.95; transform: translateY(-1px);}
-    .shop-left{display:flex;align-items:flex-start;gap:10px;min-width:0}
-    .shop-ic{
-      width:34px;height:34px;border-radius:12px;
-      display:grid;place-items:center;
-      background: rgba(167,139,250,.14);
-      border:1px solid rgba(167,139,250,.25);
-      flex:0 0 auto;
-    }
-    .shop-text{min-width:0}
-    .shop-title{
-      font-weight:900;
-      line-height:1.15;
+    .cmt:hover{opacity:.95; transform: translateY(-1px);}
+    .cmt-text{
       margin:0;
-      font-size:14.5px;
+      color:var(--text);
+      font-size:14px;
+      line-height:1.35;
+      word-wrap:break-word;
+      flex:1;
+      min-width:0;
     }
-    .shop-sub{
-      margin:4px 0 0;
-      color:var(--muted);
-      font-size:13px;
-      line-height:1.25;
-    }
-    .shop-go{
-      color: var(--accent2);
-      font-weight:900;
+    .cmt-btn{
       flex:0 0 auto;
+      font-weight:900;
+      color: var(--accent2);
+      font-size:13px;
+      opacity:.95;
     }
 
-    .footer{margin-top:18px;color:var(--muted);font-size:14px;text-align:center;opacity:.95}
+    .footer{
+      margin-top:18px;
+      color:var(--muted);
+      font-size:14px;
+      text-align:center;
+      opacity:.95;
+    }
 
-    /* i18n blocks */
+    /* toast */
+    .toast{
+      position: fixed;
+      left: 50%;
+      bottom: 18px;
+      transform: translateX(-50%);
+      padding:10px 12px;
+      border-radius:999px;
+      border:1px solid var(--border);
+      background: rgba(0,0,0,.45);
+      color: var(--text);
+      font-size:14px;
+      box-shadow: var(--shadow);
+      opacity:0;
+      pointer-events:none;
+      transition: opacity .15s ease, transform .15s ease;
+    }
+    .toast.show{
+      opacity:1;
+      transform: translateX(-50%) translateY(-2px);
+    }
+
+    /* i18n */
     [data-lang]{display:none}
     body.lang-ru [data-lang="ru"]{display:inline}
     body.lang-en [data-lang="en"]{display:inline}
@@ -214,11 +231,11 @@
 
 <body class="lang-ru">
   <div class="wrap">
-    <!-- BIG CUBE ONLY -->
     <header class="hero">
       <div class="topbar">
         <div class="badge"><span class="dot"></span>
-          <span data-lang="ru">Обновлено: 06 декабря 2025</span><span data-lang="en">Updated: December 06, 2025</span>
+          <span data-lang="ru">Обновлено: 06 декабря 2025</span>
+          <span data-lang="en">Updated: December 06, 2025</span>
         </div>
 
         <div class="lang" role="tablist" aria-label="Language switch">
@@ -231,7 +248,7 @@
         <div>
           <div data-lang="ru">
             <h1>✨ Выбери комменты</h1>
-            <p class="subtitle">Быстрые ссылки на мои услуги.</p>
+            <p class="subtitle">Нажми на комментарий — он скопируется 📋</p>
             <div class="meta">
               <span>Автор: <b>Yukimi2208</b></span>
             </div>
@@ -239,7 +256,7 @@
 
           <div data-lang="en">
             <h1>✨ Choose comments</h1>
-            <p class="subtitle">Quick links to my services.</p>
+            <p class="subtitle">Click a comment to copy it 📋</p>
             <div class="meta">
               <span>Author: <b>Yukimi2208</b></span>
             </div>
@@ -251,135 +268,167 @@
             <img src="assets/hero.jpg" alt="Steam badge example" loading="lazy">
           </a>
           <div class="hero-img-caption">
-            <span data-lang="ru">Пример значка/счётчика игр.</span>
-            <span data-lang="en">Example of the badge/game count.</span>
+            <span data-lang="ru">Пример оформления.</span>
+            <span data-lang="en">Layout example.</span>
           </div>
         </div>
       </div>
     </header>
 
-    <!-- MOVED DOWN: cards are now separate from the big cube -->
-    <section class="below-hero">
-      <div class="grid">
-        <!-- LEFT CARD -->
-        <section class="card shop-card">
-          <div data-lang="ru">
-            <h2>🛒 Товары Юкими</h2>
-            <p>Быстрый переход к моим услугам на FunPay:</p>
+    <section class="section">
+      <div data-lang="ru" class="section-title">🎀 Выбор комментариев</div>
+      <div data-lang="en" class="section-title">🎀 Comment packs</div>
 
-            <div class="shop-grid">
-              <a class="shop-btn" href="https://funpay.com/lots/offer?id=61954569" target="_blank" rel="noopener">
-                <div class="shop-left">
-                  <div class="shop-ic">❤️</div>
-                  <div class="shop-text">
-                    <p class="shop-title">Лайки</p>
-                    <p class="shop-sub">🖼️ 20 ЛАЙКОВ ДЛЯ ВАШЕГО СКРИНШОТА ИЛИ ОБЗОРА STEAM 👍</p>
-                  </div>
-                </div>
-                <div class="shop-go">→</div>
-              </a>
+      <div class="grid5">
+        <!-- CS -->
+        <div class="card">
+          <div class="cat-head">
+            <div class="cat-left">
+              <h2 class="cat-title">
+                <span data-lang="ru">🔫 CS (Counter-Strike)</span>
+                <span data-lang="en">🔫 CS (Counter-Strike)</span>
+              </h2>
+              <p class="cat-sub">
+                <span data-lang="ru">6 нейтральных комментов для профиля/скринов</span>
+                <span data-lang="en">6 neutral comments for profile/screens</span>
+              </p>
+            </div>
+            <img class="cat-img" src="assets/games/cs2.png" alt="CS image" loading="lazy">
+          </div>
 
-              <a class="shop-btn" href="https://funpay.com/lots/offer?id=61954834" target="_blank" rel="noopener">
-                <div class="shop-left">
-                  <div class="shop-ic">💬</div>
-                  <div class="shop-text">
-                    <p class="shop-title">Комментарии</p>
-                    <p class="shop-sub">🎀 20 КОММЕНТАРИЕВ ДЛЯ ВАШЕГО STEAM ПРОФИЛЯ 🎀</p>
-                  </div>
-                </div>
-                <div class="shop-go">→</div>
-              </a>
+          <ul class="comment-list">
+            <li class="cmt" data-copy="Чёткий тиммейт, приятно играть 🔥"><p class="cmt-text">Чёткий тиммейт, приятно играть 🔥</p><span class="cmt-btn">Копировать</span></li>
+            <li class="cmt" data-copy="Хорошие коллы и спокойная игра, респект ✅"><p class="cmt-text">Хорошие коллы и спокойная игра, респект ✅</p><span class="cmt-btn">Копировать</span></li>
+            <li class="cmt" data-copy="Отличная стрельба, тащит катку 💪"><p class="cmt-text">Отличная стрельба, тащит катку 💪</p><span class="cmt-btn">Копировать</span></li>
+            <li class="cmt" data-copy="Норм общение, без токсика, лайк 👍"><p class="cmt-text">Норм общение, без токсика, лайк 👍</p><span class="cmt-btn">Копировать</span></li>
+            <li class="cmt" data-copy="Стабильный игрок, сыграю ещё 🎯"><p class="cmt-text">Стабильный игрок, сыграю ещё 🎯</p><span class="cmt-btn">Копировать</span></li>
+            <li class="cmt" data-copy="Командная игра на уровне, спасибо за матч ✨"><p class="cmt-text">Командная игра на уровне, спасибо за матч ✨</p><span class="cmt-btn">Копировать</span></li>
+          </ul>
 
-              <a class="shop-btn" href="https://funpay.com/lots/offer?id=58877689" target="_blank" rel="noopener">
-                <div class="shop-left">
-                  <div class="shop-ic">⭐</div>
-                  <div class="shop-text">
-                    <p class="shop-title">Лайки на обзоры</p>
-                    <p class="shop-sub">📋 10 ЛАЙКОВ ДЛЯ ВАШЕГО ОБЗОРА ИГРЫ STEAM 👍</p>
-                  </div>
-                </div>
-                <div class="shop-go">→</div>
-              </a>
+          <div class="cat-sub" style="margin-top:12px">
+            <span data-lang="ru">📌 Файл картинки: assets/games/cs2.png</span>
+            <span data-lang="en">📌 Image file: assets/games/cs2.png</span>
+          </div>
+        </div>
+
+        <!-- DOTA -->
+        <div class="card">
+          <div class="cat-head">
+            <div class="cat-left">
+              <h2 class="cat-title">
+                <span data-lang="ru">🧙 Dota 2</span>
+                <span data-lang="en">🧙 Dota 2</span>
+              </h2>
+              <p class="cat-sub">
+                <span data-lang="ru">6 комментов для тимплея/игры</span>
+                <span data-lang="en">6 comments for teamwork/game</span>
+              </p>
+            </div>
+            <img class="cat-img" src="assets/games/dota2.png" alt="Dota 2 image" loading="lazy">
+          </div>
+
+          <ul class="comment-list">
+            <li class="cmt" data-copy="Крутой тимплей, играется легко ✅"><p class="cmt-text">Крутой тимплей, играется легко ✅</p><span class="cmt-btn">Копировать</span></li>
+            <li class="cmt" data-copy="Отличные решения по карте, респект 🗺️"><p class="cmt-text">Отличные решения по карте, респект 🗺️</p><span class="cmt-btn">Копировать</span></li>
+            <li class="cmt" data-copy="Спокойно и по делу, без лишних эмоций 👍"><p class="cmt-text">Спокойно и по делу, без лишних эмоций 👍</p><span class="cmt-btn">Копировать</span></li>
+            <li class="cmt" data-copy="Хорошо отыграл роль, приятно в пати ✨"><p class="cmt-text">Хорошо отыграл роль, приятно в пати ✨</p><span class="cmt-btn">Копировать</span></li>
+            <li class="cmt" data-copy="Сильный игрок, уверенно ведёт к победе 💪"><p class="cmt-text">Сильный игрок, уверенно ведёт к победе 💪</p><span class="cmt-btn">Копировать</span></li>
+            <li class="cmt" data-copy="Спасибо за катку, было кайфово 🎮"><p class="cmt-text">Спасибо за катку, было кайфово 🎮</p><span class="cmt-btn">Копировать</span></li>
+          </ul>
+
+          <div class="cat-sub" style="margin-top:12px">
+            <span data-lang="ru">📌 Файл картинки: assets/games/dota2.png</span>
+            <span data-lang="en">📌 Image file: assets/games/dota2.png</span>
+          </div>
+        </div>
+
+        <!-- RUST -->
+        <div class="card">
+          <div class="cat-head">
+            <div class="cat-left">
+              <h2 class="cat-title">
+                <span data-lang="ru">🛠️ RUST</span>
+                <span data-lang="en">🛠️ RUST</span>
+              </h2>
+              <p class="cat-sub">
+                <span data-lang="ru">6 комментов для рейдов/вайпов</span>
+                <span data-lang="en">6 comments for wipes/raids</span>
+              </p>
+            </div>
+            <img class="cat-img" src="assets/games/rust.png" alt="Rust image" loading="lazy">
+          </div>
+
+          <ul class="comment-list">
+            <li class="cmt" data-copy="Надёжный напарник, держит слово ✅"><p class="cmt-text">Надёжный напарник, держит слово ✅</p><span class="cmt-btn">Копировать</span></li>
+            <li class="cmt" data-copy="Сильная игра, хорошие мувы на рейде 💥"><p class="cmt-text">Сильная игра, хорошие мувы на рейде 💥</p><span class="cmt-btn">Копировать</span></li>
+            <li class="cmt" data-copy="Спокойный и адекватный, приятно в тиме 👍"><p class="cmt-text">Спокойный и адекватный, приятно в тиме 👍</p><span class="cmt-btn">Копировать</span></li>
+            <li class="cmt" data-copy="Фармит быстро, не бросает команду ⛏️"><p class="cmt-text">Фармит быстро, не бросает команду ⛏️</p><span class="cmt-btn">Копировать</span></li>
+            <li class="cmt" data-copy="Хорошая координация, всё по плану 🧠"><p class="cmt-text">Хорошая координация, всё по плану 🧠</p><span class="cmt-btn">Копировать</span></li>
+            <li class="cmt" data-copy="Спасибо за вайп, было весело 😄"><p class="cmt-text">Спасибо за вайп, было весело 😄</p><span class="cmt-btn">Копировать</span></li>
+          </ul>
+
+          <div class="cat-sub" style="margin-top:12px">
+            <span data-lang="ru">📌 Файл картинки: assets/games/rust.png</span>
+            <span data-lang="en">📌 Image file: assets/games/rust.png</span>
+          </div>
+        </div>
+
+        <!-- +REP -->
+        <div class="card">
+          <div class="cat-head">
+            <div class="cat-left">
+              <h2 class="cat-title">
+                <span data-lang="ru">✅ +rep</span>
+                <span data-lang="en">✅ +rep</span>
+              </h2>
+              <p class="cat-sub">
+                <span data-lang="ru">6 коротких плюсовых отзывов</span>
+                <span data-lang="en">6 short positive reps</span>
+              </p>
+            </div>
+            <div style="width:92px;height:56px;border-radius:12px;border:1px solid rgba(255,255,255,.10);background:rgba(167,139,250,.10);display:grid;place-items:center;font-weight:900;color:var(--accent2);">
+              +REP
             </div>
           </div>
 
-          <div data-lang="en">
-            <h2>🛒 Yukimi’s Services</h2>
-            <p>Quick links to my FunPay offers:</p>
+          <ul class="comment-list">
+            <li class="cmt" data-copy="+rep быстро ответил и помог ✅"><p class="cmt-text">+rep быстро ответил и помог ✅</p><span class="cmt-btn">Копировать</span></li>
+            <li class="cmt" data-copy="+rep всё честно, рекомендую 👍"><p class="cmt-text">+rep всё честно, рекомендую 👍</p><span class="cmt-btn">Копировать</span></li>
+            <li class="cmt" data-copy="+rep адекватный и вежливый человек ✨"><p class="cmt-text">+rep адекватный и вежливый человек ✨</p><span class="cmt-btn">Копировать</span></li>
+            <li class="cmt" data-copy="+rep быстро и по делу, спасибо 🙌"><p class="cmt-text">+rep быстро и по делу, спасибо 🙌</p><span class="cmt-btn">Копировать</span></li>
+            <li class="cmt" data-copy="+rep топ сервис, всё ок ✅"><p class="cmt-text">+rep топ сервис, всё ок ✅</p><span class="cmt-btn">Копировать</span></li>
+            <li class="cmt" data-copy="+rep приятно общаться, лайк ❤️"><p class="cmt-text">+rep приятно общаться, лайк ❤️</p><span class="cmt-btn">Копировать</span></li>
+          </ul>
+        </div>
 
-            <div class="shop-grid">
-              <a class="shop-btn" href="https://funpay.com/lots/offer?id=61954569" target="_blank" rel="noopener">
-                <div class="shop-left">
-                  <div class="shop-ic">❤️</div>
-                  <div class="shop-text">
-                    <p class="shop-title">Likes / reactions</p>
-                    <p class="shop-sub">🖼️ 20 LIKES FOR YOUR STEAM SCREENSHOT 👍</p>
-                  </div>
-                </div>
-                <div class="shop-go">→</div>
-              </a>
-
-              <a class="shop-btn" href="https://funpay.com/lots/offer?id=61954834" target="_blank" rel="noopener">
-                <div class="shop-left">
-                  <div class="shop-ic">💬</div>
-                  <div class="shop-text">
-                    <p class="shop-title">Comments</p>
-                    <p class="shop-sub">🎀 20 COMMENTS FOR YOUR STEAM PROFILE 🎀</p>
-                  </div>
-                </div>
-                <div class="shop-go">→</div>
-              </a>
-
-              <a class="shop-btn" href="https://funpay.com/lots/offer?id=58877689" target="_blank" rel="noopener">
-                <div class="shop-left">
-                  <div class="shop-ic">⭐</div>
-                  <div class="shop-text">
-                    <p class="shop-title">Review likes</p>
-                    <p class="shop-sub">👍 10 LIKES FOR YOUR STEAM REVIEW 👍</p>
-                  </div>
-                </div>
-                <div class="shop-go">→</div>
-              </a>
+        <!-- -REP -->
+        <div class="card">
+          <div class="cat-head">
+            <div class="cat-left">
+              <h2 class="cat-title">
+                <span data-lang="ru">⚠️ -rep</span>
+                <span data-lang="en">⚠️ -rep</span>
+              </h2>
+              <p class="cat-sub">
+                <span data-lang="ru">6 мягких “минусов” без жести</span>
+                <span data-lang="en">6 mild negatives (no insults)</span>
+              </p>
+            </div>
+            <div style="width:92px;height:56px;border-radius:12px;border:1px solid rgba(255,255,255,.10);background:rgba(251,191,36,.10);display:grid;place-items:center;font-weight:900;color:#fbbf24;">
+              -REP
             </div>
           </div>
-        </section>
 
-        <!-- RIGHT CARD -->
-        <aside class="card">
-          <div data-lang="ru">
-            <h2>✨ Внутрености</h2>
-            <ul class="bullet">
-              <li><span class="ic">🖤</span><span>Это витрина с быстрыми ссылками на услуги.</span></li>
-              <li><span class="ic">🎀</span><span>Если нужно — могу добавить любой блок ниже.</span></li>
-              <li>
-                <span class="ic">📋</span>
-                <span>
-                  Сделал
-                  <a class="credit-link" href="https://funpay.com/users/3472051/" target="_blank" rel="noopener">
-                    Yukimi2208 / FunPay
-                  </a>
-                </span>
-              </li>
-            </ul>
-          </div>
+          <ul class="comment-list">
+            <li class="cmt" data-copy="-rep долго отвечает, неудобно"><p class="cmt-text">-rep долго отвечает, неудобно</p><span class="cmt-btn">Копировать</span></li>
+            <li class="cmt" data-copy="-rep не вышло договориться по времени"><p class="cmt-text">-rep не вышло договориться по времени</p><span class="cmt-btn">Копировать</span></li>
+            <li class="cmt" data-copy="-rep обещал, но затянул по срокам"><p class="cmt-text">-rep обещал, но затянул по срокам</p><span class="cmt-btn">Копировать</span></li>
+            <li class="cmt" data-copy="-rep ответил не сразу, пришлось ждать"><p class="cmt-text">-rep ответил не сразу, пришлось ждать</p><span class="cmt-btn">Копировать</span></li>
+            <li class="cmt" data-copy="-rep коммуникация слабая, мало информации"><p class="cmt-text">-rep коммуникация слабая, мало информации</p><span class="cmt-btn">Копировать</span></li>
+            <li class="cmt" data-copy="-rep не подошло, возможно, просто не мой формат"><p class="cmt-text">-rep не подошло, возможно, просто не мой формат</p><span class="cmt-btn">Копировать</span></li>
+          </ul>
+        </div>
 
-          <div data-lang="en">
-            <h2>✨ What we have here</h2>
-            <ul class="bullet">
-              <li><span class="ic">🖤</span><span>This is a landing page with quick service links.</span></li>
-              <li><span class="ic">🎀</span><span>I can add any extra block below if needed.</span></li>
-              <li>
-                <span class="ic">📋</span>
-                <span>
-                  Created by
-                  <a class="credit-link" href="https://funpay.com/users/3472051/" target="_blank" rel="noopener">
-                    Yukimi2208 / FunPay
-                  </a>
-                </span>
-              </li>
-            </ul>
-          </div>
-        </aside>
       </div>
     </section>
 
@@ -389,9 +438,44 @@
     </div>
   </div>
 
+  <div id="toast" class="toast" role="status" aria-live="polite">
+    <span data-lang="ru">Скопировано ✅</span>
+    <span data-lang="en">Copied ✅</span>
+  </div>
+
   <script>
     const btnRu = document.getElementById('btn-ru');
     const btnEn = document.getElementById('btn-en');
+    const toast = document.getElementById('toast');
+    let toastTimer = null;
+
+    function showToast(){
+      toast.classList.add('show');
+      clearTimeout(toastTimer);
+      toastTimer = setTimeout(() => toast.classList.remove('show'), 900);
+    }
+
+    async function copyText(text){
+      try{
+        await navigator.clipboard.writeText(text);
+      }catch(e){
+        // fallback
+        const ta = document.createElement('textarea');
+        ta.value = text;
+        document.body.appendChild(ta);
+        ta.select();
+        document.execCommand('copy');
+        ta.remove();
+      }
+      showToast();
+    }
+
+    document.addEventListener('click', (e) => {
+      const el = e.target.closest('.cmt');
+      if(!el) return;
+      const text = el.getAttribute('data-copy') || '';
+      if(text.trim()) copyText(text.trim());
+    });
 
     function setLang(lang){
       document.body.classList.toggle('lang-ru', lang === 'ru');
@@ -400,7 +484,7 @@
       btnEn.classList.toggle('active', lang === 'en');
       btnRu.setAttribute('aria-selected', lang === 'ru');
       btnEn.setAttribute('aria-selected', lang === 'en');
-      document.documentElement.lang = lang === 'ru' ? 'ru' : 'en';
+      document.documentElement.lang = (lang === 'ru') ? 'ru' : 'en';
       localStorage.setItem('site_lang', lang);
       document.title = (lang === 'ru') ? '✨ Выбери комменты' : '✨ Choose comments';
     }
@@ -414,6 +498,7 @@
   </script>
 </body>
 </html>
+
 
 
 
