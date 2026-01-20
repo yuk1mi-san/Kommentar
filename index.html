@@ -4,20 +4,29 @@
   <meta charset="utf-8" />
   <meta name="viewport" content="width=device-width,initial-scale=1" />
   <title>✨ Выбери комменты</title>
-  <meta name="description" content="RU/EN: готовые комментарии по играм + репутация." />
+  <meta name="description" content="RU/EN: наборы комментариев в стиле Steam." />
 
-  <!-- Favicon -->
   <link rel="icon" type="image/png" href="assets/favicon.jpg">
   <link rel="apple-touch-icon" href="assets/favicon.jpg">
   <meta name="theme-color" content="#0b0f17">
 
   <style>
     :root{
-      --bg:#0b0f17; --text:#e5e7eb; --muted:#9ca3af;
-      --accent:#a78bfa; --accent2:#22d3ee; --border:rgba(255,255,255,.08);
+      --bg:#0b0f17;
+      --text:#e5e7eb;
+      --muted:#9ca3af;
+      --accent:#a78bfa;
+      --accent2:#22d3ee;
+      --border:rgba(255,255,255,.08);
       --shadow: 0 10px 30px rgba(0,0,0,.35);
-      --cardgrad: linear-gradient(180deg, rgba(255,255,255,.04), rgba(255,255,255,.02));
+
+      /* steam-ish */
+      --steam-panel: rgba(0,0,0,.18);
+      --steam-line: rgba(255,255,255,.06);
+      --steam-row: rgba(255,255,255,.03);
+      --steam-row2: rgba(255,255,255,.02);
     }
+
     *{box-sizing:border-box}
     body{
       margin:0;
@@ -102,67 +111,71 @@
       font-size:16px;
       color:var(--text);
       opacity:.95;
+      display:flex;
+      align-items:center;
+      gap:8px;
     }
 
-    /* CARDS */
-    .card{
-      background: var(--cardgrad);
-      border:1px solid var(--border);
-      border-radius:18px;
-      padding:16px;
-      box-shadow: var(--shadow);
-      overflow:hidden;
-      position:relative;
-    }
-
-    /* 2-column layout: left games, right reps */
+    /* 2 columns: left games, right reps */
     .packs-2col{
       display:grid;
       grid-template-columns: 1fr 1fr;
       gap:16px;
       align-items:start;
     }
-    @media (max-width:880px){
-      .packs-2col{grid-template-columns:1fr;}
-    }
-    .col{
-      display:grid;
-      gap:16px;
-    }
+    @media (max-width:880px){ .packs-2col{grid-template-columns:1fr;} }
+    .col{display:grid;gap:16px;}
 
-    /* bottom 2 cards grid */
-    .grid2{
-      display:grid;
-      grid-template-columns: 1.2fr .8fr;
-      gap:16px;
+    /* Steam-like pack panel */
+    .pack{
+      border-radius:14px;
+      border:1px solid var(--steam-line);
+      background: linear-gradient(180deg, rgba(0,0,0,.22), rgba(0,0,0,.12));
+      box-shadow: 0 12px 28px rgba(0,0,0,.35);
+      overflow:hidden;
     }
-    @media (max-width:880px){ .grid2{grid-template-columns:1fr} }
-
-    .cat-head{
+    .pack-head{
       display:flex;
-      gap:12px;
-      align-items:flex-start;
+      align-items:center;
       justify-content:space-between;
-      margin-bottom:10px;
+      gap:12px;
+      padding:12px 12px 10px;
+      border-bottom:1px solid var(--steam-line);
+      background: rgba(255,255,255,.02);
     }
-    .cat-left{min-width:0}
-    .cat-title{
+    .pack-title{
       margin:0;
-      font-weight:900;
-      font-size:18px;
-      line-height:1.2;
+      font-weight:800;
+      font-size:16px;
+      line-height:1.15;
+      display:flex;
+      align-items:center;
+      gap:8px;
+      min-width:0;
     }
-    .cat-sub{
+    .pack-sub{
       margin:6px 0 0;
       color:var(--muted);
-      font-size:13px;
-      line-height:1.35;
+      font-size:12.5px;
+      line-height:1.25;
+    }
+    .pack-left{min-width:0}
+    .pack-badge{
+      flex:0 0 auto;
+      display:flex;
+      align-items:center;
+      gap:8px;
+      padding:7px 10px;
+      border-radius:999px;
+      border:1px solid var(--steam-line);
+      background: rgba(0,0,0,.20);
+      color:var(--muted);
+      font-size:12px;
+      white-space:nowrap;
     }
 
-    .cat-img{
-      width:92px;
-      height:56px;
-      border-radius:12px;
+    .pack-img{
+      width:82px;height:48px;border-radius:10px;
       border:1px solid rgba(255,255,255,.10);
       background: rgba(0,0,0,.25);
       object-fit:cover;
@@ -170,60 +183,85 @@
       display:block;
     }
 
-    .comment-list{
-      margin:12px 0 0;
-      padding:0;
-      list-style:none;
-      display:grid;
-      gap:10px;
+    /* Steam-like comment rows */
+    .thread{
+      padding:10px 10px 12px;
     }
-
-    .cmt{
-      display:flex;
-      align-items:flex-start;
-      justify-content:space-between;
+    .comment{
+      display:grid;
+      grid-template-columns: 36px 1fr;
       gap:10px;
-      padding:10px 10px;
-      border-radius:14px;
-      border:1px solid var(--border);
-      background: rgba(255,255,255,.03);
-      cursor:pointer;
-      transition: transform .08s ease, opacity .08s ease;
+      padding:10px 8px;
+      border-top:1px solid var(--steam-line);
+      background: linear-gradient(180deg, var(--steam-row), var(--steam-row2));
+    }
+    .comment:first-child{border-top:0}
+    .avatar{
+      width:36px;height:36px;border-radius:6px;
+      border:1px solid rgba(255,255,255,.12);
+      background: linear-gradient(135deg, rgba(167,139,250,.18), rgba(34,211,238,.12));
+      display:grid;
+      place-items:center;
+      font-weight:900;
+      color:rgba(229,231,235,.92);
       user-select:none;
     }
-    .cmt:hover{opacity:.95; transform: translateY(-1px);}
-    .cmt-text{
+    .c-body{min-width:0}
+    .c-meta{
+      display:flex;
+      gap:8px;
+      align-items:baseline;
+      flex-wrap:wrap;
+      margin-bottom:3px;
+    }
+    .c-name{
+      font-weight:700;
+      font-size:13px;
+      color:rgba(229,231,235,.95);
+    }
+    .c-time{
+      color:rgba(156,163,175,.88);
+      font-size:12px;
+    }
+    .c-text{
       margin:0;
-      color:var(--text);
       font-size:14px;
       line-height:1.35;
+      color:rgba(229,231,235,.95);
+      white-space:pre-wrap;
       word-wrap:break-word;
-      flex:1;
-      min-width:0;
     }
-    .cmt-btn{
-      flex:0 0 auto;
-      font-weight:900;
-      color: var(--accent2);
-      font-size:13px;
-      opacity:.95;
+
+    /* Select-on-click hint (no copy button) */
+    .comment{cursor:pointer}
+    .comment:hover{filter: brightness(1.05)}
+    .hint{
+      padding:10px 12px;
+      border-top:1px solid var(--steam-line);
+      color:rgba(156,163,175,.9);
+      font-size:12.5px;
+      background: rgba(0,0,0,.16);
+    }
+
+    /* bottom 2 cards */
+    .grid2{
+      display:grid;
+      grid-template-columns: 1.2fr .8fr;
+      gap:16px;
+    }
+    @media (max-width:880px){ .grid2{grid-template-columns:1fr} }
+
+    .card{
+      background: linear-gradient(180deg, rgba(255,255,255,.04), rgba(255,255,255,.02));
+      border:1px solid var(--border);
+      border-radius:18px;
+      padding:16px;
+      box-shadow: var(--shadow);
     }
 
     /* bullet list */
-    .bullet{
-      list-style:none;
-      padding:0;
-      margin:10px 0 0;
-      display:grid;
-      gap:10px;
-      color:var(--muted);
-    }
-    .bullet li{
-      display:flex;
-      gap:10px;
-      align-items:flex-start;
-      line-height:1.35;
-    }
+    .bullet{list-style:none;padding:0;margin:10px 0 0;display:grid;gap:10px;color:var(--muted);}
+    .bullet li{display:flex;gap:10px;align-items:flex-start;line-height:1.35;}
     .bullet .ic{width:18px;flex:0 0 18px;opacity:.95}
     .bullet b{color:var(--text)}
     .credit-link{
@@ -236,69 +274,36 @@
     .credit-link:hover{opacity:.9}
 
     /* shop buttons */
-    .shop-grid{
-      margin-top:12px;
-      display:grid;
-      grid-template-columns:1fr;
-      gap:10px;
-    }
+    .shop-grid{margin-top:12px;display:grid;grid-template-columns:1fr;gap:10px;}
     .shop-btn{
-      display:flex;
-      align-items:center;
-      justify-content:space-between;
-      gap:10px;
-      padding:12px 12px;
-      border-radius:14px;
-      border:1px solid var(--border);
-      background: rgba(255,255,255,.03);
-      text-decoration:none;
-      color:var(--text);
+      display:flex;align-items:center;justify-content:space-between;gap:10px;
+      padding:12px 12px;border-radius:14px;border:1px solid var(--border);
+      background: rgba(255,255,255,.03);text-decoration:none;color:var(--text);
       box-shadow: 0 10px 22px rgba(0,0,0,.20);
       transition: transform .08s ease, opacity .08s ease;
     }
     .shop-btn:hover{opacity:.95; transform: translateY(-1px);}
     .shop-left{display:flex;align-items:flex-start;gap:10px;min-width:0}
     .shop-ic{
-      width:34px;height:34px;border-radius:12px;
-      display:grid;place-items:center;
-      background: rgba(167,139,250,.14);
-      border:1px solid rgba(167,139,250,.25);
-      flex:0 0 auto;
+      width:34px;height:34px;border-radius:12px;display:grid;place-items:center;
+      background: rgba(167,139,250,.14);border:1px solid rgba(167,139,250,.25);flex:0 0 auto;
     }
     .shop-text{min-width:0}
     .shop-title{font-weight:900;line-height:1.15;margin:0;font-size:14.5px;}
     .shop-sub{margin:4px 0 0;color:var(--muted);font-size:13px;line-height:1.25;}
     .shop-go{color: var(--accent2);font-weight:900;flex:0 0 auto;}
 
-    .footer{
-      margin-top:18px;
-      color:var(--muted);
-      font-size:14px;
-      text-align:center;
-      opacity:.95;
-    }
+    .footer{margin-top:18px;color:var(--muted);font-size:14px;text-align:center;opacity:.95;}
 
     /* toast */
     .toast{
-      position: fixed;
-      left: 50%;
-      bottom: 18px;
-      transform: translateX(-50%);
-      padding:10px 12px;
-      border-radius:999px;
-      border:1px solid var(--border);
-      background: rgba(0,0,0,.45);
-      color: var(--text);
-      font-size:14px;
-      box-shadow: var(--shadow);
-      opacity:0;
-      pointer-events:none;
+      position: fixed;left: 50%;bottom: 18px;transform: translateX(-50%);
+      padding:10px 12px;border-radius:999px;border:1px solid var(--border);
+      background: rgba(0,0,0,.45);color: var(--text);font-size:14px;
+      box-shadow: var(--shadow);opacity:0;pointer-events:none;
       transition: opacity .15s ease, transform .15s ease;
     }
-    .toast.show{
-      opacity:1;
-      transform: translateX(-50%) translateY(-2px);
-    }
+    .toast.show{opacity:1;transform: translateX(-50%) translateY(-2px);}
 
     /* i18n */
     [data-lang]{display:none}
@@ -311,7 +316,6 @@
 
 <body class="lang-ru">
   <div class="wrap">
-    <!-- HERO -->
     <header class="hero">
       <div class="topbar">
         <div class="badge"><span class="dot"></span>
@@ -329,18 +333,14 @@
         <div>
           <div data-lang="ru">
             <h1>✨ Выбери комменты</h1>
-            <p class="subtitle">Нажми на комментарий — он скопируется 📋</p>
-            <div class="meta">
-              <span>Автор: <b>Yukimi2208</b></span>
-            </div>
+            <p class="subtitle">Нажми на комментарий — он выделится (Ctrl+C чтобы скопировать)</p>
+            <div class="meta"><span>Автор: <b>Yukimi2208</b></span></div>
           </div>
 
           <div data-lang="en">
             <h1>✨ Choose comments</h1>
-            <p class="subtitle">Click a comment to copy it 📋</p>
-            <div class="meta">
-              <span>Author: <b>Yukimi2208</b></span>
-            </div>
+            <p class="subtitle">Click a comment to select it (Ctrl+C to copy)</p>
+            <div class="meta"><span>Author: <b>Yukimi2208</b></span></div>
           </div>
         </div>
 
@@ -358,121 +358,373 @@
 
     <!-- COMMENTS -->
     <section class="section">
-      <div data-lang="ru" class="section-title">🎀 Комментарии</div>
-      <div data-lang="en" class="section-title">🎀 Comments</div>
+      <div class="section-title">
+        <span data-lang="ru">💬 Комментарии (Steam-стиль)</span>
+        <span data-lang="en">💬 Comments (Steam-style)</span>
+      </div>
 
       <div class="packs-2col">
-        <!-- LEFT: CS / DOTA / RUST -->
+        <!-- LEFT: games -->
         <div class="col">
+
           <!-- CS -->
-          <div class="card">
-            <div class="cat-head">
-              <div class="cat-left">
-                <h2 class="cat-title"><span data-lang="ru">🔫 CS (Counter-Strike)</span><span data-lang="en">🔫 CS (Counter-Strike)</span></h2>
-                <p class="cat-sub"><span data-lang="ru">6 нейтральных комментов</span><span data-lang="en">6 neutral comments</span></p>
+          <article class="pack">
+            <div class="pack-head">
+              <div class="pack-left">
+                <h2 class="pack-title"><span>🔫</span><span data-lang="ru">CS (Counter-Strike)</span><span data-lang="en">CS (Counter-Strike)</span></h2>
+                <div class="pack-sub">
+                  <span data-lang="ru">Пачка нейтральных комментов для профиля</span>
+                  <span data-lang="en">Neutral pack for profile comments</span>
+                </div>
               </div>
-              <img class="cat-img" src="assets/games/cs2.png" alt="CS image" loading="lazy">
+              <img class="pack-img" src="assets/games/cs2.png" alt="CS image" loading="lazy">
             </div>
-            <ul class="comment-list">
-              <li class="cmt" data-copy="Чёткий тиммейт, приятно играть 🔥"><p class="cmt-text">Чёткий тиммейт, приятно играть 🔥</p><span class="cmt-btn">Копировать</span></li>
-              <li class="cmt" data-copy="Хорошие коллы и спокойная игра, респект ✅"><p class="cmt-text">Хорошие коллы и спокойная игра, респект ✅</p><span class="cmt-btn">Копировать</span></li>
-              <li class="cmt" data-copy="Отличная стрельба, тащит катку 💪"><p class="cmt-text">Отличная стрельба, тащит катку 💪</p><span class="cmt-btn">Копировать</span></li>
-              <li class="cmt" data-copy="Норм общение, без токсика, лайк 👍"><p class="cmt-text">Норм общение, без токсика, лайк 👍</p><span class="cmt-btn">Копировать</span></li>
-              <li class="cmt" data-copy="Стабильный игрок, сыграю ещё 🎯"><p class="cmt-text">Стабильный игрок, сыграю ещё 🎯</p><span class="cmt-btn">Копировать</span></li>
-              <li class="cmt" data-copy="Командная игра на уровне, спасибо за матч ✨"><p class="cmt-text">Командная игра на уровне, спасибо за матч ✨</p><span class="cmt-btn">Копировать</span></li>
-            </ul>
-          </div>
+
+            <div class="thread">
+              <div class="comment" data-text="Чёткий тиммейт, приятно играть 🔥">
+                <div class="avatar">Y</div>
+                <div class="c-body">
+                  <div class="c-meta"><span class="c-name">yukimi</span><span class="c-time" data-lang="ru">17 часов назад</span><span class="c-time" data-lang="en">17 hours ago</span></div>
+                  <p class="c-text">Чёткий тиммейт, приятно играть 🔥</p>
+                </div>
+              </div>
+
+              <div class="comment" data-text="Хорошие коллы и спокойная игра, респект ✅">
+                <div class="avatar">Y</div>
+                <div class="c-body">
+                  <div class="c-meta"><span class="c-name">yukimi</span><span class="c-time" data-lang="ru">17 часов назад</span><span class="c-time" data-lang="en">17 hours ago</span></div>
+                  <p class="c-text">Хорошие коллы и спокойная игра, респект ✅</p>
+                </div>
+              </div>
+
+              <div class="comment" data-text="Отличная стрельба, тащит катку 💪">
+                <div class="avatar">Y</div>
+                <div class="c-body">
+                  <div class="c-meta"><span class="c-name">yukimi</span><span class="c-time" data-lang="ru">17 часов назад</span><span class="c-time" data-lang="en">17 hours ago</span></div>
+                  <p class="c-text">Отличная стрельба, тащит катку 💪</p>
+                </div>
+              </div>
+
+              <div class="comment" data-text="Норм общение, без токсика, лайк 👍">
+                <div class="avatar">Y</div>
+                <div class="c-body">
+                  <div class="c-meta"><span class="c-name">yukimi</span><span class="c-time" data-lang="ru">17 часов назад</span><span class="c-time" data-lang="en">17 hours ago</span></div>
+                  <p class="c-text">Норм общение, без токсика, лайк 👍</p>
+                </div>
+              </div>
+
+              <div class="comment" data-text="Стабильный игрок, сыграю ещё 🎯">
+                <div class="avatar">Y</div>
+                <div class="c-body">
+                  <div class="c-meta"><span class="c-name">yukimi</span><span class="c-time" data-lang="ru">17 часов назад</span><span class="c-time" data-lang="en">17 hours ago</span></div>
+                  <p class="c-text">Стабильный игрок, сыграю ещё 🎯</p>
+                </div>
+              </div>
+
+              <div class="comment" data-text="Командная игра на уровне, спасибо за матч ✨">
+                <div class="avatar">Y</div>
+                <div class="c-body">
+                  <div class="c-meta"><span class="c-name">yukimi</span><span class="c-time" data-lang="ru">17 часов назад</span><span class="c-time" data-lang="en">17 hours ago</span></div>
+                  <p class="c-text">Командная игра на уровне, спасибо за матч ✨</p>
+                </div>
+              </div>
+            </div>
+
+            <div class="hint">
+              <span data-lang="ru">Совет: клик по комменту выделяет текст (Ctrl+C чтобы скопировать)</span>
+              <span data-lang="en">Tip: click selects text (Ctrl+C to copy)</span>
+            </div>
+          </article>
 
           <!-- DOTA -->
-          <div class="card">
-            <div class="cat-head">
-              <div class="cat-left">
-                <h2 class="cat-title"><span data-lang="ru">🧙 Dota 2</span><span data-lang="en">🧙 Dota 2</span></h2>
-                <p class="cat-sub"><span data-lang="ru">6 комментов для тимплея</span><span data-lang="en">6 teamwork comments</span></p>
+          <article class="pack">
+            <div class="pack-head">
+              <div class="pack-left">
+                <h2 class="pack-title"><span>🧙</span><span data-lang="ru">Dota 2</span><span data-lang="en">Dota 2</span></h2>
+                <div class="pack-sub">
+                  <span data-lang="ru">Комменты под тимплей/роль</span>
+                  <span data-lang="en">Teamplay/role comments</span>
+                </div>
               </div>
-              <img class="cat-img" src="assets/games/dota2.png" alt="Dota 2 image" loading="lazy">
+              <img class="pack-img" src="assets/games/dota2.png" alt="Dota 2 image" loading="lazy">
             </div>
-            <ul class="comment-list">
-              <li class="cmt" data-copy="Крутой тимплей, играется легко ✅"><p class="cmt-text">Крутой тимплей, играется легко ✅</p><span class="cmt-btn">Копировать</span></li>
-              <li class="cmt" data-copy="Отличные решения по карте, респект 🗺️"><p class="cmt-text">Отличные решения по карте, респект 🗺️</p><span class="cmt-btn">Копировать</span></li>
-              <li class="cmt" data-copy="Спокойно и по делу, без лишних эмоций 👍"><p class="cmt-text">Спокойно и по делу, без лишних эмоций 👍</p><span class="cmt-btn">Копировать</span></li>
-              <li class="cmt" data-copy="Хорошо отыграл роль, приятно в пати ✨"><p class="cmt-text">Хорошо отыграл роль, приятно в пати ✨</p><span class="cmt-btn">Копировать</span></li>
-              <li class="cmt" data-copy="Сильный игрок, уверенно ведёт к победе 💪"><p class="cmt-text">Сильный игрок, уверенно ведёт к победе 💪</p><span class="cmt-btn">Копировать</span></li>
-              <li class="cmt" data-copy="Спасибо за катку, было кайфово 🎮"><p class="cmt-text">Спасибо за катку, было кайфово 🎮</p><span class="cmt-btn">Копировать</span></li>
-            </ul>
-          </div>
+
+            <div class="thread">
+              <div class="comment" data-text="Крутой тимплей, играется легко ✅">
+                <div class="avatar">Y</div>
+                <div class="c-body">
+                  <div class="c-meta"><span class="c-name">yukimi</span><span class="c-time" data-lang="ru">17 часов назад</span><span class="c-time" data-lang="en">17 hours ago</span></div>
+                  <p class="c-text">Крутой тимплей, играется легко ✅</p>
+                </div>
+              </div>
+
+              <div class="comment" data-text="Отличные решения по карте, респект 🗺️">
+                <div class="avatar">Y</div>
+                <div class="c-body">
+                  <div class="c-meta"><span class="c-name">yukimi</span><span class="c-time" data-lang="ru">17 часов назад</span><span class="c-time" data-lang="en">17 hours ago</span></div>
+                  <p class="c-text">Отличные решения по карте, респект 🗺️</p>
+                </div>
+              </div>
+
+              <div class="comment" data-text="Спокойно и по делу, без лишних эмоций 👍">
+                <div class="avatar">Y</div>
+                <div class="c-body">
+                  <div class="c-meta"><span class="c-name">yukimi</span><span class="c-time" data-lang="ru">17 часов назад</span><span class="c-time" data-lang="en">17 hours ago</span></div>
+                  <p class="c-text">Спокойно и по делу, без лишних эмоций 👍</p>
+                </div>
+              </div>
+
+              <div class="comment" data-text="Хорошо отыграл роль, приятно в пати ✨">
+                <div class="avatar">Y</div>
+                <div class="c-body">
+                  <div class="c-meta"><span class="c-name">yukimi</span><span class="c-time" data-lang="ru">17 часов назад</span><span class="c-time" data-lang="en">17 hours ago</span></div>
+                  <p class="c-text">Хорошо отыграл роль, приятно в пати ✨</p>
+                </div>
+              </div>
+
+              <div class="comment" data-text="Сильный игрок, уверенно ведёт к победе 💪">
+                <div class="avatar">Y</div>
+                <div class="c-body">
+                  <div class="c-meta"><span class="c-name">yukimi</span><span class="c-time" data-lang="ru">17 часов назад</span><span class="c-time" data-lang="en">17 hours ago</span></div>
+                  <p class="c-text">Сильный игрок, уверенно ведёт к победе 💪</p>
+                </div>
+              </div>
+
+              <div class="comment" data-text="Спасибо за катку, было кайфово 🎮">
+                <div class="avatar">Y</div>
+                <div class="c-body">
+                  <div class="c-meta"><span class="c-name">yukimi</span><span class="c-time" data-lang="ru">17 часов назад</span><span class="c-time" data-lang="en">17 hours ago</span></div>
+                  <p class="c-text">Спасибо за катку, было кайфово 🎮</p>
+                </div>
+              </div>
+            </div>
+
+            <div class="hint">
+              <span data-lang="ru">Кликни по строке, чтобы выделить</span>
+              <span data-lang="en">Click a row to select</span>
+            </div>
+          </article>
 
           <!-- RUST -->
-          <div class="card">
-            <div class="cat-head">
-              <div class="cat-left">
-                <h2 class="cat-title"><span data-lang="ru">🛠️ RUST</span><span data-lang="en">🛠️ RUST</span></h2>
-                <p class="cat-sub"><span data-lang="ru">6 комментов для вайпов/рейдов</span><span data-lang="en">6 wipe/raid comments</span></p>
+          <article class="pack">
+            <div class="pack-head">
+              <div class="pack-left">
+                <h2 class="pack-title"><span>🛠️</span><span data-lang="ru">RUST</span><span data-lang="en">RUST</span></h2>
+                <div class="pack-sub">
+                  <span data-lang="ru">Под рейды/вайпы, без токсика</span>
+                  <span data-lang="en">For raids/wipes, non-toxic</span>
+                </div>
               </div>
-              <img class="cat-img" src="assets/games/rust.png" alt="Rust image" loading="lazy">
+              <img class="pack-img" src="assets/games/rust.png" alt="Rust image" loading="lazy">
             </div>
-            <ul class="comment-list">
-              <li class="cmt" data-copy="Надёжный напарник, держит слово ✅"><p class="cmt-text">Надёжный напарник, держит слово ✅</p><span class="cmt-btn">Копировать</span></li>
-              <li class="cmt" data-copy="Сильная игра, хорошие мувы на рейде 💥"><p class="cmt-text">Сильная игра, хорошие мувы на рейде 💥</p><span class="cmt-btn">Копировать</span></li>
-              <li class="cmt" data-copy="Спокойный и адекватный, приятно в тиме 👍"><p class="cmt-text">Спокойный и адекватный, приятно в тиме 👍</p><span class="cmt-btn">Копировать</span></li>
-              <li class="cmt" data-copy="Фармит быстро, не бросает команду ⛏️"><p class="cmt-text">Фармит быстро, не бросает команду ⛏️</p><span class="cmt-btn">Копировать</span></li>
-              <li class="cmt" data-copy="Хорошая координация, всё по плану 🧠"><p class="cmt-text">Хорошая координация, всё по плану 🧠</p><span class="cmt-btn">Копировать</span></li>
-              <li class="cmt" data-copy="Спасибо за вайп, было весело 😄"><p class="cmt-text">Спасибо за вайп, было весело 😄</p><span class="cmt-btn">Копировать</span></li>
-            </ul>
-          </div>
+
+            <div class="thread">
+              <div class="comment" data-text="Надёжный напарник, держит слово ✅">
+                <div class="avatar">Y</div>
+                <div class="c-body">
+                  <div class="c-meta"><span class="c-name">yukimi</span><span class="c-time" data-lang="ru">17 часов назад</span><span class="c-time" data-lang="en">17 hours ago</span></div>
+                  <p class="c-text">Надёжный напарник, держит слово ✅</p>
+                </div>
+              </div>
+
+              <div class="comment" data-text="Сильная игра, хорошие мувы на рейде 💥">
+                <div class="avatar">Y</div>
+                <div class="c-body">
+                  <div class="c-meta"><span class="c-name">yukimi</span><span class="c-time" data-lang="ru">17 часов назад</span><span class="c-time" data-lang="en">17 hours ago</span></div>
+                  <p class="c-text">Сильная игра, хорошие мувы на рейде 💥</p>
+                </div>
+              </div>
+
+              <div class="comment" data-text="Спокойный и адекватный, приятно в тиме 👍">
+                <div class="avatar">Y</div>
+                <div class="c-body">
+                  <div class="c-meta"><span class="c-name">yukimi</span><span class="c-time" data-lang="ru">17 часов назад</span><span class="c-time" data-lang="en">17 hours ago</span></div>
+                  <p class="c-text">Спокойный и адекватный, приятно в тиме 👍</p>
+                </div>
+              </div>
+
+              <div class="comment" data-text="Фармит быстро, не бросает команду ⛏️">
+                <div class="avatar">Y</div>
+                <div class="c-body">
+                  <div class="c-meta"><span class="c-name">yukimi</span><span class="c-time" data-lang="ru">17 часов назад</span><span class="c-time" data-lang="en">17 hours ago</span></div>
+                  <p class="c-text">Фармит быстро, не бросает команду ⛏️</p>
+                </div>
+              </div>
+
+              <div class="comment" data-text="Хорошая координация, всё по плану 🧠">
+                <div class="avatar">Y</div>
+                <div class="c-body">
+                  <div class="c-meta"><span class="c-name">yukimi</span><span class="c-time" data-lang="ru">17 часов назад</span><span class="c-time" data-lang="en">17 hours ago</span></div>
+                  <p class="c-text">Хорошая координация, всё по плану 🧠</p>
+                </div>
+              </div>
+
+              <div class="comment" data-text="Спасибо за вайп, было весело 😄">
+                <div class="avatar">Y</div>
+                <div class="c-body">
+                  <div class="c-meta"><span class="c-name">yukimi</span><span class="c-time" data-lang="ru">17 часов назад</span><span class="c-time" data-lang="en">17 hours ago</span></div>
+                  <p class="c-text">Спасибо за вайп, было весело 😄</p>
+                </div>
+              </div>
+            </div>
+
+            <div class="hint">
+              <span data-lang="ru">Тут как в Steam: ник + время + текст</span>
+              <span data-lang="en">Steam-like: name + time + text</span>
+            </div>
+          </article>
         </div>
 
-        <!-- RIGHT: +REP / -REP -->
+        <!-- RIGHT: reps -->
         <div class="col">
+
           <!-- +REP -->
-          <div class="card">
-            <div class="cat-head">
-              <div class="cat-left">
-                <h2 class="cat-title"><span data-lang="ru">✅ +rep</span><span data-lang="en">✅ +rep</span></h2>
-                <p class="cat-sub"><span data-lang="ru">6 коротких плюсовых отзывов</span><span data-lang="en">6 short positive reps</span></p>
+          <article class="pack">
+            <div class="pack-head">
+              <div class="pack-left">
+                <h2 class="pack-title"><span>✅</span><span data-lang="ru">+rep</span><span data-lang="en">+rep</span></h2>
+                <div class="pack-sub">
+                  <span data-lang="ru">Короткие плюсовые репы</span>
+                  <span data-lang="en">Short positive reps</span>
+                </div>
               </div>
-              <div class="cat-img" style="display:grid;place-items:center;font-weight:900;color:var(--accent2);background:rgba(167,139,250,.10);">
-                +REP
+              <div class="pack-badge">+REP</div>
+            </div>
+
+            <div class="thread">
+              <div class="comment" data-text="+rep быстро ответил и помог ✅">
+                <div class="avatar">Y</div>
+                <div class="c-body">
+                  <div class="c-meta"><span class="c-name">yukimi</span><span class="c-time" data-lang="ru">17 часов назад</span><span class="c-time" data-lang="en">17 hours ago</span></div>
+                  <p class="c-text">+rep быстро ответил и помог ✅</p>
+                </div>
+              </div>
+
+              <div class="comment" data-text="+rep всё честно, рекомендую 👍">
+                <div class="avatar">Y</div>
+                <div class="c-body">
+                  <div class="c-meta"><span class="c-name">yukimi</span><span class="c-time" data-lang="ru">17 часов назад</span><span class="c-time" data-lang="en">17 hours ago</span></div>
+                  <p class="c-text">+rep всё честно, рекомендую 👍</p>
+                </div>
+              </div>
+
+              <div class="comment" data-text="+rep адекватный и вежливый человек ✨">
+                <div class="avatar">Y</div>
+                <div class="c-body">
+                  <div class="c-meta"><span class="c-name">yukimi</span><span class="c-time" data-lang="ru">17 часов назад</span><span class="c-time" data-lang="en">17 hours ago</span></div>
+                  <p class="c-text">+rep адекватный и вежливый человек ✨</p>
+                </div>
+              </div>
+
+              <div class="comment" data-text="+rep быстро и по делу, спасибо 🙌">
+                <div class="avatar">Y</div>
+                <div class="c-body">
+                  <div class="c-meta"><span class="c-name">yukimi</span><span class="c-time" data-lang="ru">17 часов назад</span><span class="c-time" data-lang="en">17 hours ago</span></div>
+                  <p class="c-text">+rep быстро и по делу, спасибо 🙌</p>
+                </div>
+              </div>
+
+              <div class="comment" data-text="+rep топ сервис, всё ок ✅">
+                <div class="avatar">Y</div>
+                <div class="c-body">
+                  <div class="c-meta"><span class="c-name">yukimi</span><span class="c-time" data-lang="ru">17 часов назад</span><span class="c-time" data-lang="en">17 hours ago</span></div>
+                  <p class="c-text">+rep топ сервис, всё ок ✅</p>
+                </div>
+              </div>
+
+              <div class="comment" data-text="+rep приятно общаться, лайк ❤️">
+                <div class="avatar">Y</div>
+                <div class="c-body">
+                  <div class="c-meta"><span class="c-name">yukimi</span><span class="c-time" data-lang="ru">17 часов назад</span><span class="c-time" data-lang="en">17 hours ago</span></div>
+                  <p class="c-text">+rep приятно общаться, лайк ❤️</p>
+                </div>
               </div>
             </div>
-            <ul class="comment-list">
-              <li class="cmt" data-copy="+rep быстро ответил и помог ✅"><p class="cmt-text">+rep быстро ответил и помог ✅</p><span class="cmt-btn">Копировать</span></li>
-              <li class="cmt" data-copy="+rep всё честно, рекомендую 👍"><p class="cmt-text">+rep всё честно, рекомендую 👍</p><span class="cmt-btn">Копировать</span></li>
-              <li class="cmt" data-copy="+rep адекватный и вежливый человек ✨"><p class="cmt-text">+rep адекватный и вежливый человек ✨</p><span class="cmt-btn">Копировать</span></li>
-              <li class="cmt" data-copy="+rep быстро и по делу, спасибо 🙌"><p class="cmt-text">+rep быстро и по делу, спасибо 🙌</p><span class="cmt-btn">Копировать</span></li>
-              <li class="cmt" data-copy="+rep топ сервис, всё ок ✅"><p class="cmt-text">+rep топ сервис, всё ок ✅</p><span class="cmt-btn">Копировать</span></li>
-              <li class="cmt" data-copy="+rep приятно общаться, лайк ❤️"><p class="cmt-text">+rep приятно общаться, лайк ❤️</p><span class="cmt-btn">Копировать</span></li>
-            </ul>
-          </div>
+
+            <div class="hint">
+              <span data-lang="ru">Без кнопок: просто выделяй и копируй</span>
+              <span data-lang="en">No buttons: select and copy</span>
+            </div>
+          </article>
 
           <!-- -REP -->
-          <div class="card">
-            <div class="cat-head">
-              <div class="cat-left">
-                <h2 class="cat-title"><span data-lang="ru">⚠️ -rep</span><span data-lang="en">⚠️ -rep</span></h2>
-                <p class="cat-sub"><span data-lang="ru">6 мягких минусов (без жести)</span><span data-lang="en">6 mild negatives</span></p>
+          <article class="pack">
+            <div class="pack-head">
+              <div class="pack-left">
+                <h2 class="pack-title"><span>⚠️</span><span data-lang="ru">-rep</span><span data-lang="en">-rep</span></h2>
+                <div class="pack-sub">
+                  <span data-lang="ru">Мягкие минусы, без оскорблений</span>
+                  <span data-lang="en">Mild negatives, no insults</span>
+                </div>
               </div>
-              <div class="cat-img" style="display:grid;place-items:center;font-weight:900;color:#fbbf24;background:rgba(251,191,36,.10);">
-                -REP
+              <div class="pack-badge">-REP</div>
+            </div>
+
+            <div class="thread">
+              <div class="comment" data-text="-rep долго отвечает, неудобно">
+                <div class="avatar">Y</div>
+                <div class="c-body">
+                  <div class="c-meta"><span class="c-name">yukimi</span><span class="c-time" data-lang="ru">17 часов назад</span><span class="c-time" data-lang="en">17 hours ago</span></div>
+                  <p class="c-text">-rep долго отвечает, неудобно</p>
+                </div>
+              </div>
+
+              <div class="comment" data-text="-rep не вышло договориться по времени">
+                <div class="avatar">Y</div>
+                <div class="c-body">
+                  <div class="c-meta"><span class="c-name">yukimi</span><span class="c-time" data-lang="ru">17 часов назад</span><span class="c-time" data-lang="en">17 hours ago</span></div>
+                  <p class="c-text">-rep не вышло договориться по времени</p>
+                </div>
+              </div>
+
+              <div class="comment" data-text="-rep обещал, но затянул по срокам">
+                <div class="avatar">Y</div>
+                <div class="c-body">
+                  <div class="c-meta"><span class="c-name">yukimi</span><span class="c-time" data-lang="ru">17 часов назад</span><span class="c-time" data-lang="en">17 hours ago</span></div>
+                  <p class="c-text">-rep обещал, но затянул по срокам</p>
+                </div>
+              </div>
+
+              <div class="comment" data-text="-rep ответил не сразу, пришлось ждать">
+                <div class="avatar">Y</div>
+                <div class="c-body">
+                  <div class="c-meta"><span class="c-name">yukimi</span><span class="c-time" data-lang="ru">17 часов назад</span><span class="c-time" data-lang="en">17 hours ago</span></div>
+                  <p class="c-text">-rep ответил не сразу, пришлось ждать</p>
+                </div>
+              </div>
+
+              <div class="comment" data-text="-rep коммуникация слабая, мало информации">
+                <div class="avatar">Y</div>
+                <div class="c-body">
+                  <div class="c-meta"><span class="c-name">yukimi</span><span class="c-time" data-lang="ru">17 часов назад</span><span class="c-time" data-lang="en">17 hours ago</span></div>
+                  <p class="c-text">-rep коммуникация слабая, мало информации</p>
+                </div>
+              </div>
+
+              <div class="comment" data-text="-rep не подошло, возможно, просто не мой формат">
+                <div class="avatar">Y</div>
+                <div class="c-body">
+                  <div class="c-meta"><span class="c-name">yukimi</span><span class="c-time" data-lang="ru">17 часов назад</span><span class="c-time" data-lang="en">17 hours ago</span></div>
+                  <p class="c-text">-rep не подошло, возможно, просто не мой формат</p>
+                </div>
               </div>
             </div>
-            <ul class="comment-list">
-              <li class="cmt" data-copy="-rep долго отвечает, неудобно"><p class="cmt-text">-rep долго отвечает, неудобно</p><span class="cmt-btn">Копировать</span></li>
-              <li class="cmt" data-copy="-rep не вышло договориться по времени"><p class="cmt-text">-rep не вышло договориться по времени</p><span class="cmt-btn">Копировать</span></li>
-              <li class="cmt" data-copy="-rep обещал, но затянул по срокам"><p class="cmt-text">-rep обещал, но затянул по срокам</p><span class="cmt-btn">Копировать</span></li>
-              <li class="cmt" data-copy="-rep ответил не сразу, пришлось ждать"><p class="cmt-text">-rep ответил не сразу, пришлось ждать</p><span class="cmt-btn">Копировать</span></li>
-              <li class="cmt" data-copy="-rep коммуникация слабая, мало информации"><p class="cmt-text">-rep коммуникация слабая, мало информации</p><span class="cmt-btn">Копировать</span></li>
-              <li class="cmt" data-copy="-rep не подошло, возможно, просто не мой формат"><p class="cmt-text">-rep не подошло, возможно, просто не мой формат</p><span class="cmt-btn">Копировать</span></li>
-            </ul>
-          </div>
+
+            <div class="hint">
+              <span data-lang="ru">Можно менять ник/время в коде, если хочешь</span>
+              <span data-lang="en">You can change name/time in code if you want</span>
+            </div>
+          </article>
         </div>
       </div>
     </section>
 
     <!-- BOTTOM: SHOP + INFO -->
     <section class="section">
-      <div data-lang="ru" class="section-title">🛒 Товары и информация</div>
-      <div data-lang="en" class="section-title">🛒 Shop & info</div>
+      <div class="section-title">
+        <span data-lang="ru">🛒 Товары и информация</span>
+        <span data-lang="en">🛒 Shop & info</span>
+      </div>
 
       <div class="grid2">
         <!-- SHOP -->
@@ -565,7 +817,7 @@
             <ul class="bullet">
               <li><span class="ic">📋</span><span>Слева: CS / Dota / Rust</span></li>
               <li><span class="ic">📋</span><span>Справа: +rep / -rep</span></li>
-              <li><span class="ic">🖱️</span><span>Нажми — и коммент копируется</span></li>
+              <li><span class="ic">🖱️</span><span>Стиль комментов как в Steam: аватар, ник, время, текст</span></li>
               <li>
                 <span class="ic">📌</span>
                 <span>
@@ -583,7 +835,7 @@
             <ul class="bullet">
               <li><span class="ic">📋</span><span>Left: CS / Dota / Rust</span></li>
               <li><span class="ic">📋</span><span>Right: +rep / -rep</span></li>
-              <li><span class="ic">🖱️</span><span>Click to copy</span></li>
+              <li><span class="ic">🖱️</span><span>Steam-like: avatar, name, time, text</span></li>
               <li>
                 <span class="ic">📌</span>
                 <span>
@@ -606,8 +858,8 @@
   </div>
 
   <div id="toast" class="toast" role="status" aria-live="polite">
-    <span data-lang="ru">Скопировано ✅</span>
-    <span data-lang="en">Copied ✅</span>
+    <span data-lang="ru">Текст выделен ✅</span>
+    <span data-lang="en">Selected ✅</span>
   </div>
 
   <script>
@@ -619,28 +871,25 @@
     function showToast(){
       toast.classList.add('show');
       clearTimeout(toastTimer);
-      toastTimer = setTimeout(() => toast.classList.remove('show'), 900);
+      toastTimer = setTimeout(() => toast.classList.remove('show'), 800);
     }
 
-    async function copyText(text){
-      try{
-        await navigator.clipboard.writeText(text);
-      }catch(e){
-        const ta = document.createElement('textarea');
-        ta.value = text;
-        document.body.appendChild(ta);
-        ta.select();
-        document.execCommand('copy');
-        ta.remove();
-      }
-      showToast();
+    // click comment -> select its text (steam-ish, no copy button)
+    function selectText(node){
+      const range = document.createRange();
+      range.selectNodeContents(node);
+      const sel = window.getSelection();
+      sel.removeAllRanges();
+      sel.addRange(range);
     }
 
     document.addEventListener('click', (e) => {
-      const el = e.target.closest('.cmt');
-      if(!el) return;
-      const text = el.getAttribute('data-copy') || '';
-      if(text.trim()) copyText(text.trim());
+      const row = e.target.closest('.comment');
+      if(!row) return;
+      const textEl = row.querySelector('.c-text');
+      if(!textEl) return;
+      selectText(textEl);
+      showToast();
     });
 
     function setLang(lang){
@@ -664,6 +913,7 @@
   </script>
 </body>
 </html>
+
 
 
 
