@@ -4,7 +4,7 @@
   <meta charset="utf-8" />
   <meta name="viewport" content="width=device-width,initial-scale=1" />
   <title>✨ Выбери комменты</title>
-  <meta name="description" content="RU/EN: наборы комментариев в стиле Steam." />
+  <meta name="description" content="RU/EN: комментарии в стиле Steam." />
 
   <link rel="icon" type="image/png" href="assets/favicon.jpg">
   <link rel="apple-touch-icon" href="assets/favicon.jpg">
@@ -15,16 +15,21 @@
       --bg:#0b0f17;
       --text:#e5e7eb;
       --muted:#9ca3af;
-      --accent:#a78bfa;
-      --accent2:#22d3ee;
       --border:rgba(255,255,255,.08);
       --shadow: 0 10px 30px rgba(0,0,0,.35);
+      --accent:#a78bfa;
+      --accent2:#22d3ee;
 
-      /* steam-ish */
-      --steam-panel: rgba(0,0,0,.18);
-      --steam-line: rgba(255,255,255,.06);
-      --steam-row: rgba(255,255,255,.03);
-      --steam-row2: rgba(255,255,255,.02);
+      /* Steam-ish palette */
+      --steam-bg: rgba(0,0,0,.28);
+      --steam-panel: rgba(0,0,0,.22);
+      --steam-line: rgba(255,255,255,.08);
+      --steam-line2: rgba(255,255,255,.06);
+      --steam-input: rgba(255,255,255,.06);
+      --steam-input2: rgba(255,255,255,.03);
+      --steam-name: rgba(229,231,235,.98);
+      --steam-time: rgba(156,163,175,.9);
+      --steam-text: rgba(229,231,235,.95);
     }
 
     *{box-sizing:border-box}
@@ -120,127 +125,140 @@
     .packs-2col{
       display:grid;
       grid-template-columns: 1fr 1fr;
-      gap:16px;
+      gap:18px;
       align-items:start;
     }
     @media (max-width:880px){ .packs-2col{grid-template-columns:1fr;} }
-    .col{display:grid;gap:16px;}
+    .col{display:grid;gap:18px;}
 
-    /* Steam-like pack panel */
-    .pack{
-      border-radius:14px;
-      border:1px solid var(--steam-line);
-      background: linear-gradient(180deg, rgba(0,0,0,.22), rgba(0,0,0,.12));
-      box-shadow: 0 12px 28px rgba(0,0,0,.35);
+    /* STEAM COMMENTS BLOCK */
+    .steam-block{
+      border-radius:6px;
+      background: rgba(0,0,0,.16);
+      border:1px solid var(--steam-line2);
+      box-shadow: 0 14px 30px rgba(0,0,0,.35);
       overflow:hidden;
     }
-    .pack-head{
+
+    .steam-header{
+      padding:12px 12px 10px;
+      border-bottom:1px solid var(--steam-line2);
+      background: rgba(0,0,0,.22);
       display:flex;
-      align-items:center;
+      align-items:flex-start;
       justify-content:space-between;
       gap:12px;
-      padding:12px 12px 10px;
-      border-bottom:1px solid var(--steam-line);
-      background: rgba(255,255,255,.02);
     }
-    .pack-title{
+    .steam-h-left{min-width:0}
+    .steam-h-title{
       margin:0;
-      font-weight:800;
-      font-size:16px;
-      line-height:1.15;
+      font-size:15px;
+      font-weight:700;
+      color:rgba(229,231,235,.95);
       display:flex;
-      align-items:center;
       gap:8px;
-      min-width:0;
+      align-items:center;
+      line-height:1.2;
     }
-    .pack-sub{
+    .steam-h-sub{
       margin:6px 0 0;
-      color:var(--muted);
       font-size:12.5px;
+      color:rgba(156,163,175,.9);
       line-height:1.25;
     }
-    .pack-left{min-width:0}
-    .pack-badge{
+    .steam-h-img{
+      width:84px;height:46px;border-radius:4px;
+      border:1px solid rgba(255,255,255,.08);
+      background: rgba(0,0,0,.25);
+      object-fit:cover;
       flex:0 0 auto;
-      display:flex;
-      align-items:center;
-      gap:8px;
-      padding:7px 10px;
+    }
+    .steam-badge{
+      flex:0 0 auto;
+      padding:6px 10px;
       border-radius:999px;
-      border:1px solid var(--steam-line);
-      background: rgba(0,0,0,.20);
-      color:var(--muted);
+      border:1px solid rgba(255,255,255,.08);
+      background: rgba(0,0,0,.22);
+      color:rgba(156,163,175,.9);
       font-size:12px;
       white-space:nowrap;
     }
 
-    .pack-img{
-      width:82px;height:48px;border-radius:10px;
-      border:1px solid rgba(255,255,255,.10);
-      background: rgba(0,0,0,.25);
-      object-fit:cover;
-      flex:0 0 auto;
-      display:block;
-    }
-
-    /* Steam-like comment rows */
-    .thread{
-      padding:10px 10px 12px;
-    }
-    .comment{
+    /* "Add a comment" row like Steam */
+    .steam-add{
       display:grid;
-      grid-template-columns: 36px 1fr;
+      grid-template-columns: 38px 1fr;
       gap:10px;
-      padding:10px 8px;
-      border-top:1px solid var(--steam-line);
-      background: linear-gradient(180deg, var(--steam-row), var(--steam-row2));
+      padding:12px;
+      border-bottom:1px solid var(--steam-line2);
+      background: rgba(0,0,0,.18);
     }
-    .comment:first-child{border-top:0}
-    .avatar{
-      width:36px;height:36px;border-radius:6px;
-      border:1px solid rgba(255,255,255,.12);
+    .steam-add .a-ava{
+      width:38px;height:38px;border-radius:4px;
+      border:1px solid rgba(255,255,255,.10);
       background: linear-gradient(135deg, rgba(167,139,250,.18), rgba(34,211,238,.12));
-      display:grid;
-      place-items:center;
+      display:grid;place-items:center;
       font-weight:900;
       color:rgba(229,231,235,.92);
       user-select:none;
     }
-    .c-body{min-width:0}
-    .c-meta{
+    .steam-add .a-input{
+      height:38px;
+      border-radius:3px;
+      border:1px solid rgba(255,255,255,.08);
+      background: linear-gradient(180deg, var(--steam-input), var(--steam-input2));
+      color:rgba(229,231,235,.85);
+      padding:0 10px;
+      font-size:13px;
+      outline:none;
+    }
+    .steam-add .a-input::placeholder{color:rgba(156,163,175,.75)}
+    .steam-add .a-input[disabled]{opacity:.9; cursor:not-allowed}
+
+    /* Each comment row like Steam: avatar + name/time + text */
+    .steam-thread{padding:6px 0}
+    .steam-comment{
+      display:grid;
+      grid-template-columns: 38px 1fr;
+      gap:10px;
+      padding:10px 12px;
+    }
+    .steam-comment + .steam-comment{
+      border-top:1px solid rgba(255,255,255,.04);
+    }
+    .steam-comment .c-ava{
+      width:38px;height:38px;border-radius:4px;
+      border:1px solid rgba(255,255,255,.10);
+      background: rgba(255,255,255,.06);
+      display:grid;place-items:center;
+      font-weight:900;
+      color:rgba(229,231,235,.9);
+      user-select:none;
+    }
+    .steam-comment .c-body{min-width:0}
+    .steam-comment .c-top{
       display:flex;
       gap:8px;
       align-items:baseline;
       flex-wrap:wrap;
       margin-bottom:3px;
     }
-    .c-name{
+    .steam-comment .c-name{
       font-weight:700;
       font-size:13px;
-      color:rgba(229,231,235,.95);
+      color: var(--steam-name);
     }
-    .c-time{
-      color:rgba(156,163,175,.88);
+    .steam-comment .c-time{
       font-size:12px;
+      color: var(--steam-time);
     }
-    .c-text{
+    .steam-comment .c-text{
       margin:0;
-      font-size:14px;
-      line-height:1.35;
-      color:rgba(229,231,235,.95);
+      font-size:13.5px;
+      line-height:1.38;
+      color: var(--steam-text);
       white-space:pre-wrap;
       word-wrap:break-word;
-    }
-
-    /* Select-on-click hint (no copy button) */
-    .comment{cursor:pointer}
-    .comment:hover{filter: brightness(1.05)}
-    .hint{
-      padding:10px 12px;
-      border-top:1px solid var(--steam-line);
-      color:rgba(156,163,175,.9);
-      font-size:12.5px;
-      background: rgba(0,0,0,.16);
     }
 
     /* bottom 2 cards */
@@ -295,16 +313,6 @@
 
     .footer{margin-top:18px;color:var(--muted);font-size:14px;text-align:center;opacity:.95;}
 
-    /* toast */
-    .toast{
-      position: fixed;left: 50%;bottom: 18px;transform: translateX(-50%);
-      padding:10px 12px;border-radius:999px;border:1px solid var(--border);
-      background: rgba(0,0,0,.45);color: var(--text);font-size:14px;
-      box-shadow: var(--shadow);opacity:0;pointer-events:none;
-      transition: opacity .15s ease, transform .15s ease;
-    }
-    .toast.show{opacity:1;transform: translateX(-50%) translateY(-2px);}
-
     /* i18n */
     [data-lang]{display:none}
     body.lang-ru [data-lang="ru"]{display:inline}
@@ -333,13 +341,13 @@
         <div>
           <div data-lang="ru">
             <h1>✨ Выбери комменты</h1>
-            <p class="subtitle">Нажми на комментарий — он выделится (Ctrl+C чтобы скопировать)</p>
+            <p class="subtitle">Страница с комментариями в стиле Steam (без функций копирования)</p>
             <div class="meta"><span>Автор: <b>Yukimi2208</b></span></div>
           </div>
 
           <div data-lang="en">
             <h1>✨ Choose comments</h1>
-            <p class="subtitle">Click a comment to select it (Ctrl+C to copy)</p>
+            <p class="subtitle">Steam-like comment layout (no copy features)</p>
             <div class="meta"><span>Author: <b>Yukimi2208</b></span></div>
           </div>
         </div>
@@ -359,362 +367,194 @@
     <!-- COMMENTS -->
     <section class="section">
       <div class="section-title">
-        <span data-lang="ru">💬 Комментарии (Steam-стиль)</span>
-        <span data-lang="en">💬 Comments (Steam-style)</span>
+        <span data-lang="ru">💬 Комментарии (Steam-формат)</span>
+        <span data-lang="en">💬 Comments (Steam format)</span>
       </div>
 
       <div class="packs-2col">
-        <!-- LEFT: games -->
+        <!-- LEFT: CS / DOTA / RUST -->
         <div class="col">
 
           <!-- CS -->
-          <article class="pack">
-            <div class="pack-head">
-              <div class="pack-left">
-                <h2 class="pack-title"><span>🔫</span><span data-lang="ru">CS (Counter-Strike)</span><span data-lang="en">CS (Counter-Strike)</span></h2>
-                <div class="pack-sub">
-                  <span data-lang="ru">Пачка нейтральных комментов для профиля</span>
-                  <span data-lang="en">Neutral pack for profile comments</span>
+          <article class="steam-block">
+            <div class="steam-header">
+              <div class="steam-h-left">
+                <h2 class="steam-h-title"><span>🔫</span><span data-lang="ru">CS (Counter-Strike)</span><span data-lang="en">CS (Counter-Strike)</span></h2>
+                <div class="steam-h-sub">
+                  <span data-lang="ru">Пачка нейтральных комментариев</span>
+                  <span data-lang="en">Neutral comment pack</span>
                 </div>
               </div>
-              <img class="pack-img" src="assets/games/cs2.png" alt="CS image" loading="lazy">
+              <img class="steam-h-img" src="assets/games/cs2.png" alt="CS image" loading="lazy">
             </div>
 
-            <div class="thread">
-              <div class="comment" data-text="Чёткий тиммейт, приятно играть 🔥">
-                <div class="avatar">Y</div>
+            <div class="steam-add">
+              <div class="a-ava">Y</div>
+              <input class="a-input" type="text" placeholder="Legg til en kommentar" disabled>
+            </div>
+
+            <div class="steam-thread">
+              <div class="steam-comment">
+                <div class="c-ava">Y</div>
                 <div class="c-body">
-                  <div class="c-meta"><span class="c-name">yukimi</span><span class="c-time" data-lang="ru">17 часов назад</span><span class="c-time" data-lang="en">17 hours ago</span></div>
+                  <div class="c-top"><span class="c-name">yukimi</span><span class="c-time" data-lang="ru">17 часов назад</span><span class="c-time" data-lang="en">17 hours ago</span></div>
                   <p class="c-text">Чёткий тиммейт, приятно играть 🔥</p>
                 </div>
               </div>
-
-              <div class="comment" data-text="Хорошие коллы и спокойная игра, респект ✅">
-                <div class="avatar">Y</div>
+              <div class="steam-comment">
+                <div class="c-ava">Y</div>
                 <div class="c-body">
-                  <div class="c-meta"><span class="c-name">yukimi</span><span class="c-time" data-lang="ru">17 часов назад</span><span class="c-time" data-lang="en">17 hours ago</span></div>
+                  <div class="c-top"><span class="c-name">yukimi</span><span class="c-time" data-lang="ru">17 часов назад</span><span class="c-time" data-lang="en">17 hours ago</span></div>
                   <p class="c-text">Хорошие коллы и спокойная игра, респект ✅</p>
                 </div>
               </div>
-
-              <div class="comment" data-text="Отличная стрельба, тащит катку 💪">
-                <div class="avatar">Y</div>
+              <div class="steam-comment">
+                <div class="c-ava">Y</div>
                 <div class="c-body">
-                  <div class="c-meta"><span class="c-name">yukimi</span><span class="c-time" data-lang="ru">17 часов назад</span><span class="c-time" data-lang="en">17 hours ago</span></div>
+                  <div class="c-top"><span class="c-name">yukimi</span><span class="c-time" data-lang="ru">17 часов назад</span><span class="c-time" data-lang="en">17 hours ago</span></div>
                   <p class="c-text">Отличная стрельба, тащит катку 💪</p>
                 </div>
               </div>
-
-              <div class="comment" data-text="Норм общение, без токсика, лайк 👍">
-                <div class="avatar">Y</div>
+              <div class="steam-comment">
+                <div class="c-ava">Y</div>
                 <div class="c-body">
-                  <div class="c-meta"><span class="c-name">yukimi</span><span class="c-time" data-lang="ru">17 часов назад</span><span class="c-time" data-lang="en">17 hours ago</span></div>
+                  <div class="c-top"><span class="c-name">yukimi</span><span class="c-time" data-lang="ru">17 часов назад</span><span class="c-time" data-lang="en">17 hours ago</span></div>
                   <p class="c-text">Норм общение, без токсика, лайк 👍</p>
                 </div>
               </div>
-
-              <div class="comment" data-text="Стабильный игрок, сыграю ещё 🎯">
-                <div class="avatar">Y</div>
+              <div class="steam-comment">
+                <div class="c-ava">Y</div>
                 <div class="c-body">
-                  <div class="c-meta"><span class="c-name">yukimi</span><span class="c-time" data-lang="ru">17 часов назад</span><span class="c-time" data-lang="en">17 hours ago</span></div>
+                  <div class="c-top"><span class="c-name">yukimi</span><span class="c-time" data-lang="ru">17 часов назад</span><span class="c-time" data-lang="en">17 hours ago</span></div>
                   <p class="c-text">Стабильный игрок, сыграю ещё 🎯</p>
                 </div>
               </div>
-
-              <div class="comment" data-text="Командная игра на уровне, спасибо за матч ✨">
-                <div class="avatar">Y</div>
+              <div class="steam-comment">
+                <div class="c-ava">Y</div>
                 <div class="c-body">
-                  <div class="c-meta"><span class="c-name">yukimi</span><span class="c-time" data-lang="ru">17 часов назад</span><span class="c-time" data-lang="en">17 hours ago</span></div>
+                  <div class="c-top"><span class="c-name">yukimi</span><span class="c-time" data-lang="ru">17 часов назад</span><span class="c-time" data-lang="en">17 hours ago</span></div>
                   <p class="c-text">Командная игра на уровне, спасибо за матч ✨</p>
                 </div>
               </div>
             </div>
-
-            <div class="hint">
-              <span data-lang="ru">Совет: клик по комменту выделяет текст (Ctrl+C чтобы скопировать)</span>
-              <span data-lang="en">Tip: click selects text (Ctrl+C to copy)</span>
-            </div>
           </article>
 
           <!-- DOTA -->
-          <article class="pack">
-            <div class="pack-head">
-              <div class="pack-left">
-                <h2 class="pack-title"><span>🧙</span><span data-lang="ru">Dota 2</span><span data-lang="en">Dota 2</span></h2>
-                <div class="pack-sub">
-                  <span data-lang="ru">Комменты под тимплей/роль</span>
-                  <span data-lang="en">Teamplay/role comments</span>
+          <article class="steam-block">
+            <div class="steam-header">
+              <div class="steam-h-left">
+                <h2 class="steam-h-title"><span>🧙</span><span data-lang="ru">Dota 2</span><span data-lang="en">Dota 2</span></h2>
+                <div class="steam-h-sub">
+                  <span data-lang="ru">Комментарии под тимплей/роль</span>
+                  <span data-lang="en">Comments for teamplay/role</span>
                 </div>
               </div>
-              <img class="pack-img" src="assets/games/dota2.png" alt="Dota 2 image" loading="lazy">
+              <img class="steam-h-img" src="assets/games/dota2.png" alt="Dota 2 image" loading="lazy">
             </div>
 
-            <div class="thread">
-              <div class="comment" data-text="Крутой тимплей, играется легко ✅">
-                <div class="avatar">Y</div>
-                <div class="c-body">
-                  <div class="c-meta"><span class="c-name">yukimi</span><span class="c-time" data-lang="ru">17 часов назад</span><span class="c-time" data-lang="en">17 hours ago</span></div>
-                  <p class="c-text">Крутой тимплей, играется легко ✅</p>
-                </div>
-              </div>
-
-              <div class="comment" data-text="Отличные решения по карте, респект 🗺️">
-                <div class="avatar">Y</div>
-                <div class="c-body">
-                  <div class="c-meta"><span class="c-name">yukimi</span><span class="c-time" data-lang="ru">17 часов назад</span><span class="c-time" data-lang="en">17 hours ago</span></div>
-                  <p class="c-text">Отличные решения по карте, респект 🗺️</p>
-                </div>
-              </div>
-
-              <div class="comment" data-text="Спокойно и по делу, без лишних эмоций 👍">
-                <div class="avatar">Y</div>
-                <div class="c-body">
-                  <div class="c-meta"><span class="c-name">yukimi</span><span class="c-time" data-lang="ru">17 часов назад</span><span class="c-time" data-lang="en">17 hours ago</span></div>
-                  <p class="c-text">Спокойно и по делу, без лишних эмоций 👍</p>
-                </div>
-              </div>
-
-              <div class="comment" data-text="Хорошо отыграл роль, приятно в пати ✨">
-                <div class="avatar">Y</div>
-                <div class="c-body">
-                  <div class="c-meta"><span class="c-name">yukimi</span><span class="c-time" data-lang="ru">17 часов назад</span><span class="c-time" data-lang="en">17 hours ago</span></div>
-                  <p class="c-text">Хорошо отыграл роль, приятно в пати ✨</p>
-                </div>
-              </div>
-
-              <div class="comment" data-text="Сильный игрок, уверенно ведёт к победе 💪">
-                <div class="avatar">Y</div>
-                <div class="c-body">
-                  <div class="c-meta"><span class="c-name">yukimi</span><span class="c-time" data-lang="ru">17 часов назад</span><span class="c-time" data-lang="en">17 hours ago</span></div>
-                  <p class="c-text">Сильный игрок, уверенно ведёт к победе 💪</p>
-                </div>
-              </div>
-
-              <div class="comment" data-text="Спасибо за катку, было кайфово 🎮">
-                <div class="avatar">Y</div>
-                <div class="c-body">
-                  <div class="c-meta"><span class="c-name">yukimi</span><span class="c-time" data-lang="ru">17 часов назад</span><span class="c-time" data-lang="en">17 hours ago</span></div>
-                  <p class="c-text">Спасибо за катку, было кайфово 🎮</p>
-                </div>
-              </div>
+            <div class="steam-add">
+              <div class="a-ava">Y</div>
+              <input class="a-input" type="text" placeholder="Legg til en kommentar" disabled>
             </div>
 
-            <div class="hint">
-              <span data-lang="ru">Кликни по строке, чтобы выделить</span>
-              <span data-lang="en">Click a row to select</span>
+            <div class="steam-thread">
+              <div class="steam-comment"><div class="c-ava">Y</div><div class="c-body"><div class="c-top"><span class="c-name">yukimi</span><span class="c-time" data-lang="ru">17 часов назад</span><span class="c-time" data-lang="en">17 hours ago</span></div><p class="c-text">Крутой тимплей, играется легко ✅</p></div></div>
+              <div class="steam-comment"><div class="c-ava">Y</div><div class="c-body"><div class="c-top"><span class="c-name">yukimi</span><span class="c-time" data-lang="ru">17 часов назад</span><span class="c-time" data-lang="en">17 hours ago</span></div><p class="c-text">Отличные решения по карте, респект 🗺️</p></div></div>
+              <div class="steam-comment"><div class="c-ava">Y</div><div class="c-body"><div class="c-top"><span class="c-name">yukimi</span><span class="c-time" data-lang="ru">17 часов назад</span><span class="c-time" data-lang="en">17 hours ago</span></div><p class="c-text">Спокойно и по делу, без лишних эмоций 👍</p></div></div>
+              <div class="steam-comment"><div class="c-ava">Y</div><div class="c-body"><div class="c-top"><span class="c-name">yukimi</span><span class="c-time" data-lang="ru">17 часов назад</span><span class="c-time" data-lang="en">17 hours ago</span></div><p class="c-text">Хорошо отыграл роль, приятно в пати ✨</p></div></div>
+              <div class="steam-comment"><div class="c-ava">Y</div><div class="c-body"><div class="c-top"><span class="c-name">yukimi</span><span class="c-time" data-lang="ru">17 часов назад</span><span class="c-time" data-lang="en">17 hours ago</span></div><p class="c-text">Сильный игрок, уверенно ведёт к победе 💪</p></div></div>
+              <div class="steam-comment"><div class="c-ava">Y</div><div class="c-body"><div class="c-top"><span class="c-name">yukimi</span><span class="c-time" data-lang="ru">17 часов назад</span><span class="c-time" data-lang="en">17 hours ago</span></div><p class="c-text">Спасибо за катку, было кайфово 🎮</p></div></div>
             </div>
           </article>
 
           <!-- RUST -->
-          <article class="pack">
-            <div class="pack-head">
-              <div class="pack-left">
-                <h2 class="pack-title"><span>🛠️</span><span data-lang="ru">RUST</span><span data-lang="en">RUST</span></h2>
-                <div class="pack-sub">
+          <article class="steam-block">
+            <div class="steam-header">
+              <div class="steam-h-left">
+                <h2 class="steam-h-title"><span>🛠️</span><span data-lang="ru">RUST</span><span data-lang="en">RUST</span></h2>
+                <div class="steam-h-sub">
                   <span data-lang="ru">Под рейды/вайпы, без токсика</span>
                   <span data-lang="en">For raids/wipes, non-toxic</span>
                 </div>
               </div>
-              <img class="pack-img" src="assets/games/rust.png" alt="Rust image" loading="lazy">
+              <img class="steam-h-img" src="assets/games/rust.png" alt="Rust image" loading="lazy">
             </div>
 
-            <div class="thread">
-              <div class="comment" data-text="Надёжный напарник, держит слово ✅">
-                <div class="avatar">Y</div>
-                <div class="c-body">
-                  <div class="c-meta"><span class="c-name">yukimi</span><span class="c-time" data-lang="ru">17 часов назад</span><span class="c-time" data-lang="en">17 hours ago</span></div>
-                  <p class="c-text">Надёжный напарник, держит слово ✅</p>
-                </div>
-              </div>
-
-              <div class="comment" data-text="Сильная игра, хорошие мувы на рейде 💥">
-                <div class="avatar">Y</div>
-                <div class="c-body">
-                  <div class="c-meta"><span class="c-name">yukimi</span><span class="c-time" data-lang="ru">17 часов назад</span><span class="c-time" data-lang="en">17 hours ago</span></div>
-                  <p class="c-text">Сильная игра, хорошие мувы на рейде 💥</p>
-                </div>
-              </div>
-
-              <div class="comment" data-text="Спокойный и адекватный, приятно в тиме 👍">
-                <div class="avatar">Y</div>
-                <div class="c-body">
-                  <div class="c-meta"><span class="c-name">yukimi</span><span class="c-time" data-lang="ru">17 часов назад</span><span class="c-time" data-lang="en">17 hours ago</span></div>
-                  <p class="c-text">Спокойный и адекватный, приятно в тиме 👍</p>
-                </div>
-              </div>
-
-              <div class="comment" data-text="Фармит быстро, не бросает команду ⛏️">
-                <div class="avatar">Y</div>
-                <div class="c-body">
-                  <div class="c-meta"><span class="c-name">yukimi</span><span class="c-time" data-lang="ru">17 часов назад</span><span class="c-time" data-lang="en">17 hours ago</span></div>
-                  <p class="c-text">Фармит быстро, не бросает команду ⛏️</p>
-                </div>
-              </div>
-
-              <div class="comment" data-text="Хорошая координация, всё по плану 🧠">
-                <div class="avatar">Y</div>
-                <div class="c-body">
-                  <div class="c-meta"><span class="c-name">yukimi</span><span class="c-time" data-lang="ru">17 часов назад</span><span class="c-time" data-lang="en">17 hours ago</span></div>
-                  <p class="c-text">Хорошая координация, всё по плану 🧠</p>
-                </div>
-              </div>
-
-              <div class="comment" data-text="Спасибо за вайп, было весело 😄">
-                <div class="avatar">Y</div>
-                <div class="c-body">
-                  <div class="c-meta"><span class="c-name">yukimi</span><span class="c-time" data-lang="ru">17 часов назад</span><span class="c-time" data-lang="en">17 hours ago</span></div>
-                  <p class="c-text">Спасибо за вайп, было весело 😄</p>
-                </div>
-              </div>
+            <div class="steam-add">
+              <div class="a-ava">Y</div>
+              <input class="a-input" type="text" placeholder="Legg til en kommentar" disabled>
             </div>
 
-            <div class="hint">
-              <span data-lang="ru">Тут как в Steam: ник + время + текст</span>
-              <span data-lang="en">Steam-like: name + time + text</span>
+            <div class="steam-thread">
+              <div class="steam-comment"><div class="c-ava">Y</div><div class="c-body"><div class="c-top"><span class="c-name">yukimi</span><span class="c-time" data-lang="ru">17 часов назад</span><span class="c-time" data-lang="en">17 hours ago</span></div><p class="c-text">Надёжный напарник, держит слово ✅</p></div></div>
+              <div class="steam-comment"><div class="c-ava">Y</div><div class="c-body"><div class="c-top"><span class="c-name">yukimi</span><span class="c-time" data-lang="ru">17 часов назад</span><span class="c-time" data-lang="en">17 hours ago</span></div><p class="c-text">Сильная игра, хорошие мувы на рейде 💥</p></div></div>
+              <div class="steam-comment"><div class="c-ava">Y</div><div class="c-body"><div class="c-top"><span class="c-name">yukimi</span><span class="c-time" data-lang="ru">17 часов назад</span><span class="c-time" data-lang="en">17 hours ago</span></div><p class="c-text">Спокойный и адекватный, приятно в тиме 👍</p></div></div>
+              <div class="steam-comment"><div class="c-ava">Y</div><div class="c-body"><div class="c-top"><span class="c-name">yukimi</span><span class="c-time" data-lang="ru">17 часов назад</span><span class="c-time" data-lang="en">17 hours ago</span></div><p class="c-text">Фармит быстро, не бросает команду ⛏️</p></div></div>
+              <div class="steam-comment"><div class="c-ava">Y</div><div class="c-body"><div class="c-top"><span class="c-name">yukimi</span><span class="c-time" data-lang="ru">17 часов назад</span><span class="c-time" data-lang="en">17 hours ago</span></div><p class="c-text">Хорошая координация, всё по плану 🧠</p></div></div>
+              <div class="steam-comment"><div class="c-ava">Y</div><div class="c-body"><div class="c-top"><span class="c-name">yukimi</span><span class="c-time" data-lang="ru">17 часов назад</span><span class="c-time" data-lang="en">17 hours ago</span></div><p class="c-text">Спасибо за вайп, было весело 😄</p></div></div>
             </div>
           </article>
         </div>
 
-        <!-- RIGHT: reps -->
+        <!-- RIGHT: +rep / -rep -->
         <div class="col">
 
           <!-- +REP -->
-          <article class="pack">
-            <div class="pack-head">
-              <div class="pack-left">
-                <h2 class="pack-title"><span>✅</span><span data-lang="ru">+rep</span><span data-lang="en">+rep</span></h2>
-                <div class="pack-sub">
+          <article class="steam-block">
+            <div class="steam-header">
+              <div class="steam-h-left">
+                <h2 class="steam-h-title"><span>✅</span><span data-lang="ru">+rep</span><span data-lang="en">+rep</span></h2>
+                <div class="steam-h-sub">
                   <span data-lang="ru">Короткие плюсовые репы</span>
                   <span data-lang="en">Short positive reps</span>
                 </div>
               </div>
-              <div class="pack-badge">+REP</div>
+              <div class="steam-badge">+REP</div>
             </div>
 
-            <div class="thread">
-              <div class="comment" data-text="+rep быстро ответил и помог ✅">
-                <div class="avatar">Y</div>
-                <div class="c-body">
-                  <div class="c-meta"><span class="c-name">yukimi</span><span class="c-time" data-lang="ru">17 часов назад</span><span class="c-time" data-lang="en">17 hours ago</span></div>
-                  <p class="c-text">+rep быстро ответил и помог ✅</p>
-                </div>
-              </div>
-
-              <div class="comment" data-text="+rep всё честно, рекомендую 👍">
-                <div class="avatar">Y</div>
-                <div class="c-body">
-                  <div class="c-meta"><span class="c-name">yukimi</span><span class="c-time" data-lang="ru">17 часов назад</span><span class="c-time" data-lang="en">17 hours ago</span></div>
-                  <p class="c-text">+rep всё честно, рекомендую 👍</p>
-                </div>
-              </div>
-
-              <div class="comment" data-text="+rep адекватный и вежливый человек ✨">
-                <div class="avatar">Y</div>
-                <div class="c-body">
-                  <div class="c-meta"><span class="c-name">yukimi</span><span class="c-time" data-lang="ru">17 часов назад</span><span class="c-time" data-lang="en">17 hours ago</span></div>
-                  <p class="c-text">+rep адекватный и вежливый человек ✨</p>
-                </div>
-              </div>
-
-              <div class="comment" data-text="+rep быстро и по делу, спасибо 🙌">
-                <div class="avatar">Y</div>
-                <div class="c-body">
-                  <div class="c-meta"><span class="c-name">yukimi</span><span class="c-time" data-lang="ru">17 часов назад</span><span class="c-time" data-lang="en">17 hours ago</span></div>
-                  <p class="c-text">+rep быстро и по делу, спасибо 🙌</p>
-                </div>
-              </div>
-
-              <div class="comment" data-text="+rep топ сервис, всё ок ✅">
-                <div class="avatar">Y</div>
-                <div class="c-body">
-                  <div class="c-meta"><span class="c-name">yukimi</span><span class="c-time" data-lang="ru">17 часов назад</span><span class="c-time" data-lang="en">17 hours ago</span></div>
-                  <p class="c-text">+rep топ сервис, всё ок ✅</p>
-                </div>
-              </div>
-
-              <div class="comment" data-text="+rep приятно общаться, лайк ❤️">
-                <div class="avatar">Y</div>
-                <div class="c-body">
-                  <div class="c-meta"><span class="c-name">yukimi</span><span class="c-time" data-lang="ru">17 часов назад</span><span class="c-time" data-lang="en">17 hours ago</span></div>
-                  <p class="c-text">+rep приятно общаться, лайк ❤️</p>
-                </div>
-              </div>
+            <div class="steam-add">
+              <div class="a-ava">Y</div>
+              <input class="a-input" type="text" placeholder="Legg til en kommentar" disabled>
             </div>
 
-            <div class="hint">
-              <span data-lang="ru">Без кнопок: просто выделяй и копируй</span>
-              <span data-lang="en">No buttons: select and copy</span>
+            <div class="steam-thread">
+              <div class="steam-comment"><div class="c-ava">Y</div><div class="c-body"><div class="c-top"><span class="c-name">yukimi</span><span class="c-time" data-lang="ru">17 часов назад</span><span class="c-time" data-lang="en">17 hours ago</span></div><p class="c-text">+rep быстро ответил и помог ✅</p></div></div>
+              <div class="steam-comment"><div class="c-ava">Y</div><div class="c-body"><div class="c-top"><span class="c-name">yukimi</span><span class="c-time" data-lang="ru">17 часов назад</span><span class="c-time" data-lang="en">17 hours ago</span></div><p class="c-text">+rep всё честно, рекомендую 👍</p></div></div>
+              <div class="steam-comment"><div class="c-ava">Y</div><div class="c-body"><div class="c-top"><span class="c-name">yukimi</span><span class="c-time" data-lang="ru">17 часов назад</span><span class="c-time" data-lang="en">17 hours ago</span></div><p class="c-text">+rep адекватный и вежливый человек ✨</p></div></div>
+              <div class="steam-comment"><div class="c-ava">Y</div><div class="c-body"><div class="c-top"><span class="c-name">yukimi</span><span class="c-time" data-lang="ru">17 часов назад</span><span class="c-time" data-lang="en">17 hours ago</span></div><p class="c-text">+rep быстро и по делу, спасибо 🙌</p></div></div>
+              <div class="steam-comment"><div class="c-ava">Y</div><div class="c-body"><div class="c-top"><span class="c-name">yukimi</span><span class="c-time" data-lang="ru">17 часов назад</span><span class="c-time" data-lang="en">17 hours ago</span></div><p class="c-text">+rep топ сервис, всё ок ✅</p></div></div>
+              <div class="steam-comment"><div class="c-ava">Y</div><div class="c-body"><div class="c-top"><span class="c-name">yukimi</span><span class="c-time" data-lang="ru">17 часов назад</span><span class="c-time" data-lang="en">17 hours ago</span></div><p class="c-text">+rep приятно общаться, лайк ❤️</p></div></div>
             </div>
           </article>
 
           <!-- -REP -->
-          <article class="pack">
-            <div class="pack-head">
-              <div class="pack-left">
-                <h2 class="pack-title"><span>⚠️</span><span data-lang="ru">-rep</span><span data-lang="en">-rep</span></h2>
-                <div class="pack-sub">
+          <article class="steam-block">
+            <div class="steam-header">
+              <div class="steam-h-left">
+                <h2 class="steam-h-title"><span>⚠️</span><span data-lang="ru">-rep</span><span data-lang="en">-rep</span></h2>
+                <div class="steam-h-sub">
                   <span data-lang="ru">Мягкие минусы, без оскорблений</span>
                   <span data-lang="en">Mild negatives, no insults</span>
                 </div>
               </div>
-              <div class="pack-badge">-REP</div>
+              <div class="steam-badge">-REP</div>
             </div>
 
-            <div class="thread">
-              <div class="comment" data-text="-rep долго отвечает, неудобно">
-                <div class="avatar">Y</div>
-                <div class="c-body">
-                  <div class="c-meta"><span class="c-name">yukimi</span><span class="c-time" data-lang="ru">17 часов назад</span><span class="c-time" data-lang="en">17 hours ago</span></div>
-                  <p class="c-text">-rep долго отвечает, неудобно</p>
-                </div>
-              </div>
-
-              <div class="comment" data-text="-rep не вышло договориться по времени">
-                <div class="avatar">Y</div>
-                <div class="c-body">
-                  <div class="c-meta"><span class="c-name">yukimi</span><span class="c-time" data-lang="ru">17 часов назад</span><span class="c-time" data-lang="en">17 hours ago</span></div>
-                  <p class="c-text">-rep не вышло договориться по времени</p>
-                </div>
-              </div>
-
-              <div class="comment" data-text="-rep обещал, но затянул по срокам">
-                <div class="avatar">Y</div>
-                <div class="c-body">
-                  <div class="c-meta"><span class="c-name">yukimi</span><span class="c-time" data-lang="ru">17 часов назад</span><span class="c-time" data-lang="en">17 hours ago</span></div>
-                  <p class="c-text">-rep обещал, но затянул по срокам</p>
-                </div>
-              </div>
-
-              <div class="comment" data-text="-rep ответил не сразу, пришлось ждать">
-                <div class="avatar">Y</div>
-                <div class="c-body">
-                  <div class="c-meta"><span class="c-name">yukimi</span><span class="c-time" data-lang="ru">17 часов назад</span><span class="c-time" data-lang="en">17 hours ago</span></div>
-                  <p class="c-text">-rep ответил не сразу, пришлось ждать</p>
-                </div>
-              </div>
-
-              <div class="comment" data-text="-rep коммуникация слабая, мало информации">
-                <div class="avatar">Y</div>
-                <div class="c-body">
-                  <div class="c-meta"><span class="c-name">yukimi</span><span class="c-time" data-lang="ru">17 часов назад</span><span class="c-time" data-lang="en">17 hours ago</span></div>
-                  <p class="c-text">-rep коммуникация слабая, мало информации</p>
-                </div>
-              </div>
-
-              <div class="comment" data-text="-rep не подошло, возможно, просто не мой формат">
-                <div class="avatar">Y</div>
-                <div class="c-body">
-                  <div class="c-meta"><span class="c-name">yukimi</span><span class="c-time" data-lang="ru">17 часов назад</span><span class="c-time" data-lang="en">17 hours ago</span></div>
-                  <p class="c-text">-rep не подошло, возможно, просто не мой формат</p>
-                </div>
-              </div>
+            <div class="steam-add">
+              <div class="a-ava">Y</div>
+              <input class="a-input" type="text" placeholder="Legg til en kommentar" disabled>
             </div>
 
-            <div class="hint">
-              <span data-lang="ru">Можно менять ник/время в коде, если хочешь</span>
-              <span data-lang="en">You can change name/time in code if you want</span>
+            <div class="steam-thread">
+              <div class="steam-comment"><div class="c-ava">Y</div><div class="c-body"><div class="c-top"><span class="c-name">yukimi</span><span class="c-time" data-lang="ru">17 часов назад</span><span class="c-time" data-lang="en">17 hours ago</span></div><p class="c-text">-rep долго отвечает, неудобно</p></div></div>
+              <div class="steam-comment"><div class="c-ava">Y</div><div class="c-body"><div class="c-top"><span class="c-name">yukimi</span><span class="c-time" data-lang="ru">17 часов назад</span><span class="c-time" data-lang="en">17 hours ago</span></div><p class="c-text">-rep не вышло договориться по времени</p></div></div>
+              <div class="steam-comment"><div class="c-ava">Y</div><div class="c-body"><div class="c-top"><span class="c-name">yukimi</span><span class="c-time" data-lang="ru">17 часов назад</span><span class="c-time" data-lang="en">17 hours ago</span></div><p class="c-text">-rep обещал, но затянул по срокам</p></div></div>
+              <div class="steam-comment"><div class="c-ava">Y</div><div class="c-body"><div class="c-top"><span class="c-name">yukimi</span><span class="c-time" data-lang="ru">17 часов назад</span><span class="c-time" data-lang="en">17 hours ago</span></div><p class="c-text">-rep ответил не сразу, пришлось ждать</p></div></div>
+              <div class="steam-comment"><div class="c-ava">Y</div><div class="c-body"><div class="c-top"><span class="c-name">yukimi</span><span class="c-time" data-lang="ru">17 часов назад</span><span class="c-time" data-lang="en">17 hours ago</span></div><p class="c-text">-rep коммуникация слабая, мало информации</p></div></div>
+              <div class="steam-comment"><div class="c-ava">Y</div><div class="c-body"><div class="c-top"><span class="c-name">yukimi</span><span class="c-time" data-lang="ru">17 часов назад</span><span class="c-time" data-lang="en">17 hours ago</span></div><p class="c-text">-rep не подошло, возможно, просто не мой формат</p></div></div>
             </div>
           </article>
+
         </div>
       </div>
     </section>
@@ -817,7 +657,7 @@
             <ul class="bullet">
               <li><span class="ic">📋</span><span>Слева: CS / Dota / Rust</span></li>
               <li><span class="ic">📋</span><span>Справа: +rep / -rep</span></li>
-              <li><span class="ic">🖱️</span><span>Стиль комментов как в Steam: аватар, ник, время, текст</span></li>
+              <li><span class="ic">🎨</span><span>Вёрстка сделана максимально похоже на Steam-комменты</span></li>
               <li>
                 <span class="ic">📌</span>
                 <span>
@@ -835,7 +675,7 @@
             <ul class="bullet">
               <li><span class="ic">📋</span><span>Left: CS / Dota / Rust</span></li>
               <li><span class="ic">📋</span><span>Right: +rep / -rep</span></li>
-              <li><span class="ic">🖱️</span><span>Steam-like: avatar, name, time, text</span></li>
+              <li><span class="ic">🎨</span><span>Layout made максимально close to Steam comments</span></li>
               <li>
                 <span class="ic">📌</span>
                 <span>
@@ -857,40 +697,9 @@
     </div>
   </div>
 
-  <div id="toast" class="toast" role="status" aria-live="polite">
-    <span data-lang="ru">Текст выделен ✅</span>
-    <span data-lang="en">Selected ✅</span>
-  </div>
-
   <script>
     const btnRu = document.getElementById('btn-ru');
     const btnEn = document.getElementById('btn-en');
-    const toast = document.getElementById('toast');
-    let toastTimer = null;
-
-    function showToast(){
-      toast.classList.add('show');
-      clearTimeout(toastTimer);
-      toastTimer = setTimeout(() => toast.classList.remove('show'), 800);
-    }
-
-    // click comment -> select its text (steam-ish, no copy button)
-    function selectText(node){
-      const range = document.createRange();
-      range.selectNodeContents(node);
-      const sel = window.getSelection();
-      sel.removeAllRanges();
-      sel.addRange(range);
-    }
-
-    document.addEventListener('click', (e) => {
-      const row = e.target.closest('.comment');
-      if(!row) return;
-      const textEl = row.querySelector('.c-text');
-      if(!textEl) return;
-      selectText(textEl);
-      showToast();
-    });
 
     function setLang(lang){
       document.body.classList.toggle('lang-ru', lang === 'ru');
@@ -913,6 +722,7 @@
   </script>
 </body>
 </html>
+
 
 
 
