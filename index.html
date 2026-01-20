@@ -16,7 +16,6 @@
       --muted:#9ca3af;
       --accent:#a78bfa;
       --accent2:#22d3ee;
-      --warn:#fbbf24;
       --border:rgba(255,255,255,.08);
       --shadow: 0 10px 30px rgba(0,0,0,.35);
 
@@ -85,65 +84,6 @@
     .subtitle{margin:0;color:var(--muted)}
     .meta{margin-top:10px;display:flex;flex-wrap:wrap;gap:10px;color:var(--muted);font-size:14px}
     .meta b{color:var(--text);font-weight:600}
-
-    /* cards (витрина снизу) */
-    .grid{display:grid;grid-template-columns: 1.2fr .8fr;gap:16px;margin-top:14px}
-    @media (max-width:880px){ .grid{grid-template-columns:1fr} }
-
-    .card{
-      background: linear-gradient(180deg, rgba(255,255,255,.04), rgba(255,255,255,.02));
-      border:1px solid var(--border);
-      border-radius:18px;
-      padding:16px;
-      box-shadow: var(--shadow);
-    }
-    .card h2{margin:0 0 8px;font-size:18px}
-    .card p{margin:0;color:var(--muted)}
-
-    /* bullets */
-    .bullet{
-      list-style:none;
-      padding:0;
-      margin:10px 0 0;
-      display:grid;
-      gap:10px;
-      color:var(--muted);
-    }
-    .bullet li{display:flex;gap:10px;align-items:flex-start;line-height:1.35;}
-    .bullet .ic{width:18px;flex:0 0 18px;opacity:.95}
-    .bullet b{color:var(--text)}
-    .credit-link{
-      color: var(--accent2);
-      text-decoration:none;
-      border-bottom:1px dashed rgba(34,211,238,.55);
-      padding-bottom:2px;
-      font-weight:800;
-    }
-    .credit-link:hover{opacity:.9}
-
-    /* shop buttons */
-    .shop-grid{margin-top:12px;display:grid;grid-template-columns:1fr;gap:10px;}
-    .shop-btn{
-      display:flex;align-items:center;justify-content:space-between;gap:10px;
-      padding:12px 12px;border-radius:14px;border:1px solid var(--border);
-      background: rgba(255,255,255,.03);
-      text-decoration:none;color:var(--text);
-      box-shadow: 0 10px 22px rgba(0,0,0,.20);
-      transition: transform .08s ease, opacity .08s ease;
-    }
-    .shop-btn:hover{opacity:.95; transform: translateY(-1px);}
-    .shop-left{display:flex;align-items:flex-start;gap:10px;min-width:0}
-    .shop-ic{
-      width:34px;height:34px;border-radius:12px;
-      display:grid;place-items:center;
-      background: rgba(167,139,250,.14);
-      border:1px solid rgba(167,139,250,.25);
-      flex:0 0 auto;
-    }
-    .shop-text{min-width:0}
-    .shop-title{font-weight:900;line-height:1.15;margin:0;font-size:14.5px;}
-    .shop-sub{margin:4px 0 0;color:var(--muted);font-size:13px;line-height:1.25;}
-    .shop-go{color: var(--accent2);font-weight:900;flex:0 0 auto;}
 
     /* ===== Категории (витрина) ===== */
     .section-title{
@@ -323,6 +263,63 @@
     .c-time{font-size:12px;color:rgba(156,163,175,.9)}
     .c-text{margin:0;font-size:13.5px;line-height:1.38;color:rgba(229,231,235,.95);white-space:pre-wrap;word-wrap:break-word}
 
+    /* Витрина снизу */
+    .grid{display:grid;grid-template-columns: 1.2fr .8fr;gap:16px;margin-top:22px}
+    @media (max-width:880px){ .grid{grid-template-columns:1fr} }
+
+    .card{
+      background: linear-gradient(180deg, rgba(255,255,255,.04), rgba(255,255,255,.02));
+      border:1px solid var(--border);
+      border-radius:18px;
+      padding:16px;
+      box-shadow: var(--shadow);
+    }
+    .card h2{margin:0 0 8px;font-size:18px}
+    .card p{margin:0;color:var(--muted)}
+
+    .bullet{
+      list-style:none;
+      padding:0;
+      margin:10px 0 0;
+      display:grid;
+      gap:10px;
+      color:var(--muted);
+    }
+    .bullet li{display:flex;gap:10px;align-items:flex-start;line-height:1.35;}
+    .bullet .ic{width:18px;flex:0 0 18px;opacity:.95}
+    .bullet b{color:var(--text)}
+    .credit-link{
+      color: var(--accent2);
+      text-decoration:none;
+      border-bottom:1px dashed rgba(34,211,238,.55);
+      padding-bottom:2px;
+      font-weight:800;
+    }
+    .credit-link:hover{opacity:.9}
+
+    .shop-grid{margin-top:12px;display:grid;grid-template-columns:1fr;gap:10px;}
+    .shop-btn{
+      display:flex;align-items:center;justify-content:space-between;gap:10px;
+      padding:12px 12px;border-radius:14px;border:1px solid var(--border);
+      background: rgba(255,255,255,.03);
+      text-decoration:none;color:var(--text);
+      box-shadow: 0 10px 22px rgba(0,0,0,.20);
+      transition: transform .08s ease, opacity .08s ease;
+    }
+    .shop-btn:hover{opacity:.95; transform: translateY(-1px);}
+    .shop-left{display:flex;align-items:flex-start;gap:10px;min-width:0}
+    .shop-ic{
+      width:34px;height:34px;border-radius:12px;
+      display:grid;place-items:center;
+      background: rgba(167,139,250,.14);
+      border:1px solid rgba(167,139,250,.25);
+      flex:0 0 auto;
+    }
+    .shop-text{min-width:0}
+    .shop-title{font-weight:900;line-height:1.15;margin:0;font-size:14.5px;}
+    .shop-sub{margin:4px 0 0;color:var(--muted);font-size:13px;line-height:1.25;}
+    .shop-go{color: var(--accent2);font-weight:900;flex:0 0 auto;}
+
     .footer{margin-top:18px;color:var(--muted);font-size:14px;text-align:center;opacity:.95}
 
     /* i18n blocks */
@@ -337,7 +334,7 @@
 <body class="lang-ru">
   <div class="wrap">
 
-    <!-- HERO (без товаров внутри) -->
+    <!-- HERO -->
     <header class="hero">
       <div class="topbar">
         <div class="badge"><span class="dot"></span>
@@ -380,7 +377,7 @@
             <p class="cat-sub">Пачка нейтральных комментариев для профиля</p>
             <div class="pill"><span class="dot"></span> 6 комментариев</div>
           </div>
-          <button class="btn-open" type="button" data-toggle="#cat-cs2">Показать комментарии</button>
+          <button class="btn-open" type="button">Показать комментарии</button>
         </div>
 
         <div class="cat-body">
@@ -409,7 +406,7 @@
             <p class="cat-sub">Комментарии под тимплей / роль (6 штук)</p>
             <div class="pill"><span class="dot"></span> 6 комментариев</div>
           </div>
-          <button class="btn-open" type="button" data-toggle="#cat-dota">Показать комментарии</button>
+          <button class="btn-open" type="button">Показать комментарии</button>
         </div>
 
         <div class="cat-body">
@@ -438,7 +435,7 @@
             <p class="cat-sub">Под вайпы/рейды, без токсика (6 штук)</p>
             <div class="pill"><span class="dot"></span> 6 комментариев</div>
           </div>
-          <button class="btn-open" type="button" data-toggle="#cat-rust">Показать комментарии</button>
+          <button class="btn-open" type="button">Показать комментарии</button>
         </div>
 
         <div class="cat-body">
@@ -467,7 +464,7 @@
             <p class="cat-sub">Короткие плюсовые репы (6 штук)</p>
             <div class="pill"><span class="dot"></span> 6 комментариев</div>
           </div>
-          <button class="btn-open" type="button" data-toggle="#cat-plus">Показать комментарии</button>
+          <button class="btn-open" type="button">Показать комментарии</button>
         </div>
 
         <div class="cat-body">
@@ -496,7 +493,7 @@
             <p class="cat-sub">Мягкие минусы, без оскорблений (6 штук)</p>
             <div class="pill"><span class="dot"></span> 6 комментариев</div>
           </div>
-          <button class="btn-open" type="button" data-toggle="#cat-minus">Показать комментарии</button>
+          <button class="btn-open" type="button">Показать комментарии</button>
         </div>
 
         <div class="cat-body">
@@ -519,7 +516,7 @@
     </div>
 
     <!-- Витрина в самый низ -->
-    <section class="grid" style="margin-top:22px">
+    <section class="grid">
       <section class="card">
         <div data-lang="ru">
           <h2>🛒 Товары Юкими</h2>
@@ -629,7 +626,7 @@
   </div>
 
   <script>
-    // RU/EN switch
+    // ===== RU/EN switch =====
     const btnRu = document.getElementById('btn-ru');
     const btnEn = document.getElementById('btn-en');
 
@@ -652,36 +649,50 @@
     if (saved === 'en' || saved === 'ru') setLang(saved);
     else setLang('ru');
 
-    // Toggle categories
-    function closeAllCats(exceptEl){
-      document.querySelectorAll('.cat.open').forEach(el=>{
-        if (exceptEl && el === exceptEl) return;
-        el.classList.remove('open');
-        const b = el.querySelector('.btn-open');
-        if (b) b.textContent = 'Показать комментарии';
+    // ===== Toggle (100% работает) =====
+    function updateButtonText(cat){
+      const btn = cat.querySelector('.btn-open');
+      if (!btn) return;
+      btn.textContent = cat.classList.contains('open')
+        ? 'Скрыть комментарии'
+        : 'Показать комментарии';
+    }
+
+    function closeAllCats(exceptCat){
+      document.querySelectorAll('.cat.open').forEach(cat=>{
+        if (exceptCat && cat === exceptCat) return;
+        cat.classList.remove('open');
+        updateButtonText(cat);
       });
     }
 
-    document.querySelectorAll('[data-toggle]').forEach(btn=>{
-      btn.addEventListener('click', ()=>{
-        const sel = btn.getAttribute('data-toggle');
-        const cat = document.querySelector(sel);
-        if (!cat) return;
+    // Делегирование кликов по всем .btn-open
+    document.addEventListener('click', (e)=>{
+      const btn = e.target.closest('.btn-open');
+      if (!btn) return;
 
-        const willOpen = !cat.classList.contains('open');
-        closeAllCats(willOpen ? cat : null);
+      const cat = btn.closest('.cat');
+      if (!cat) return;
 
-        cat.classList.toggle('open');
-        btn.textContent = cat.classList.contains('open') ? 'Скрыть комментарии' : 'Показать комментарии';
+      const willOpen = !cat.classList.contains('open');
 
-        if (willOpen){
-          setTimeout(()=>cat.scrollIntoView({behavior:'smooth', block:'start'}), 50);
-        }
-      });
+      // Если хочешь только один открытый блок — оставь:
+      closeAllCats(willOpen ? cat : null);
+
+      cat.classList.toggle('open');
+      updateButtonText(cat);
+
+      if (willOpen){
+        setTimeout(()=>cat.scrollIntoView({behavior:'smooth', block:'start'}), 50);
+      }
     });
+
+    // выставляем правильный текст кнопок на старте
+    document.querySelectorAll('.cat').forEach(updateButtonText);
   </script>
 </body>
 </html>
+
 
 
 
