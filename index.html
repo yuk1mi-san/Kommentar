@@ -5,7 +5,6 @@
   <meta name="viewport" content="width=device-width,initial-scale=1" />
   <title>✨ Выбери комменты</title>
   <meta name="description" content="RU/EN: комментарии в стиле Steam." />
-
   <link rel="icon" type="image/png" href="assets/favicon.jpg">
   <link rel="apple-touch-icon" href="assets/favicon.jpg">
   <meta name="theme-color" content="#0b0f17">
@@ -39,7 +38,18 @@
       color:var(--text);
       line-height:1.55;
     }
-    .wrap{max-width:980px;margin:0 auto;padding:28px 18px 60px}
+
+    /* Page padding */
+    .page-pad{padding:28px 18px 60px;}
+
+    /* Centered header container */
+    .wrap{max-width:980px;margin:0 auto;}
+
+    /* Full-width comments container (near screen edges) */
+    .comments-wrap{
+      width: min(1800px, calc(100vw - 24px)); /* closer to edges */
+      margin: 0 auto;
+    }
 
     /* HERO */
     .hero{
@@ -100,43 +110,44 @@
     .packs-2col{
       display:grid;
       grid-template-columns: 1fr 1fr;
-      gap:16px;
+      gap:18px;
       align-items:start;
+      width:100%;
     }
-    @media (max-width:980px){ .packs-2col{grid-template-columns:1fr;} }
-    .col{display:grid;gap:16px;}
+    @media (max-width:1100px){ .packs-2col{grid-template-columns:1fr;} }
+    .col{display:grid;gap:18px;}
 
-    /* BIG RECTANGLE: image left, comments right */
+    /* BIG rectangle category: image left, steam comments right */
     .steam-rect{
       border-radius:14px;
       overflow:hidden;
-      border:1px solid var(--steam-line2);
-      background: linear-gradient(180deg, rgba(0,0,0,.22), rgba(0,0,0,.12));
+      border:1px solid rgba(255,255,255,.09);
+      background: linear-gradient(180deg, rgba(0,0,0,.26), rgba(0,0,0,.14));
       box-shadow: 0 14px 30px rgba(0,0,0,.35);
       display:grid;
-      grid-template-columns: 280px 1fr;
-      min-height: 260px;
+      grid-template-columns: 340px minmax(0, 1fr);
+      min-height: 460px;
     }
-    @media (max-width:980px){
-      .steam-rect{grid-template-columns:1fr}
+    @media (max-width:1100px){
+      .steam-rect{grid-template-columns:1fr; min-height:auto;}
     }
 
     /* left side */
     .rect-left{
-      padding:12px;
+      padding:14px;
       border-right:1px solid var(--steam-line2);
       background: rgba(0,0,0,.22);
       display:flex;
       flex-direction:column;
       gap:10px;
     }
-    @media (max-width:980px){
+    @media (max-width:1100px){
       .rect-left{border-right:0;border-bottom:1px solid var(--steam-line2)}
     }
     .rect-title{
       margin:0;
       font-size:16px;
-      font-weight:800;
+      font-weight:900;
       display:flex;
       gap:8px;
       align-items:center;
@@ -150,7 +161,7 @@
     }
     .rect-img{
       width:100%;
-      height:160px;
+      height:240px;            /* bigger so it is visible */
       border-radius:10px;
       border:1px solid rgba(255,255,255,.10);
       background: rgba(0,0,0,.25);
@@ -173,7 +184,10 @@
       background: rgba(0,0,0,.14);
       display:flex;
       flex-direction:column;
+      min-width:0;
     }
+
+    /* "Add a comment" row */
     .steam-add{
       display:grid;
       grid-template-columns: 38px 1fr;
@@ -204,7 +218,21 @@
     .a-input::placeholder{color:rgba(156,163,175,.75)}
     .a-input[disabled]{opacity:.9; cursor:not-allowed}
 
-    .steam-thread{padding:6px 0}
+    /* comments list scroll (like Steam blocks) */
+    .steam-thread{
+      padding:6px 0;
+      max-height: 360px; /* show more, still scroll */
+      overflow:auto;
+    }
+    .steam-thread::-webkit-scrollbar{width:10px}
+    .steam-thread::-webkit-scrollbar-thumb{
+      background: rgba(255,255,255,.10);
+      border-radius:10px;
+    }
+    .steam-thread::-webkit-scrollbar-track{
+      background: rgba(0,0,0,.15);
+    }
+
     .steam-comment{
       display:grid;
       grid-template-columns: 38px 1fr;
@@ -230,7 +258,7 @@
       flex-wrap:wrap;
       margin-bottom:3px;
     }
-    .c-name{font-weight:700;font-size:13px;color:rgba(229,231,235,.98)}
+    .c-name{font-weight:800;font-size:13px;color:rgba(229,231,235,.98)}
     .c-time{font-size:12px;color:rgba(156,163,175,.9)}
     .c-text{margin:0;font-size:13.5px;line-height:1.38;color:rgba(229,231,235,.95);white-space:pre-wrap;word-wrap:break-word}
 
@@ -297,307 +325,317 @@
 </head>
 
 <body class="lang-ru">
-  <div class="wrap">
-    <header class="hero">
-      <div class="topbar">
-        <div class="badge"><span class="dot"></span>
-          <span data-lang="ru">Обновлено: 06 декабря 2025</span>
-          <span data-lang="en">Updated: December 06, 2025</span>
+  <div class="page-pad">
+
+    <!-- HEADER (centered) -->
+    <div class="wrap">
+      <header class="hero">
+        <div class="topbar">
+          <div class="badge"><span class="dot"></span>
+            <span data-lang="ru">Обновлено: 06 декабря 2025</span>
+            <span data-lang="en">Updated: December 06, 2025</span>
+          </div>
+
+          <div class="lang" role="tablist" aria-label="Language switch">
+            <button id="btn-ru" class="active" type="button" aria-selected="true">RU</button>
+            <button id="btn-en" type="button" aria-selected="false">EN</button>
+          </div>
         </div>
 
-        <div class="lang" role="tablist" aria-label="Language switch">
-          <button id="btn-ru" class="active" type="button" aria-selected="true">RU</button>
-          <button id="btn-en" type="button" aria-selected="false">EN</button>
-        </div>
-      </div>
-
-      <div style="margin-top:10px">
-        <div data-lang="ru">
-          <h1>✨ Выбери комменты</h1>
-          <p class="subtitle">Категории: слева игры, справа репутация</p>
-          <div class="meta"><span>Автор: <b>Yukimi2208</b></span></div>
-        </div>
-
-        <div data-lang="en">
-          <h1>✨ Choose comments</h1>
-          <p class="subtitle">Categories: games on the left, reps on the right</p>
-          <div class="meta"><span>Author: <b>Yukimi2208</b></span></div>
-        </div>
-      </div>
-    </header>
-
-    <section class="section">
-      <div class="section-title">
-        <span data-lang="ru">💬 Комментарии</span>
-        <span data-lang="en">💬 Comments</span>
-      </div>
-
-      <div class="packs-2col">
-        <!-- LEFT COLUMN: CS / DOTA / RUST -->
-        <div class="col">
-
-          <!-- CS RECT -->
-          <article class="steam-rect">
-            <div class="rect-left">
-              <h2 class="rect-title">🔫 CS (Counter-Strike)</h2>
-              <div class="rect-sub">Пачка нейтральных комментариев</div>
-              <img class="rect-img" src="assets/games/cs2.png" alt="CS image" loading="lazy">
-              <div class="rect-badge">CS PACK</div>
-            </div>
-
-            <div class="rect-right">
-              <div class="steam-add">
-                <div class="a-ava">Y</div>
-                <input class="a-input" type="text" placeholder="Legg til en kommentar" disabled>
-              </div>
-
-              <div class="steam-thread">
-                <div class="steam-comment"><div class="c-ava">Y</div><div><div class="c-top"><span class="c-name">yukimi</span><span class="c-time">17 часов назад</span></div><p class="c-text">Чёткий тиммейт, приятно играть 🔥</p></div></div>
-                <div class="steam-comment"><div class="c-ava">Y</div><div><div class="c-top"><span class="c-name">yukimi</span><span class="c-time">17 часов назад</span></div><p class="c-text">Хорошие коллы и спокойная игра, респект ✅</p></div></div>
-                <div class="steam-comment"><div class="c-ava">Y</div><div><div class="c-top"><span class="c-name">yukimi</span><span class="c-time">17 часов назад</span></div><p class="c-text">Отличная стрельба, тащит катку 💪</p></div></div>
-                <div class="steam-comment"><div class="c-ava">Y</div><div><div class="c-top"><span class="c-name">yukimi</span><span class="c-time">17 часов назад</span></div><p class="c-text">Норм общение, без токсика, лайк 👍</p></div></div>
-                <div class="steam-comment"><div class="c-ava">Y</div><div><div class="c-top"><span class="c-name">yukimi</span><span class="c-time">17 часов назад</span></div><p class="c-text">Стабильный игрок, сыграю ещё 🎯</p></div></div>
-                <div class="steam-comment"><div class="c-ava">Y</div><div><div class="c-top"><span class="c-name">yukimi</span><span class="c-time">17 часов назад</span></div><p class="c-text">Командная игра на уровне, спасибо за матч ✨</p></div></div>
-              </div>
-            </div>
-          </article>
-
-          <!-- DOTA RECT -->
-          <article class="steam-rect">
-            <div class="rect-left">
-              <h2 class="rect-title">🧙 Dota 2</h2>
-              <div class="rect-sub">Комментарии под тимплей/роль</div>
-              <img class="rect-img" src="assets/games/dota2.png" alt="Dota 2 image" loading="lazy">
-              <div class="rect-badge">DOTA PACK</div>
-            </div>
-
-            <div class="rect-right">
-              <div class="steam-add">
-                <div class="a-ava">Y</div>
-                <input class="a-input" type="text" placeholder="Legg til en kommentar" disabled>
-              </div>
-
-              <div class="steam-thread">
-                <div class="steam-comment"><div class="c-ava">Y</div><div><div class="c-top"><span class="c-name">yukimi</span><span class="c-time">17 часов назад</span></div><p class="c-text">Крутой тимплей, играется легко ✅</p></div></div>
-                <div class="steam-comment"><div class="c-ava">Y</div><div><div class="c-top"><span class="c-name">yukimi</span><span class="c-time">17 часов назад</span></div><p class="c-text">Отличные решения по карте, респект 🗺️</p></div></div>
-                <div class="steam-comment"><div class="c-ava">Y</div><div><div class="c-top"><span class="c-name">yukimi</span><span class="c-time">17 часов назад</span></div><p class="c-text">Спокойно и по делу, без лишних эмоций 👍</p></div></div>
-                <div class="steam-comment"><div class="c-ava">Y</div><div><div class="c-top"><span class="c-name">yukimi</span><span class="c-time">17 часов назад</span></div><p class="c-text">Хорошо отыграл роль, приятно в пати ✨</p></div></div>
-                <div class="steam-comment"><div class="c-ava">Y</div><div><div class="c-top"><span class="c-name">yukimi</span><span class="c-time">17 часов назад</span></div><p class="c-text">Сильный игрок, уверенно ведёт к победе 💪</p></div></div>
-                <div class="steam-comment"><div class="c-ava">Y</div><div><div class="c-top"><span class="c-name">yukimi</span><span class="c-time">17 часов назад</span></div><p class="c-text">Спасибо за катку, было кайфово 🎮</p></div></div>
-              </div>
-            </div>
-          </article>
-
-          <!-- RUST RECT -->
-          <article class="steam-rect">
-            <div class="rect-left">
-              <h2 class="rect-title">🛠️ RUST</h2>
-              <div class="rect-sub">Под рейды/вайпы, без токсика</div>
-              <img class="rect-img" src="assets/games/rust.png" alt="Rust image" loading="lazy">
-              <div class="rect-badge">RUST PACK</div>
-            </div>
-
-            <div class="rect-right">
-              <div class="steam-add">
-                <div class="a-ava">Y</div>
-                <input class="a-input" type="text" placeholder="Legg til en kommentar" disabled>
-              </div>
-
-              <div class="steam-thread">
-                <div class="steam-comment"><div class="c-ava">Y</div><div><div class="c-top"><span class="c-name">yukimi</span><span class="c-time">17 часов назад</span></div><p class="c-text">Надёжный напарник, держит слово ✅</p></div></div>
-                <div class="steam-comment"><div class="c-ava">Y</div><div><div class="c-top"><span class="c-name">yukimi</span><span class="c-time">17 часов назад</span></div><p class="c-text">Сильная игра, хорошие мувы на рейде 💥</p></div></div>
-                <div class="steam-comment"><div class="c-ava">Y</div><div><div class="c-top"><span class="c-name">yukimi</span><span class="c-time">17 часов назад</span></div><p class="c-text">Спокойный и адекватный, приятно в тиме 👍</p></div></div>
-                <div class="steam-comment"><div class="c-ava">Y</div><div><div class="c-top"><span class="c-name">yukimi</span><span class="c-time">17 часов назад</span></div><p class="c-text">Фармит быстро, не бросает команду ⛏️</p></div></div>
-                <div class="steam-comment"><div class="c-ava">Y</div><div><div class="c-top"><span class="c-name">yukimi</span><span class="c-time">17 часов назад</span></div><p class="c-text">Хорошая координация, всё по плану 🧠</p></div></div>
-                <div class="steam-comment"><div class="c-ava">Y</div><div><div class="c-top"><span class="c-name">yukimi</span><span class="c-time">17 часов назад</span></div><p class="c-text">Спасибо за вайп, было весело 😄</p></div></div>
-              </div>
-            </div>
-          </article>
-        </div>
-
-        <!-- RIGHT COLUMN: +rep / -rep -->
-        <div class="col">
-
-          <!-- +REP RECT -->
-          <article class="steam-rect">
-            <div class="rect-left">
-              <h2 class="rect-title">✅ +rep</h2>
-              <div class="rect-sub">Короткие плюсовые репы</div>
-              <img class="rect-img" src="assets/games/rep_plus.png" alt="+rep image" loading="lazy">
-              <div class="rect-badge">+REP</div>
-            </div>
-
-            <div class="rect-right">
-              <div class="steam-add">
-                <div class="a-ava">Y</div>
-                <input class="a-input" type="text" placeholder="Legg til en kommentar" disabled>
-              </div>
-
-              <div class="steam-thread">
-                <div class="steam-comment"><div class="c-ava">Y</div><div><div class="c-top"><span class="c-name">yukimi</span><span class="c-time">17 часов назад</span></div><p class="c-text">+rep быстро ответил и помог ✅</p></div></div>
-                <div class="steam-comment"><div class="c-ava">Y</div><div><div class="c-top"><span class="c-name">yukimi</span><span class="c-time">17 часов назад</span></div><p class="c-text">+rep всё честно, рекомендую 👍</p></div></div>
-                <div class="steam-comment"><div class="c-ava">Y</div><div><div class="c-top"><span class="c-name">yukimi</span><span class="c-time">17 часов назад</span></div><p class="c-text">+rep адекватный и вежливый человек ✨</p></div></div>
-                <div class="steam-comment"><div class="c-ava">Y</div><div><div class="c-top"><span class="c-name">yukimi</span><span class="c-time">17 часов назад</span></div><p class="c-text">+rep быстро и по делу, спасибо 🙌</p></div></div>
-                <div class="steam-comment"><div class="c-ava">Y</div><div><div class="c-top"><span class="c-name">yukimi</span><span class="c-time">17 часов назад</span></div><p class="c-text">+rep топ сервис, всё ок ✅</p></div></div>
-                <div class="steam-comment"><div class="c-ava">Y</div><div><div class="c-top"><span class="c-name">yukimi</span><span class="c-time">17 часов назад</span></div><p class="c-text">+rep приятно общаться, лайк ❤️</p></div></div>
-              </div>
-            </div>
-          </article>
-
-          <!-- -REP RECT -->
-          <article class="steam-rect">
-            <div class="rect-left">
-              <h2 class="rect-title">⚠️ -rep</h2>
-              <div class="rect-sub">Мягкие минусы, без оскорблений</div>
-              <img class="rect-img" src="assets/games/rep_minus.png" alt="-rep image" loading="lazy">
-              <div class="rect-badge">-REP</div>
-            </div>
-
-            <div class="rect-right">
-              <div class="steam-add">
-                <div class="a-ava">Y</div>
-                <input class="a-input" type="text" placeholder="Legg til en kommentar" disabled>
-              </div>
-
-              <div class="steam-thread">
-                <div class="steam-comment"><div class="c-ava">Y</div><div><div class="c-top"><span class="c-name">yukimi</span><span class="c-time">17 часов назад</span></div><p class="c-text">-rep долго отвечает, неудобно</p></div></div>
-                <div class="steam-comment"><div class="c-ava">Y</div><div><div class="c-top"><span class="c-name">yukimi</span><span class="c-time">17 часов назад</span></div><p class="c-text">-rep не вышло договориться по времени</p></div></div>
-                <div class="steam-comment"><div class="c-ava">Y</div><div><div class="c-top"><span class="c-name">yukimi</span><span class="c-time">17 часов назад</span></div><p class="c-text">-rep обещал, но затянул по срокам</p></div></div>
-                <div class="steam-comment"><div class="c-ava">Y</div><div><div class="c-top"><span class="c-name">yukimi</span><span class="c-time">17 часов назад</span></div><p class="c-text">-rep ответил не сразу, пришлось ждать</p></div></div>
-                <div class="steam-comment"><div class="c-ava">Y</div><div><div class="c-top"><span class="c-name">yukimi</span><span class="c-time">17 часов назад</span></div><p class="c-text">-rep коммуникация слабая, мало информации</p></div></div>
-                <div class="steam-comment"><div class="c-ava">Y</div><div><div class="c-top"><span class="c-name">yukimi</span><span class="c-time">17 часов назад</span></div><p class="c-text">-rep не подошло, возможно, просто не мой формат</p></div></div>
-              </div>
-            </div>
-          </article>
-
-        </div>
-      </div>
-    </section>
-
-    <!-- bottom: shop + info -->
-    <section class="section">
-      <div class="section-title">
-        <span data-lang="ru">🛒 Товары и информация</span>
-        <span data-lang="en">🛒 Shop & info</span>
-      </div>
-
-      <div class="grid2">
-        <section class="card">
+        <div style="margin-top:10px">
           <div data-lang="ru">
-            <h2 style="margin:0 0 8px;font-size:18px">🛒 Товары Юкими</h2>
-            <p style="margin:0;color:var(--muted)">Быстрый переход к моим услугам на FunPay:</p>
-
-            <div class="shop-grid">
-              <a class="shop-btn" href="https://funpay.com/lots/offer?id=61954569" target="_blank" rel="noopener">
-                <div class="shop-left">
-                  <div class="shop-ic">❤️</div>
-                  <div class="shop-text">
-                    <p class="shop-title">Лайки</p>
-                    <p class="shop-sub">🖼️ 20 ЛАЙКОВ ДЛЯ ВАШЕГО СКРИНШОТА ИЛИ ОБЗОРА STEAM 👍</p>
-                  </div>
-                </div>
-                <div class="shop-go">→</div>
-              </a>
-
-              <a class="shop-btn" href="https://funpay.com/lots/offer?id=61954834" target="_blank" rel="noopener">
-                <div class="shop-left">
-                  <div class="shop-ic">💬</div>
-                  <div class="shop-text">
-                    <p class="shop-title">Комментарии</p>
-                    <p class="shop-sub">🎀 20 КОММЕНТАРИЕВ ДЛЯ ВАШЕГО STEAM ПРОФИЛЯ 🎀</p>
-                  </div>
-                </div>
-                <div class="shop-go">→</div>
-              </a>
-
-              <a class="shop-btn" href="https://funpay.com/lots/offer?id=58877689" target="_blank" rel="noopener">
-                <div class="shop-left">
-                  <div class="shop-ic">⭐</div>
-                  <div class="shop-text">
-                    <p class="shop-title">Лайки на обзоры</p>
-                    <p class="shop-sub">📋 10 ЛАЙКОВ ДЛЯ ВАШЕГО ОБЗОРА ИГРЫ STEAM 👍</p>
-                  </div>
-                </div>
-                <div class="shop-go">→</div>
-              </a>
-            </div>
+            <h1>✨ Выбери комменты</h1>
+            <p class="subtitle">Категории: слева игры, справа репутация</p>
+            <div class="meta"><span>Автор: <b>Yukimi2208</b></span></div>
           </div>
 
           <div data-lang="en">
-            <h2 style="margin:0 0 8px;font-size:18px">🛒 Yukimi’s Services</h2>
-            <p style="margin:0;color:var(--muted)">Quick links to my FunPay offers:</p>
-
-            <div class="shop-grid">
-              <a class="shop-btn" href="https://funpay.com/lots/offer?id=61954569" target="_blank" rel="noopener">
-                <div class="shop-left">
-                  <div class="shop-ic">❤️</div>
-                  <div class="shop-text">
-                    <p class="shop-title">Likes / reactions</p>
-                    <p class="shop-sub">🖼️ 20 LIKES FOR YOUR STEAM SCREENSHOT 👍</p>
-                  </div>
-                </div>
-                <div class="shop-go">→</div>
-              </a>
-
-              <a class="shop-btn" href="https://funpay.com/lots/offer?id=61954834" target="_blank" rel="noopener">
-                <div class="shop-left">
-                  <div class="shop-ic">💬</div>
-                  <div class="shop-text">
-                    <p class="shop-title">Comments</p>
-                    <p class="shop-sub">🎀 20 COMMENTS FOR YOUR STEAM PROFILE 🎀</p>
-                  </div>
-                </div>
-                <div class="shop-go">→</div>
-              </a>
-
-              <a class="shop-btn" href="https://funpay.com/lots/offer?id=58877689" target="_blank" rel="noopener">
-                <div class="shop-left">
-                  <div class="shop-ic">⭐</div>
-                  <div class="shop-text">
-                    <p class="shop-title">Review likes</p>
-                    <p class="shop-sub">👍 10 LIKES FOR YOUR STEAM REVIEW 👍</p>
-                  </div>
-                </div>
-                <div class="shop-go">→</div>
-              </a>
-            </div>
+            <h1>✨ Choose comments</h1>
+            <p class="subtitle">Categories: games on the left, reps on the right</p>
+            <div class="meta"><span>Author: <b>Yukimi2208</b></span></div>
           </div>
-        </section>
-
-        <aside class="card">
-          <div data-lang="ru">
-            <h2 style="margin:0 0 8px;font-size:18px">✨ Внутрености</h2>
-            <ul class="bullet">
-              <li><span class="ic">🟦</span><span>Каждая категория — один прямоугольный блок: слева картинка, справа комменты</span></li>
-              <li><span class="ic">📋</span><span>Слева колонка: CS / Dota / Rust</span></li>
-              <li><span class="ic">📋</span><span>Справа колонка: +rep / -rep</span></li>
-              <li>
-                <span class="ic">📌</span>
-                <span>Сделал <a class="credit-link" href="https://funpay.com/users/3472051/" target="_blank" rel="noopener">Yukimi2208 / FunPay</a></span>
-              </li>
-            </ul>
-          </div>
-
-          <div data-lang="en">
-            <h2 style="margin:0 0 8px;font-size:18px">✨ Info</h2>
-            <ul class="bullet">
-              <li><span class="ic">🟦</span><span>Each category is a rectangle: image left, comments right</span></li>
-              <li><span class="ic">📋</span><span>Left column: CS / Dota / Rust</span></li>
-              <li><span class="ic">📋</span><span>Right column: +rep / -rep</span></li>
-              <li>
-                <span class="ic">📌</span>
-                <span>Made by <a class="credit-link" href="https://funpay.com/users/3472051/" target="_blank" rel="noopener">Yukimi2208 / FunPay</a></span>
-              </li>
-            </ul>
-          </div>
-        </aside>
-      </div>
-    </section>
-
-    <div class="footer">
-      <span data-lang="ru">✨ Выбери комменты • Yukimi2208</span>
-      <span data-lang="en">✨ Choose comments • Yukimi2208</span>
+        </div>
+      </header>
     </div>
+
+    <!-- COMMENTS (full width near edges) -->
+    <section class="section">
+      <div class="comments-wrap">
+        <div class="section-title">
+          <span data-lang="ru">💬 Комментарии</span>
+          <span data-lang="en">💬 Comments</span>
+        </div>
+
+        <div class="packs-2col">
+          <!-- LEFT COLUMN: CS / DOTA / RUST -->
+          <div class="col">
+
+            <!-- CS -->
+            <article class="steam-rect">
+              <div class="rect-left">
+                <h2 class="rect-title">🔫 CS (Counter-Strike)</h2>
+                <div class="rect-sub">Пачка нейтральных комментариев</div>
+                <img class="rect-img" src="assets/games/cs2.png" alt="CS image" loading="lazy">
+                <div class="rect-badge">CS PACK</div>
+              </div>
+
+              <div class="rect-right">
+                <div class="steam-add">
+                  <div class="a-ava">Y</div>
+                  <input class="a-input" type="text" placeholder="Legg til en kommentar" disabled>
+                </div>
+
+                <div class="steam-thread">
+                  <div class="steam-comment"><div class="c-ava">Y</div><div><div class="c-top"><span class="c-name">yukimi</span><span class="c-time">17 часов назад</span></div><p class="c-text">Чёткий тиммейт, приятно играть 🔥</p></div></div>
+                  <div class="steam-comment"><div class="c-ava">Y</div><div><div class="c-top"><span class="c-name">yukimi</span><span class="c-time">17 часов назад</span></div><p class="c-text">Хорошие коллы и спокойная игра, респект ✅</p></div></div>
+                  <div class="steam-comment"><div class="c-ava">Y</div><div><div class="c-top"><span class="c-name">yukimi</span><span class="c-time">17 часов назад</span></div><p class="c-text">Отличная стрельба, тащит катку 💪</p></div></div>
+                  <div class="steam-comment"><div class="c-ava">Y</div><div><div class="c-top"><span class="c-name">yukimi</span><span class="c-time">17 часов назад</span></div><p class="c-text">Норм общение, без токсика, лайк 👍</p></div></div>
+                  <div class="steam-comment"><div class="c-ava">Y</div><div><div class="c-top"><span class="c-name">yukimi</span><span class="c-time">17 часов назад</span></div><p class="c-text">Стабильный игрок, сыграю ещё 🎯</p></div></div>
+                  <div class="steam-comment"><div class="c-ava">Y</div><div><div class="c-top"><span class="c-name">yukimi</span><span class="c-time">17 часов назад</span></div><p class="c-text">Командная игра на уровне, спасибо за матч ✨</p></div></div>
+                </div>
+              </div>
+            </article>
+
+            <!-- DOTA -->
+            <article class="steam-rect">
+              <div class="rect-left">
+                <h2 class="rect-title">🧙 Dota 2</h2>
+                <div class="rect-sub">Комментарии под тимплей/роль</div>
+                <img class="rect-img" src="assets/games/dota2.png" alt="Dota 2 image" loading="lazy">
+                <div class="rect-badge">DOTA PACK</div>
+              </div>
+
+              <div class="rect-right">
+                <div class="steam-add">
+                  <div class="a-ava">Y</div>
+                  <input class="a-input" type="text" placeholder="Legg til en kommentar" disabled>
+                </div>
+
+                <div class="steam-thread">
+                  <div class="steam-comment"><div class="c-ava">Y</div><div><div class="c-top"><span class="c-name">yukimi</span><span class="c-time">17 часов назад</span></div><p class="c-text">Крутой тимплей, играется легко ✅</p></div></div>
+                  <div class="steam-comment"><div class="c-ava">Y</div><div><div class="c-top"><span class="c-name">yukimi</span><span class="c-time">17 часов назад</span></div><p class="c-text">Отличные решения по карте, респект 🗺️</p></div></div>
+                  <div class="steam-comment"><div class="c-ava">Y</div><div><div class="c-top"><span class="c-name">yukimi</span><span class="c-time">17 часов назад</span></div><p class="c-text">Спокойно и по делу, без лишних эмоций 👍</p></div></div>
+                  <div class="steam-comment"><div class="c-ava">Y</div><div><div class="c-top"><span class="c-name">yukimi</span><span class="c-time">17 часов назад</span></div><p class="c-text">Хорошо отыграл роль, приятно в пати ✨</p></div></div>
+                  <div class="steam-comment"><div class="c-ava">Y</div><div><div class="c-top"><span class="c-name">yukimi</span><span class="c-time">17 часов назад</span></div><p class="c-text">Сильный игрок, уверенно ведёт к победе 💪</p></div></div>
+                  <div class="steam-comment"><div class="c-ava">Y</div><div><div class="c-top"><span class="c-name">yukimi</span><span class="c-time">17 часов назад</span></div><p class="c-text">Спасибо за катку, было кайфово 🎮</p></div></div>
+                </div>
+              </div>
+            </article>
+
+            <!-- RUST -->
+            <article class="steam-rect">
+              <div class="rect-left">
+                <h2 class="rect-title">🛠️ RUST</h2>
+                <div class="rect-sub">Под рейды/вайпы, без токсика</div>
+                <img class="rect-img" src="assets/games/rust.png" alt="Rust image" loading="lazy">
+                <div class="rect-badge">RUST PACK</div>
+              </div>
+
+              <div class="rect-right">
+                <div class="steam-add">
+                  <div class="a-ava">Y</div>
+                  <input class="a-input" type="text" placeholder="Legg til en kommentar" disabled>
+                </div>
+
+                <div class="steam-thread">
+                  <div class="steam-comment"><div class="c-ava">Y</div><div><div class="c-top"><span class="c-name">yukimi</span><span class="c-time">17 часов назад</span></div><p class="c-text">Надёжный напарник, держит слово ✅</p></div></div>
+                  <div class="steam-comment"><div class="c-ava">Y</div><div><div class="c-top"><span class="c-name">yukimi</span><span class="c-time">17 часов назад</span></div><p class="c-text">Сильная игра, хорошие мувы на рейде 💥</p></div></div>
+                  <div class="steam-comment"><div class="c-ava">Y</div><div><div class="c-top"><span class="c-name">yukimi</span><span class="c-time">17 часов назад</span></div><p class="c-text">Спокойный и адекватный, приятно в тиме 👍</p></div></div>
+                  <div class="steam-comment"><div class="c-ava">Y</div><div><div class="c-top"><span class="c-name">yukimi</span><span class="c-time">17 часов назад</span></div><p class="c-text">Фармит быстро, не бросает команду ⛏️</p></div></div>
+                  <div class="steam-comment"><div class="c-ava">Y</div><div><div class="c-top"><span class="c-name">yukimi</span><span class="c-time">17 часов назад</span></div><p class="c-text">Хорошая координация, всё по плану 🧠</p></div></div>
+                  <div class="steam-comment"><div class="c-ava">Y</div><div><div class="c-top"><span class="c-name">yukimi</span><span class="c-time">17 часов назад</span></div><p class="c-text">Спасибо за вайп, было весело 😄</p></div></div>
+                </div>
+              </div>
+            </article>
+          </div>
+
+          <!-- RIGHT COLUMN: +rep / -rep -->
+          <div class="col">
+
+            <!-- +REP -->
+            <article class="steam-rect">
+              <div class="rect-left">
+                <h2 class="rect-title">✅ +rep</h2>
+                <div class="rect-sub">Короткие плюсовые репы</div>
+                <img class="rect-img" src="assets/games/rep_plus.png" alt="+rep image" loading="lazy">
+                <div class="rect-badge">+REP</div>
+              </div>
+
+              <div class="rect-right">
+                <div class="steam-add">
+                  <div class="a-ava">Y</div>
+                  <input class="a-input" type="text" placeholder="Legg til en kommentar" disabled>
+                </div>
+
+                <div class="steam-thread">
+                  <div class="steam-comment"><div class="c-ava">Y</div><div><div class="c-top"><span class="c-name">yukimi</span><span class="c-time">17 часов назад</span></div><p class="c-text">+rep быстро ответил и помог ✅</p></div></div>
+                  <div class="steam-comment"><div class="c-ava">Y</div><div><div class="c-top"><span class="c-name">yukimi</span><span class="c-time">17 часов назад</span></div><p class="c-text">+rep всё честно, рекомендую 👍</p></div></div>
+                  <div class="steam-comment"><div class="c-ava">Y</div><div><div class="c-top"><span class="c-name">yukimi</span><span class="c-time">17 часов назад</span></div><p class="c-text">+rep адекватный и вежливый человек ✨</p></div></div>
+                  <div class="steam-comment"><div class="c-ava">Y</div><div><div class="c-top"><span class="c-name">yukimi</span><span class="c-time">17 часов назад</span></div><p class="c-text">+rep быстро и по делу, спасибо 🙌</p></div></div>
+                  <div class="steam-comment"><div class="c-ava">Y</div><div><div class="c-top"><span class="c-name">yukimi</span><span class="c-time">17 часов назад</span></div><p class="c-text">+rep топ сервис, всё ок ✅</p></div></div>
+                  <div class="steam-comment"><div class="c-ava">Y</div><div><div class="c-top"><span class="c-name">yukimi</span><span class="c-time">17 часов назад</span></div><p class="c-text">+rep приятно общаться, лайк ❤️</p></div></div>
+                </div>
+              </div>
+            </article>
+
+            <!-- -REP -->
+            <article class="steam-rect">
+              <div class="rect-left">
+                <h2 class="rect-title">⚠️ -rep</h2>
+                <div class="rect-sub">Мягкие минусы, без оскорблений</div>
+                <img class="rect-img" src="assets/games/rep_minus.png" alt="-rep image" loading="lazy">
+                <div class="rect-badge">-REP</div>
+              </div>
+
+              <div class="rect-right">
+                <div class="steam-add">
+                  <div class="a-ava">Y</div>
+                  <input class="a-input" type="text" placeholder="Legg til en kommentar" disabled>
+                </div>
+
+                <div class="steam-thread">
+                  <div class="steam-comment"><div class="c-ava">Y</div><div><div class="c-top"><span class="c-name">yukimi</span><span class="c-time">17 часов назад</span></div><p class="c-text">-rep долго отвечает, неудобно</p></div></div>
+                  <div class="steam-comment"><div class="c-ava">Y</div><div><div class="c-top"><span class="c-name">yukimi</span><span class="c-time">17 часов назад</span></div><p class="c-text">-rep не вышло договориться по времени</p></div></div>
+                  <div class="steam-comment"><div class="c-ava">Y</div><div><div class="c-top"><span class="c-name">yukimi</span><span class="c-time">17 часов назад</span></div><p class="c-text">-rep обещал, но затянул по срокам</p></div></div>
+                  <div class="steam-comment"><div class="c-ava">Y</div><div><div class="c-top"><span class="c-name">yukimi</span><span class="c-time">17 часов назад</span></div><p class="c-text">-rep ответил не сразу, пришлось ждать</p></div></div>
+                  <div class="steam-comment"><div class="c-ava">Y</div><div><div class="c-top"><span class="c-name">yukimi</span><span class="c-time">17 часов назад</span></div><p class="c-text">-rep коммуникация слабая, мало информации</p></div></div>
+                  <div class="steam-comment"><div class="c-ava">Y</div><div><div class="c-top"><span class="c-name">yukimi</span><span class="c-time">17 часов назад</span></div><p class="c-text">-rep не подошло, возможно, просто не мой формат</p></div></div>
+                </div>
+              </div>
+            </article>
+
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- bottom: shop + info (centered like header) -->
+    <div class="wrap">
+      <section class="section">
+        <div class="section-title">
+          <span data-lang="ru">🛒 Товары и информация</span>
+          <span data-lang="en">🛒 Shop & info</span>
+        </div>
+
+        <div class="grid2">
+          <section class="card">
+            <div data-lang="ru">
+              <h2 style="margin:0 0 8px;font-size:18px">🛒 Товары Юкими</h2>
+              <p style="margin:0;color:var(--muted)">Быстрый переход к моим услугам на FunPay:</p>
+
+              <div class="shop-grid">
+                <a class="shop-btn" href="https://funpay.com/lots/offer?id=61954569" target="_blank" rel="noopener">
+                  <div class="shop-left">
+                    <div class="shop-ic">❤️</div>
+                    <div class="shop-text">
+                      <p class="shop-title">Лайки</p>
+                      <p class="shop-sub">🖼️ 20 ЛАЙКОВ ДЛЯ ВАШЕГО СКРИНШОТА ИЛИ ОБЗОРА STEAM 👍</p>
+                    </div>
+                  </div>
+                  <div class="shop-go">→</div>
+                </a>
+
+                <a class="shop-btn" href="https://funpay.com/lots/offer?id=61954834" target="_blank" rel="noopener">
+                  <div class="shop-left">
+                    <div class="shop-ic">💬</div>
+                    <div class="shop-text">
+                      <p class="shop-title">Комментарии</p>
+                      <p class="shop-sub">🎀 20 КОММЕНТАРИЕВ ДЛЯ ВАШЕГО STEAM ПРОФИЛЯ 🎀</p>
+                    </div>
+                  </div>
+                  <div class="shop-go">→</div>
+                </a>
+
+                <a class="shop-btn" href="https://funpay.com/lots/offer?id=58877689" target="_blank" rel="noopener">
+                  <div class="shop-left">
+                    <div class="shop-ic">⭐</div>
+                    <div class="shop-text">
+                      <p class="shop-title">Лайки на обзоры</p>
+                      <p class="shop-sub">📋 10 ЛАЙКОВ ДЛЯ ВАШЕГО ОБЗОРА ИГРЫ STEAM 👍</p>
+                    </div>
+                  </div>
+                  <div class="shop-go">→</div>
+                </a>
+              </div>
+            </div>
+
+            <div data-lang="en">
+              <h2 style="margin:0 0 8px;font-size:18px">🛒 Yukimi’s Services</h2>
+              <p style="margin:0;color:var(--muted)">Quick links to my FunPay offers:</p>
+
+              <div class="shop-grid">
+                <a class="shop-btn" href="https://funpay.com/lots/offer?id=61954569" target="_blank" rel="noopener">
+                  <div class="shop-left">
+                    <div class="shop-ic">❤️</div>
+                    <div class="shop-text">
+                      <p class="shop-title">Likes / reactions</p>
+                      <p class="shop-sub">🖼️ 20 LIKES FOR YOUR STEAM SCREENSHOT 👍</p>
+                    </div>
+                  </div>
+                  <div class="shop-go">→</div>
+                </a>
+
+                <a class="shop-btn" href="https://funpay.com/lots/offer?id=61954834" target="_blank" rel="noopener">
+                  <div class="shop-left">
+                    <div class="shop-ic">💬</div>
+                    <div class="shop-text">
+                      <p class="shop-title">Comments</p>
+                      <p class="shop-sub">🎀 20 COMMENTS FOR YOUR STEAM PROFILE 🎀</p>
+                    </div>
+                  </div>
+                  <div class="shop-go">→</div>
+                </a>
+
+                <a class="shop-btn" href="https://funpay.com/lots/offer?id=58877689" target="_blank" rel="noopener">
+                  <div class="shop-left">
+                    <div class="shop-ic">⭐</div>
+                    <div class="shop-text">
+                      <p class="shop-title">Review likes</p>
+                      <p class="shop-sub">👍 10 LIKES FOR YOUR STEAM REVIEW 👍</p>
+                    </div>
+                  </div>
+                  <div class="shop-go">→</div>
+                </a>
+              </div>
+            </div>
+          </section>
+
+          <aside class="card">
+            <div data-lang="ru">
+              <h2 style="margin:0 0 8px;font-size:18px">✨ Внутрености</h2>
+              <ul class="bullet">
+                <li><span class="ic">🟦</span><span>Категории растянуты почти на весь экран</span></li>
+                <li><span class="ic">🖼️</span><span>Слева картинка + описание, справа Steam-комменты</span></li>
+                <li><span class="ic">📋</span><span>Слева: CS / Dota / Rust • Справа: +rep / -rep</span></li>
+                <li>
+                  <span class="ic">📌</span>
+                  <span>Сделал <a class="credit-link" href="https://funpay.com/users/3472051/" target="_blank" rel="noopener">Yukimi2208 / FunPay</a></span>
+                </li>
+              </ul>
+            </div>
+
+            <div data-lang="en">
+              <h2 style="margin:0 0 8px;font-size:18px">✨ Info</h2>
+              <ul class="bullet">
+                <li><span class="ic">🟦</span><span>Categories are near full width</span></li>
+                <li><span class="ic">🖼️</span><span>Left: image + title, right: Steam-like comments</span></li>
+                <li><span class="ic">📋</span><span>Left: CS / Dota / Rust • Right: +rep / -rep</span></li>
+                <li>
+                  <span class="ic">📌</span>
+                  <span>Made by <a class="credit-link" href="https://funpay.com/users/3472051/" target="_blank" rel="noopener">Yukimi2208 / FunPay</a></span>
+                </li>
+              </ul>
+            </div>
+          </aside>
+        </div>
+
+        <div class="footer">
+          <span data-lang="ru">✨ Выбери комменты • Yukimi2208</span>
+          <span data-lang="en">✨ Choose comments • Yukimi2208</span>
+        </div>
+      </section>
+    </div>
+
   </div>
 
   <script>
@@ -625,6 +663,7 @@
   </script>
 </body>
 </html>
+
 
 
 
