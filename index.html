@@ -4,25 +4,18 @@
   <meta charset="utf-8" />
   <meta name="viewport" content="width=device-width,initial-scale=1" />
   <title>✨ Выбери комменты</title>
-  <meta name="description" content="Витрина комментариев в Steam-стиле. Комменты открываются по кнопке." />
+  <meta name="description" content="Витрина комментариев. Комменты скрыты и открываются по кнопке." />
   <link rel="icon" type="image/png" href="assets/favicon.jpg">
   <link rel="apple-touch-icon" href="assets/favicon.jpg">
   <meta name="theme-color" content="#0b0f17">
 
   <style>
     :root{
-      --bg:#0b0f17;
-      --card:#111827;
-      --card2:#0f172a;
-      --text:#e5e7eb;
-      --muted:#9ca3af;
-      --accent:#a78bfa;
-      --accent2:#22d3ee;
-      --warn:#fbbf24;
-      --border:rgba(255,255,255,.08);
+      --bg:#0b0f17; --card:#111827; --card2:#0f172a; --text:#e5e7eb; --muted:#9ca3af;
+      --accent:#a78bfa; --accent2:#22d3ee; --border:rgba(255,255,255,.08);
       --shadow: 0 10px 30px rgba(0,0,0,.35);
 
-      /* steam-ish */
+      /* Steam-ish inputs for hidden block */
       --steam-line2: rgba(255,255,255,.05);
       --steam-input: rgba(255,255,255,.06);
       --steam-input2: rgba(255,255,255,.03);
@@ -38,7 +31,6 @@
       color:var(--text);
       line-height:1.55;
     }
-
     .wrap{max-width:980px;margin:0 auto;padding:28px 18px 60px}
 
     /* HERO (как первая витрина) */
@@ -72,23 +64,40 @@
       overflow:hidden;
     }
     .lang button{
-      cursor:pointer;
-      border:0;
-      padding:8px 12px;
-      font-size:14px;
-      color:var(--muted);
-      background: transparent;
+      cursor:pointer;border:0;padding:8px 12px;font-size:14px;
+      color:var(--muted);background:transparent;
     }
-    .lang button.active{
-      color: var(--text);
-      background: rgba(167,139,250,.16);
-    }
+    .lang button.active{color: var(--text);background: rgba(167,139,250,.16);}
+
     h1{margin:10px 0 6px;font-size:26px}
     .subtitle{margin:0;color:var(--muted)}
     .meta{margin-top:10px;display:flex;flex-wrap:wrap;gap:10px;color:var(--muted);font-size:14px}
     .meta b{color:var(--text);font-weight:600}
 
-    /* GRID как витрина */
+    /* hero-head with image */
+    .hero-head{
+      display:grid;
+      grid-template-columns: 1.35fr .65fr;
+      gap:14px;
+      margin-top:10px;
+      align-items:start;
+    }
+    @media (max-width:900px){ .hero-head{grid-template-columns:1fr} }
+
+    .hero-img-card img{
+      width:100%;
+      height:140px;
+      display:block;
+      border-radius:12px;
+      border:1px solid rgba(255,255,255,.10);
+      object-fit: contain;
+      object-position:center;
+      background: rgba(0,0,0,.35);
+      box-shadow: 0 10px 25px rgba(0,0,0,.25);
+    }
+    .hero-img-caption{margin-top:8px;font-size:12px;color:var(--muted);}
+
+    /* GRID like first showcase */
     .grid{display:grid;grid-template-columns: 1.2fr .8fr;gap:16px;margin-top:14px}
     @media (max-width:880px){ .grid{grid-template-columns:1fr} }
 
@@ -104,17 +113,12 @@
 
     /* bullets */
     .bullet{
-      list-style:none;
-      padding:0;
-      margin:10px 0 0;
-      display:grid;
-      gap:10px;
-      color:var(--muted);
+      list-style:none;padding:0;margin:10px 0 0;
+      display:grid;gap:10px;color:var(--muted);
     }
     .bullet li{display:flex;gap:10px;align-items:flex-start;line-height:1.35;}
     .bullet .ic{width:18px;flex:0 0 18px;opacity:.95}
     .bullet b{color:var(--text)}
-
     .credit-link{
       color: var(--accent2);
       text-decoration:none;
@@ -129,28 +133,24 @@
     .shop-btn{
       display:flex;align-items:center;justify-content:space-between;gap:10px;
       padding:12px 12px;border-radius:14px;border:1px solid var(--border);
-      background: rgba(255,255,255,.03);
-      text-decoration:none;color:var(--text);
+      background: rgba(255,255,255,.03);text-decoration:none;color:var(--text);
       box-shadow: 0 10px 22px rgba(0,0,0,.20);
       transition: transform .08s ease, opacity .08s ease;
     }
     .shop-btn:hover{opacity:.95; transform: translateY(-1px);}
     .shop-left{display:flex;align-items:flex-start;gap:10px;min-width:0}
     .shop-ic{
-      width:34px;height:34px;border-radius:12px;
-      display:grid;place-items:center;
-      background: rgba(167,139,250,.14);
-      border:1px solid rgba(167,139,250,.25);
-      flex:0 0 auto;
+      width:34px;height:34px;border-radius:12px;display:grid;place-items:center;
+      background: rgba(167,139,250,.14);border:1px solid rgba(167,139,250,.25);flex:0 0 auto;
     }
     .shop-text{min-width:0}
     .shop-title{font-weight:900;line-height:1.15;margin:0;font-size:14.5px;}
     .shop-sub{margin:4px 0 0;color:var(--muted);font-size:13px;line-height:1.25;}
     .shop-go{color: var(--accent2);font-weight:900;flex:0 0 auto;}
 
-    /* ===== Категории (витрина) ===== */
+    /* ===== categories showcase (collapsed) ===== */
     .section-title{
-      margin:18px 0 10px;
+      margin:18px 0 12px;
       font-weight:900;
       letter-spacing:.3px;
       font-size:16px;
@@ -160,18 +160,12 @@
       align-items:center;
       gap:8px;
     }
-
-    .cats{
-      margin-top:14px;
-      display:grid;
-      grid-template-columns:1fr;
-      gap:12px;
-    }
+    .cats{margin-top:6px;display:grid;gap:14px;}
 
     .cat{
       border-radius:18px;
       border:1px solid var(--border);
-      background: linear-gradient(180deg, rgba(17,24,39,.78), rgba(15,23,42,.78));
+      background: linear-gradient(180deg, rgba(17,24,39,.80), rgba(15,23,42,.80));
       box-shadow: var(--shadow);
       overflow:hidden;
     }
@@ -183,9 +177,9 @@
       padding:14px;
       align-items:center;
     }
-    @media (max-width:700px){
+    @media (max-width:720px){
       .cat-head{grid-template-columns:1fr;align-items:start}
-      .cat-thumb{height:140px}
+      .cat-thumb{height:150px}
     }
 
     .cat-thumb{
@@ -199,31 +193,16 @@
     }
 
     .cat-info{min-width:0}
-    .cat-title{
-      margin:0;
-      font-weight:900;
-      font-size:16px;
-      line-height:1.2;
-    }
-    .cat-sub{
-      margin:6px 0 0;
-      color:var(--muted);
-      font-size:13px;
-      line-height:1.25;
-    }
+    .cat-title{margin:0;font-weight:900;font-size:16px;line-height:1.2;}
+    .cat-sub{margin:6px 0 0;color:var(--muted);font-size:13px;line-height:1.25;}
+
     .pill{
-      display:inline-flex;
-      align-items:center;
-      gap:8px;
-      margin-top:8px;
-      padding:6px 10px;
-      border-radius:999px;
+      display:inline-flex;align-items:center;gap:8px;margin-top:8px;
+      padding:6px 10px;border-radius:999px;
       border:1px solid rgba(255,255,255,.10);
       background: rgba(0,0,0,.20);
       color:rgba(229,231,235,.92);
-      font-size:12px;
-      font-weight:800;
-      width:fit-content;
+      font-size:12px;font-weight:800;width:fit-content;
     }
     .pill .dot{
       width:8px;height:8px;border-radius:50%;
@@ -247,20 +226,17 @@
     .btn-open:active{transform: translateY(0px);}
 
     .cat-body{
-      display:none; /* скрыто по умолчанию */
+      display:none;
       border-top:1px solid rgba(255,255,255,.06);
       background: rgba(0,0,0,.10);
       padding:0;
     }
     .cat.open .cat-body{display:block;}
 
-    /* Steam-like comments inside раскрытия */
+    /* Steam-ish comments inside раскрытия */
     .steam-add{
-      display:grid;
-      grid-template-columns: 38px 1fr;
-      gap:10px;
-      padding:12px 14px;
-      border-bottom:1px solid var(--steam-line2);
+      display:grid;grid-template-columns: 38px 1fr;gap:10px;
+      padding:12px 14px;border-bottom:1px solid var(--steam-line2);
       background: rgba(0,0,0,.14);
     }
     .a-ava{
@@ -268,39 +244,26 @@
       border:1px solid rgba(255,255,255,.10);
       background: rgba(255,255,255,.06);
       display:grid;place-items:center;
-      font-weight:900;
-      color:rgba(229,231,235,.92);
+      font-weight:900;color:rgba(229,231,235,.92);
       user-select:none;
     }
     .a-input{
-      height:38px;
-      border-radius:3px;
+      height:38px;border-radius:3px;
       border:1px solid rgba(255,255,255,.08);
       background: linear-gradient(180deg, var(--steam-input), var(--steam-input2));
       color:rgba(229,231,235,.85);
-      padding:0 10px;
-      font-size:13px;
-      outline:none;
+      padding:0 10px;font-size:13px;outline:none;
     }
     .a-input::placeholder{color:rgba(156,163,175,.75)}
     .a-input[disabled]{opacity:.9; cursor:not-allowed}
 
-    .steam-thread{
-      padding:6px 0;
-      max-height: 360px;
-      overflow:auto;
-    }
+    .steam-thread{padding:6px 0;max-height: 360px;overflow:auto;}
     .steam-thread::-webkit-scrollbar{width:10px}
-    .steam-thread::-webkit-scrollbar-thumb{
-      background: rgba(255,255,255,.10);
-      border-radius:10px;
-    }
+    .steam-thread::-webkit-scrollbar-thumb{background: rgba(255,255,255,.10);border-radius:10px;}
     .steam-thread::-webkit-scrollbar-track{background: rgba(0,0,0,.15);}
 
     .steam-comment{
-      display:grid;
-      grid-template-columns: 38px 1fr;
-      gap:10px;
+      display:grid;grid-template-columns: 38px 1fr;gap:10px;
       padding:10px 14px;
     }
     .steam-comment + .steam-comment{border-top:1px solid rgba(255,255,255,.04);}
@@ -309,8 +272,7 @@
       border:1px solid rgba(255,255,255,.10);
       background: rgba(255,255,255,.06);
       display:grid;place-items:center;
-      font-weight:900;
-      color:rgba(229,231,235,.9);
+      font-weight:900;color:rgba(229,231,235,.9);
       user-select:none;
     }
     .c-top{display:flex;gap:8px;align-items:baseline;flex-wrap:wrap;margin-bottom:3px;}
@@ -320,7 +282,7 @@
 
     .footer{margin-top:18px;color:var(--muted);font-size:14px;text-align:center;opacity:.95}
 
-    /* i18n blocks */
+    /* i18n */
     [data-lang]{display:none}
     body.lang-ru [data-lang="ru"]{display:inline}
     body.lang-en [data-lang="en"]{display:inline}
@@ -345,27 +307,37 @@
         </div>
       </div>
 
-      <div style="margin-top:10px">
-        <div data-lang="ru">
-          <h1>✨ Выбери комменты</h1>
-          <p class="subtitle">Витрина: комментарии скрыты и открываются кнопкой.</p>
-          <div class="meta"><span>Автор: <b>Yukimi2208</b></span></div>
+      <div class="hero-head">
+        <div>
+          <div data-lang="ru">
+            <h1>✨ Выбери комменты</h1>
+            <p class="subtitle">Витрина: 5 категорий. Комменты скрыты и открываются по кнопке.</p>
+            <div class="meta"><span>Автор: <b>Yukimi2208</b></span></div>
+          </div>
+
+          <div data-lang="en">
+            <h1>✨ Choose comments</h1>
+            <p class="subtitle">Showcase: 5 categories. Comments are hidden and open by button.</p>
+            <div class="meta"><span>Author: <b>Yukimi2208</b></span></div>
+          </div>
         </div>
 
-        <div data-lang="en">
-          <h1>✨ Choose comments</h1>
-          <p class="subtitle">Showcase: comments are hidden and open by button.</p>
-          <div class="meta"><span>Author: <b>Yukimi2208</b></span></div>
+        <div class="hero-img-card">
+          <a href="assets/hero.jpg" target="_blank" rel="noopener" style="display:block">
+            <img src="assets/hero.jpg" alt="Example image" loading="lazy">
+          </a>
+          <div class="hero-img-caption">
+            <span data-lang="ru">Пример оформления.</span>
+            <span data-lang="en">Example layout.</span>
+          </div>
         </div>
       </div>
 
-      <!-- ВИТРИНА: товары + внутрености (как раньше) -->
       <div class="grid">
         <section class="card">
           <div data-lang="ru">
             <h2>🛒 Товары Юкими</h2>
             <p>Быстрый переход к моим услугам на FunPay:</p>
-
             <div class="shop-grid">
               <a class="shop-btn" href="https://funpay.com/lots/offer?id=61954569" target="_blank" rel="noopener">
                 <div class="shop-left">
@@ -405,7 +377,6 @@
           <div data-lang="en">
             <h2>🛒 Yukimi’s Services</h2>
             <p>Quick links to my FunPay offers:</p>
-
             <div class="shop-grid">
               <a class="shop-btn" href="https://funpay.com/lots/offer?id=61954569" target="_blank" rel="noopener">
                 <div class="shop-left">
@@ -447,9 +418,9 @@
           <div data-lang="ru">
             <h2>✨ Внутрености</h2>
             <ul class="bullet">
-              <li><span class="ic">🧩</span><span>Комменты <b>скрыты</b> и открываются кнопкой</span></li>
-              <li><span class="ic">🎮</span><span>Категории: <b>КС2 / Дота / Раст</b></span></li>
-              <li><span class="ic">✅</span><span>Репутация: <b>+rep</b> и <b>-rep</b></span></li>
+              <li><span class="ic">🧩</span><span>Комменты <b>скрыты</b> и открываются по кнопке</span></li>
+              <li><span class="ic">🎮</span><span>Категории: <b>КС2</b>, <b>Дота</b>, <b>Раст</b></span></li>
+              <li><span class="ic">✅</span><span>Репутация: <b>Плюс реп</b> и <b>Минус реп</b></span></li>
               <li><span class="ic">📌</span><span>Сделал <a class="credit-link" href="https://funpay.com/users/3472051/" target="_blank" rel="noopener">Yukimi2208 / FunPay</a></span></li>
             </ul>
           </div>
@@ -458,8 +429,8 @@
             <h2>✨ Info</h2>
             <ul class="bullet">
               <li><span class="ic">🧩</span><span>Comments are <b>hidden</b> and open by button</span></li>
-              <li><span class="ic">🎮</span><span>Categories: <b>CS2 / Dota / Rust</b></span></li>
-              <li><span class="ic">✅</span><span>Reputation: <b>+rep</b> and <b>-rep</b></span></li>
+              <li><span class="ic">🎮</span><span>Categories: <b>CS2</b>, <b>Dota</b>, <b>Rust</b></span></li>
+              <li><span class="ic">✅</span><span>Reputation: <b>Plus rep</b> and <b>Minus rep</b></span></li>
               <li><span class="ic">📌</span><span>Made by <a class="credit-link" href="https://funpay.com/users/3472051/" target="_blank" rel="noopener">Yukimi2208 / FunPay</a></span></li>
             </ul>
           </div>
@@ -467,8 +438,7 @@
       </div>
     </header>
 
-    <!-- Категории витрины (комменты скрыты) -->
-    <div class="section-title">💬 Категории</div>
+    <div class="section-title">💬 Выбор категории</div>
 
     <div class="cats">
 
@@ -489,7 +459,6 @@
             <div class="a-ava">Y</div>
             <input class="a-input" type="text" placeholder="Добавить комментарий" disabled>
           </div>
-
           <div class="steam-thread">
             <div class="steam-comment"><div class="c-ava">Y</div><div><div class="c-top"><span class="c-name">yukimi</span><span class="c-time">18 часов назад</span></div><p class="c-text">Чёткий тиммейт, приятно играть 🔥</p></div></div>
             <div class="steam-comment"><div class="c-ava">Y</div><div><div class="c-top"><span class="c-name">yukimi</span><span class="c-time">18 часов назад</span></div><p class="c-text">Хорошие коллы и спокойная игра, респект ✅</p></div></div>
@@ -507,7 +476,7 @@
           <img class="cat-thumb" src="assets/games/dota2.png" alt="Дота" loading="lazy">
           <div class="cat-info">
             <p class="cat-title">🧙 Дота</p>
-            <p class="cat-sub">Комментарии под тимплей / роль (6 штук)</p>
+            <p class="cat-sub">Комментарии под тимплей / роль</p>
             <div class="pill"><span class="dot"></span> 6 комментариев</div>
           </div>
           <button class="btn-open" type="button" data-toggle="#cat-dota">Показать комментарии</button>
@@ -518,7 +487,6 @@
             <div class="a-ava">Y</div>
             <input class="a-input" type="text" placeholder="Добавить комментарий" disabled>
           </div>
-
           <div class="steam-thread">
             <div class="steam-comment"><div class="c-ava">Y</div><div><div class="c-top"><span class="c-name">yukimi</span><span class="c-time">18 часов назад</span></div><p class="c-text">Крутой тимплей, играется легко ✅</p></div></div>
             <div class="steam-comment"><div class="c-ava">Y</div><div><div class="c-top"><span class="c-name">yukimi</span><span class="c-time">18 часов назад</span></div><p class="c-text">Отличные решения по карте, респект 🗺️</p></div></div>
@@ -536,7 +504,7 @@
           <img class="cat-thumb" src="assets/games/rust.png" alt="Раст" loading="lazy">
           <div class="cat-info">
             <p class="cat-title">🛠️ Раст</p>
-            <p class="cat-sub">Под вайпы/рейды, без токсика (6 штук)</p>
+            <p class="cat-sub">Под вайпы/рейды, без токсика</p>
             <div class="pill"><span class="dot"></span> 6 комментариев</div>
           </div>
           <button class="btn-open" type="button" data-toggle="#cat-rust">Показать комментарии</button>
@@ -547,7 +515,6 @@
             <div class="a-ava">Y</div>
             <input class="a-input" type="text" placeholder="Добавить комментарий" disabled>
           </div>
-
           <div class="steam-thread">
             <div class="steam-comment"><div class="c-ava">Y</div><div><div class="c-top"><span class="c-name">yukimi</span><span class="c-time">18 часов назад</span></div><p class="c-text">Надёжный напарник, держит слово ✅</p></div></div>
             <div class="steam-comment"><div class="c-ava">Y</div><div><div class="c-top"><span class="c-name">yukimi</span><span class="c-time">18 часов назад</span></div><p class="c-text">Сильная игра, хорошие мувы на рейде 💥</p></div></div>
@@ -559,13 +526,13 @@
         </div>
       </section>
 
-      <!-- +rep -->
+      <!-- Плюс реп -->
       <section class="cat" id="cat-plus">
         <div class="cat-head">
-          <img class="cat-thumb" src="assets/games/rep_plus.png" alt="+rep" loading="lazy">
+          <img class="cat-thumb" src="assets/games/rep_plus.png" alt="Плюс реп" loading="lazy">
           <div class="cat-info">
             <p class="cat-title">✅ Плюс реп</p>
-            <p class="cat-sub">Короткие плюсовые репы (6 штук)</p>
+            <p class="cat-sub">Короткие плюсовые репы</p>
             <div class="pill"><span class="dot"></span> 6 комментариев</div>
           </div>
           <button class="btn-open" type="button" data-toggle="#cat-plus">Показать комментарии</button>
@@ -576,7 +543,6 @@
             <div class="a-ava">Y</div>
             <input class="a-input" type="text" placeholder="Добавить комментарий" disabled>
           </div>
-
           <div class="steam-thread">
             <div class="steam-comment"><div class="c-ava">Y</div><div><div class="c-top"><span class="c-name">yukimi</span><span class="c-time">18 часов назад</span></div><p class="c-text">+rep быстро ответил и помог ✅</p></div></div>
             <div class="steam-comment"><div class="c-ava">Y</div><div><div class="c-top"><span class="c-name">yukimi</span><span class="c-time">18 часов назад</span></div><p class="c-text">+rep всё честно, рекомендую 👍</p></div></div>
@@ -588,13 +554,13 @@
         </div>
       </section>
 
-      <!-- -rep -->
+      <!-- Минус реп -->
       <section class="cat" id="cat-minus">
         <div class="cat-head">
-          <img class="cat-thumb" src="assets/games/rep_minus.png" alt="-rep" loading="lazy">
+          <img class="cat-thumb" src="assets/games/rep_minus.png" alt="Минус реп" loading="lazy">
           <div class="cat-info">
             <p class="cat-title">⚠️ Минус реп</p>
-            <p class="cat-sub">Мягкие минусы, без оскорблений (6 штук)</p>
+            <p class="cat-sub">Мягкие минусы, без оскорблений</p>
             <div class="pill"><span class="dot"></span> 6 комментариев</div>
           </div>
           <button class="btn-open" type="button" data-toggle="#cat-minus">Показать комментарии</button>
@@ -605,7 +571,6 @@
             <div class="a-ava">Y</div>
             <input class="a-input" type="text" placeholder="Добавить комментарий" disabled>
           </div>
-
           <div class="steam-thread">
             <div class="steam-comment"><div class="c-ava">Y</div><div><div class="c-top"><span class="c-name">yukimi</span><span class="c-time">18 часов назад</span></div><p class="c-text">-rep долго отвечает, неудобно</p></div></div>
             <div class="steam-comment"><div class="c-ava">Y</div><div><div class="c-top"><span class="c-name">yukimi</span><span class="c-time">18 часов назад</span></div><p class="c-text">-rep не вышло договориться по времени</p></div></div>
@@ -623,7 +588,7 @@
   </div>
 
   <script>
-    // RU/EN switch (как раньше)
+    // RU/EN
     const btnRu = document.getElementById('btn-ru');
     const btnEn = document.getElementById('btn-en');
 
@@ -634,7 +599,7 @@
       btnEn.classList.toggle('active', lang === 'en');
       btnRu.setAttribute('aria-selected', lang === 'ru');
       btnEn.setAttribute('aria-selected', lang === 'en');
-      document.documentElement.lang = lang === 'ru' ? 'ru' : 'en';
+      document.documentElement.lang = (lang === 'ru') ? 'ru' : 'en';
       localStorage.setItem('site_lang', lang);
       document.title = (lang === 'ru') ? '✨ Выбери комменты' : '✨ Choose comments';
     }
@@ -646,7 +611,7 @@
     if (saved === 'en' || saved === 'ru') setLang(saved);
     else setLang('ru');
 
-    // Toggle categories (скрыть/показать комменты)
+    // раскрытие категорий
     function closeAllCats(exceptEl){
       document.querySelectorAll('.cat.open').forEach(el=>{
         if (exceptEl && el === exceptEl) return;
@@ -668,7 +633,6 @@
         cat.classList.toggle('open');
         btn.textContent = cat.classList.contains('open') ? 'Скрыть комментарии' : 'Показать комментарии';
 
-        // плавно прокрутить к открытой секции
         if (willOpen){
           setTimeout(()=>cat.scrollIntoView({behavior:'smooth', block:'start'}), 50);
         }
@@ -677,6 +641,7 @@
   </script>
 </body>
 </html>
+
 
 
 
