@@ -93,7 +93,7 @@
     }
     .hero-img-caption{margin-top:8px;font-size:12px;color:var(--muted)}
 
-    /* Cards */
+    /* SECTIONS */
     .section{margin-top:16px}
     .section-title{
       margin:18px 0 10px;
@@ -103,13 +103,8 @@
       color:var(--text);
       opacity:.95;
     }
-    .grid5{
-      display:grid;
-      grid-template-columns: repeat(2, minmax(0, 1fr));
-      gap:16px;
-    }
-    @media (max-width:880px){ .grid5{grid-template-columns:1fr} }
 
+    /* CARDS */
     .card{
       background: var(--cardgrad);
       border:1px solid var(--border);
@@ -119,6 +114,22 @@
       overflow:hidden;
       position:relative;
     }
+
+    /* 5 packs grid */
+    .grid5{
+      display:grid;
+      grid-template-columns: repeat(2, minmax(0, 1fr));
+      gap:16px;
+    }
+    @media (max-width:880px){ .grid5{grid-template-columns:1fr} }
+
+    /* bottom 2 cards grid */
+    .grid2{
+      display:grid;
+      grid-template-columns: 1.2fr .8fr;
+      gap:16px;
+    }
+    @media (max-width:880px){ .grid2{grid-template-columns:1fr} }
 
     .cat-head{
       display:flex;
@@ -190,6 +201,67 @@
       opacity:.95;
     }
 
+    /* bullet list */
+    .bullet{
+      list-style:none;
+      padding:0;
+      margin:10px 0 0;
+      display:grid;
+      gap:10px;
+      color:var(--muted);
+    }
+    .bullet li{
+      display:flex;
+      gap:10px;
+      align-items:flex-start;
+      line-height:1.35;
+    }
+    .bullet .ic{width:18px;flex:0 0 18px;opacity:.95}
+    .bullet b{color:var(--text)}
+    .credit-link{
+      color: var(--accent2);
+      text-decoration:none;
+      border-bottom:1px dashed rgba(34,211,238,.55);
+      padding-bottom:2px;
+      font-weight:800;
+    }
+    .credit-link:hover{opacity:.9}
+
+    /* shop buttons */
+    .shop-grid{
+      margin-top:12px;
+      display:grid;
+      grid-template-columns:1fr;
+      gap:10px;
+    }
+    .shop-btn{
+      display:flex;
+      align-items:center;
+      justify-content:space-between;
+      gap:10px;
+      padding:12px 12px;
+      border-radius:14px;
+      border:1px solid var(--border);
+      background: rgba(255,255,255,.03);
+      text-decoration:none;
+      color:var(--text);
+      box-shadow: 0 10px 22px rgba(0,0,0,.20);
+      transition: transform .08s ease, opacity .08s ease;
+    }
+    .shop-btn:hover{opacity:.95; transform: translateY(-1px);}
+    .shop-left{display:flex;align-items:flex-start;gap:10px;min-width:0}
+    .shop-ic{
+      width:34px;height:34px;border-radius:12px;
+      display:grid;place-items:center;
+      background: rgba(167,139,250,.14);
+      border:1px solid rgba(167,139,250,.25);
+      flex:0 0 auto;
+    }
+    .shop-text{min-width:0}
+    .shop-title{font-weight:900;line-height:1.15;margin:0;font-size:14.5px;}
+    .shop-sub{margin:4px 0 0;color:var(--muted);font-size:13px;line-height:1.25;}
+    .shop-go{color: var(--accent2);font-weight:900;flex:0 0 auto;}
+
     .footer{
       margin-top:18px;
       color:var(--muted);
@@ -231,6 +303,7 @@
 
 <body class="lang-ru">
   <div class="wrap">
+    <!-- HERO -->
     <header class="hero">
       <div class="topbar">
         <div class="badge"><span class="dot"></span>
@@ -265,7 +338,7 @@
 
         <div class="hero-img-card">
           <a href="assets/hero.jpg" target="_blank" rel="noopener" style="display:block">
-            <img src="assets/hero.jpg" alt="Steam badge example" loading="lazy">
+            <img src="assets/hero.jpg" alt="Example image" loading="lazy">
           </a>
           <div class="hero-img-caption">
             <span data-lang="ru">Пример оформления.</span>
@@ -275,27 +348,21 @@
       </div>
     </header>
 
+    <!-- 5 COMMENT BLOCKS -->
     <section class="section">
-      <div data-lang="ru" class="section-title">🎀 Выбор комментариев</div>
-      <div data-lang="en" class="section-title">🎀 Comment packs</div>
+      <div data-lang="ru" class="section-title">🎀 Комментарии</div>
+      <div data-lang="en" class="section-title">🎀 Comments</div>
 
       <div class="grid5">
         <!-- CS -->
         <div class="card">
           <div class="cat-head">
             <div class="cat-left">
-              <h2 class="cat-title">
-                <span data-lang="ru">🔫 CS (Counter-Strike)</span>
-                <span data-lang="en">🔫 CS (Counter-Strike)</span>
-              </h2>
-              <p class="cat-sub">
-                <span data-lang="ru">6 нейтральных комментов для профиля/скринов</span>
-                <span data-lang="en">6 neutral comments for profile/screens</span>
-              </p>
+              <h2 class="cat-title"><span data-lang="ru">🔫 CS (Counter-Strike)</span><span data-lang="en">🔫 CS (Counter-Strike)</span></h2>
+              <p class="cat-sub"><span data-lang="ru">6 нейтральных комментов</span><span data-lang="en">6 neutral comments</span></p>
             </div>
             <img class="cat-img" src="assets/games/cs2.png" alt="CS image" loading="lazy">
           </div>
-
           <ul class="comment-list">
             <li class="cmt" data-copy="Чёткий тиммейт, приятно играть 🔥"><p class="cmt-text">Чёткий тиммейт, приятно играть 🔥</p><span class="cmt-btn">Копировать</span></li>
             <li class="cmt" data-copy="Хорошие коллы и спокойная игра, респект ✅"><p class="cmt-text">Хорошие коллы и спокойная игра, респект ✅</p><span class="cmt-btn">Копировать</span></li>
@@ -304,29 +371,17 @@
             <li class="cmt" data-copy="Стабильный игрок, сыграю ещё 🎯"><p class="cmt-text">Стабильный игрок, сыграю ещё 🎯</p><span class="cmt-btn">Копировать</span></li>
             <li class="cmt" data-copy="Командная игра на уровне, спасибо за матч ✨"><p class="cmt-text">Командная игра на уровне, спасибо за матч ✨</p><span class="cmt-btn">Копировать</span></li>
           </ul>
-
-          <div class="cat-sub" style="margin-top:12px">
-            <span data-lang="ru">📌 Файл картинки: assets/games/cs2.png</span>
-            <span data-lang="en">📌 Image file: assets/games/cs2.png</span>
-          </div>
         </div>
 
         <!-- DOTA -->
         <div class="card">
           <div class="cat-head">
             <div class="cat-left">
-              <h2 class="cat-title">
-                <span data-lang="ru">🧙 Dota 2</span>
-                <span data-lang="en">🧙 Dota 2</span>
-              </h2>
-              <p class="cat-sub">
-                <span data-lang="ru">6 комментов для тимплея/игры</span>
-                <span data-lang="en">6 comments for teamwork/game</span>
-              </p>
+              <h2 class="cat-title"><span data-lang="ru">🧙 Dota 2</span><span data-lang="en">🧙 Dota 2</span></h2>
+              <p class="cat-sub"><span data-lang="ru">6 комментов для тимплея</span><span data-lang="en">6 teamwork comments</span></p>
             </div>
             <img class="cat-img" src="assets/games/dota2.png" alt="Dota 2 image" loading="lazy">
           </div>
-
           <ul class="comment-list">
             <li class="cmt" data-copy="Крутой тимплей, играется легко ✅"><p class="cmt-text">Крутой тимплей, играется легко ✅</p><span class="cmt-btn">Копировать</span></li>
             <li class="cmt" data-copy="Отличные решения по карте, респект 🗺️"><p class="cmt-text">Отличные решения по карте, респект 🗺️</p><span class="cmt-btn">Копировать</span></li>
@@ -335,29 +390,17 @@
             <li class="cmt" data-copy="Сильный игрок, уверенно ведёт к победе 💪"><p class="cmt-text">Сильный игрок, уверенно ведёт к победе 💪</p><span class="cmt-btn">Копировать</span></li>
             <li class="cmt" data-copy="Спасибо за катку, было кайфово 🎮"><p class="cmt-text">Спасибо за катку, было кайфово 🎮</p><span class="cmt-btn">Копировать</span></li>
           </ul>
-
-          <div class="cat-sub" style="margin-top:12px">
-            <span data-lang="ru">📌 Файл картинки: assets/games/dota2.png</span>
-            <span data-lang="en">📌 Image file: assets/games/dota2.png</span>
-          </div>
         </div>
 
         <!-- RUST -->
         <div class="card">
           <div class="cat-head">
             <div class="cat-left">
-              <h2 class="cat-title">
-                <span data-lang="ru">🛠️ RUST</span>
-                <span data-lang="en">🛠️ RUST</span>
-              </h2>
-              <p class="cat-sub">
-                <span data-lang="ru">6 комментов для рейдов/вайпов</span>
-                <span data-lang="en">6 comments for wipes/raids</span>
-              </p>
+              <h2 class="cat-title"><span data-lang="ru">🛠️ RUST</span><span data-lang="en">🛠️ RUST</span></h2>
+              <p class="cat-sub"><span data-lang="ru">6 комментов для вайпов/рейдов</span><span data-lang="en">6 wipe/raid comments</span></p>
             </div>
             <img class="cat-img" src="assets/games/rust.png" alt="Rust image" loading="lazy">
           </div>
-
           <ul class="comment-list">
             <li class="cmt" data-copy="Надёжный напарник, держит слово ✅"><p class="cmt-text">Надёжный напарник, держит слово ✅</p><span class="cmt-btn">Копировать</span></li>
             <li class="cmt" data-copy="Сильная игра, хорошие мувы на рейде 💥"><p class="cmt-text">Сильная игра, хорошие мувы на рейде 💥</p><span class="cmt-btn">Копировать</span></li>
@@ -366,31 +409,19 @@
             <li class="cmt" data-copy="Хорошая координация, всё по плану 🧠"><p class="cmt-text">Хорошая координация, всё по плану 🧠</p><span class="cmt-btn">Копировать</span></li>
             <li class="cmt" data-copy="Спасибо за вайп, было весело 😄"><p class="cmt-text">Спасибо за вайп, было весело 😄</p><span class="cmt-btn">Копировать</span></li>
           </ul>
-
-          <div class="cat-sub" style="margin-top:12px">
-            <span data-lang="ru">📌 Файл картинки: assets/games/rust.png</span>
-            <span data-lang="en">📌 Image file: assets/games/rust.png</span>
-          </div>
         </div>
 
         <!-- +REP -->
         <div class="card">
           <div class="cat-head">
             <div class="cat-left">
-              <h2 class="cat-title">
-                <span data-lang="ru">✅ +rep</span>
-                <span data-lang="en">✅ +rep</span>
-              </h2>
-              <p class="cat-sub">
-                <span data-lang="ru">6 коротких плюсовых отзывов</span>
-                <span data-lang="en">6 short positive reps</span>
-              </p>
+              <h2 class="cat-title"><span data-lang="ru">✅ +rep</span><span data-lang="en">✅ +rep</span></h2>
+              <p class="cat-sub"><span data-lang="ru">6 коротких плюсовых отзывов</span><span data-lang="en">6 short positive reps</span></p>
             </div>
-            <div style="width:92px;height:56px;border-radius:12px;border:1px solid rgba(255,255,255,.10);background:rgba(167,139,250,.10);display:grid;place-items:center;font-weight:900;color:var(--accent2);">
+            <div class="cat-img" style="display:grid;place-items:center;font-weight:900;color:var(--accent2);background:rgba(167,139,250,.10);object-fit:initial;">
               +REP
             </div>
           </div>
-
           <ul class="comment-list">
             <li class="cmt" data-copy="+rep быстро ответил и помог ✅"><p class="cmt-text">+rep быстро ответил и помог ✅</p><span class="cmt-btn">Копировать</span></li>
             <li class="cmt" data-copy="+rep всё честно, рекомендую 👍"><p class="cmt-text">+rep всё честно, рекомендую 👍</p><span class="cmt-btn">Копировать</span></li>
@@ -405,20 +436,13 @@
         <div class="card">
           <div class="cat-head">
             <div class="cat-left">
-              <h2 class="cat-title">
-                <span data-lang="ru">⚠️ -rep</span>
-                <span data-lang="en">⚠️ -rep</span>
-              </h2>
-              <p class="cat-sub">
-                <span data-lang="ru">6 мягких “минусов” без жести</span>
-                <span data-lang="en">6 mild negatives (no insults)</span>
-              </p>
+              <h2 class="cat-title"><span data-lang="ru">⚠️ -rep</span><span data-lang="en">⚠️ -rep</span></h2>
+              <p class="cat-sub"><span data-lang="ru">6 мягких минусов (без жести)</span><span data-lang="en">6 mild negatives (no insults)</span></p>
             </div>
-            <div style="width:92px;height:56px;border-radius:12px;border:1px solid rgba(255,255,255,.10);background:rgba(251,191,36,.10);display:grid;place-items:center;font-weight:900;color:#fbbf24;">
+            <div class="cat-img" style="display:grid;place-items:center;font-weight:900;color:#fbbf24;background:rgba(251,191,36,.10);object-fit:initial;">
               -REP
             </div>
           </div>
-
           <ul class="comment-list">
             <li class="cmt" data-copy="-rep долго отвечает, неудобно"><p class="cmt-text">-rep долго отвечает, неудобно</p><span class="cmt-btn">Копировать</span></li>
             <li class="cmt" data-copy="-rep не вышло договориться по времени"><p class="cmt-text">-rep не вышло договориться по времени</p><span class="cmt-btn">Копировать</span></li>
@@ -428,7 +452,136 @@
             <li class="cmt" data-copy="-rep не подошло, возможно, просто не мой формат"><p class="cmt-text">-rep не подошло, возможно, просто не мой формат</p><span class="cmt-btn">Копировать</span></li>
           </ul>
         </div>
+      </div>
+    </section>
 
+    <!-- MOVED DOWN: Товары + Внутрености -->
+    <section class="section">
+      <div data-lang="ru" class="section-title">🛒 Товары и информация</div>
+      <div data-lang="en" class="section-title">🛒 Shop & info</div>
+
+      <div class="grid2">
+        <!-- Товары -->
+        <section class="card">
+          <div data-lang="ru">
+            <h2 style="margin:0 0 8px;font-size:18px">🛒 Товары Юкими</h2>
+            <p style="margin:0;color:var(--muted)">Быстрый переход к моим услугам на FunPay:</p>
+
+            <div class="shop-grid">
+              <a class="shop-btn" href="https://funpay.com/lots/offer?id=61954569" target="_blank" rel="noopener">
+                <div class="shop-left">
+                  <div class="shop-ic">❤️</div>
+                  <div class="shop-text">
+                    <p class="shop-title">Лайки</p>
+                    <p class="shop-sub">🖼️ 20 ЛАЙКОВ ДЛЯ ВАШЕГО СКРИНШОТА ИЛИ ОБЗОРА STEAM 👍</p>
+                  </div>
+                </div>
+                <div class="shop-go">→</div>
+              </a>
+
+              <a class="shop-btn" href="https://funpay.com/lots/offer?id=61954834" target="_blank" rel="noopener">
+                <div class="shop-left">
+                  <div class="shop-ic">💬</div>
+                  <div class="shop-text">
+                    <p class="shop-title">Комментарии</p>
+                    <p class="shop-sub">🎀 20 КОММЕНТАРИЕВ ДЛЯ ВАШЕГО STEAM ПРОФИЛЯ 🎀</p>
+                  </div>
+                </div>
+                <div class="shop-go">→</div>
+              </a>
+
+              <a class="shop-btn" href="https://funpay.com/lots/offer?id=58877689" target="_blank" rel="noopener">
+                <div class="shop-left">
+                  <div class="shop-ic">⭐</div>
+                  <div class="shop-text">
+                    <p class="shop-title">Лайки на обзоры</p>
+                    <p class="shop-sub">📋 10 ЛАЙКОВ ДЛЯ ВАШЕГО ОБЗОРА ИГРЫ STEAM 👍</p>
+                  </div>
+                </div>
+                <div class="shop-go">→</div>
+              </a>
+            </div>
+          </div>
+
+          <div data-lang="en">
+            <h2 style="margin:0 0 8px;font-size:18px">🛒 Yukimi’s Services</h2>
+            <p style="margin:0;color:var(--muted)">Quick links to my FunPay offers:</p>
+
+            <div class="shop-grid">
+              <a class="shop-btn" href="https://funpay.com/lots/offer?id=61954569" target="_blank" rel="noopener">
+                <div class="shop-left">
+                  <div class="shop-ic">❤️</div>
+                  <div class="shop-text">
+                    <p class="shop-title">Likes / reactions</p>
+                    <p class="shop-sub">🖼️ 20 LIKES FOR YOUR STEAM SCREENSHOT 👍</p>
+                  </div>
+                </div>
+                <div class="shop-go">→</div>
+              </a>
+
+              <a class="shop-btn" href="https://funpay.com/lots/offer?id=61954834" target="_blank" rel="noopener">
+                <div class="shop-left">
+                  <div class="shop-ic">💬</div>
+                  <div class="shop-text">
+                    <p class="shop-title">Comments</p>
+                    <p class="shop-sub">🎀 20 COMMENTS FOR YOUR STEAM PROFILE 🎀</p>
+                  </div>
+                </div>
+                <div class="shop-go">→</div>
+              </a>
+
+              <a class="shop-btn" href="https://funpay.com/lots/offer?id=58877689" target="_blank" rel="noopener">
+                <div class="shop-left">
+                  <div class="shop-ic">⭐</div>
+                  <div class="shop-text">
+                    <p class="shop-title">Review likes</p>
+                    <p class="shop-sub">👍 10 LIKES FOR YOUR STEAM REVIEW 👍</p>
+                  </div>
+                </div>
+                <div class="shop-go">→</div>
+              </a>
+            </div>
+          </div>
+        </section>
+
+        <!-- Внутрености -->
+        <aside class="card">
+          <div data-lang="ru">
+            <h2 style="margin:0 0 8px;font-size:18px">✨ Внутрености</h2>
+            <ul class="bullet">
+              <li><span class="ic">📋</span><span>5 блоков: CS / Dota / Rust / +rep / -rep</span></li>
+              <li><span class="ic">🎀</span><span>В каждом блоке по <b>6</b> готовых комментов</span></li>
+              <li><span class="ic">🖱️</span><span>Нажми — и коммент копируется</span></li>
+              <li>
+                <span class="ic">📌</span>
+                <span>
+                  Сделал
+                  <a class="credit-link" href="https://funpay.com/users/3472051/" target="_blank" rel="noopener">
+                    Yukimi2208 / FunPay
+                  </a>
+                </span>
+              </li>
+            </ul>
+          </div>
+
+          <div data-lang="en">
+            <h2 style="margin:0 0 8px;font-size:18px">✨ Info</h2>
+            <ul class="bullet">
+              <li><span class="ic">📋</span><span>5 packs: CS / Dota / Rust / +rep / -rep</span></li>
+              <li><span class="ic">🎀</span><span><b>6</b> ready comments in each pack</span></li>
+              <li><span class="ic">🖱️</span><span>Click to copy</span></li>
+              <li>
+                <span class="ic">📌</span>
+                <span>
+                  Created by
+                  <a class="credit-link" href="https://funpay.com/users/3472051/" target="_blank" rel="noopener">
+                    Yukimi2208 / FunPay
+                  </a>
+                </span>
+              </li>
+            </ul>
+          </div>
+        </aside>
       </div>
     </section>
 
@@ -459,7 +612,6 @@
       try{
         await navigator.clipboard.writeText(text);
       }catch(e){
-        // fallback
         const ta = document.createElement('textarea');
         ta.value = text;
         document.body.appendChild(ta);
