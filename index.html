@@ -12,8 +12,6 @@
   <style>
     :root{
       --bg:#0b0f17;
-      --card:#111827;
-      --card2:#0f172a;
       --text:#e5e7eb;
       --muted:#9ca3af;
       --accent:#a78bfa;
@@ -41,7 +39,7 @@
 
     .wrap{max-width:980px;margin:0 auto;padding:28px 18px 60px}
 
-    /* HERO (как первая витрина) */
+    /* HERO */
     .hero{
       background: linear-gradient(135deg, rgba(167,139,250,.14), rgba(34,211,238,.10));
       border:1px solid var(--border);
@@ -88,7 +86,7 @@
     .meta{margin-top:10px;display:flex;flex-wrap:wrap;gap:10px;color:var(--muted);font-size:14px}
     .meta b{color:var(--text);font-weight:600}
 
-    /* GRID как витрина */
+    /* cards (витрина снизу) */
     .grid{display:grid;grid-template-columns: 1.2fr .8fr;gap:16px;margin-top:14px}
     @media (max-width:880px){ .grid{grid-template-columns:1fr} }
 
@@ -114,7 +112,6 @@
     .bullet li{display:flex;gap:10px;align-items:flex-start;line-height:1.35;}
     .bullet .ic{width:18px;flex:0 0 18px;opacity:.95}
     .bullet b{color:var(--text)}
-
     .credit-link{
       color: var(--accent2);
       text-decoration:none;
@@ -198,6 +195,17 @@
       display:block;
     }
 
+    /* плейсхолдер (когда фото не нужно) */
+    .cat-thumb.placeholder{
+      display:grid;
+      place-items:center;
+      font-weight:900;
+      letter-spacing:.3px;
+      color: rgba(229,231,235,.92);
+      background: linear-gradient(180deg, rgba(255,255,255,.06), rgba(0,0,0,.18));
+      text-transform: uppercase;
+    }
+
     .cat-info{min-width:0}
     .cat-title{
       margin:0;
@@ -247,14 +255,14 @@
     .btn-open:active{transform: translateY(0px);}
 
     .cat-body{
-      display:none; /* скрыто по умолчанию */
+      display:none;
       border-top:1px solid rgba(255,255,255,.06);
       background: rgba(0,0,0,.10);
       padding:0;
     }
     .cat.open .cat-body{display:block;}
 
-    /* Steam-like comments inside раскрытия */
+    /* Steam-like comments */
     .steam-add{
       display:grid;
       grid-template-columns: 38px 1fr;
@@ -291,10 +299,7 @@
       overflow:auto;
     }
     .steam-thread::-webkit-scrollbar{width:10px}
-    .steam-thread::-webkit-scrollbar-thumb{
-      background: rgba(255,255,255,.10);
-      border-radius:10px;
-    }
+    .steam-thread::-webkit-scrollbar-thumb{background: rgba(255,255,255,.10);border-radius:10px;}
     .steam-thread::-webkit-scrollbar-track{background: rgba(0,0,0,.15);}
 
     .steam-comment{
@@ -332,6 +337,7 @@
 <body class="lang-ru">
   <div class="wrap">
 
+    <!-- HERO (без товаров внутри) -->
     <header class="hero">
       <div class="topbar">
         <div class="badge"><span class="dot"></span>
@@ -358,116 +364,9 @@
           <div class="meta"><span>Author: <b>Yukimi2208</b></span></div>
         </div>
       </div>
-
-      <!-- ВИТРИНА: товары + внутрености (как раньше) -->
-      <div class="grid">
-        <section class="card">
-          <div data-lang="ru">
-            <h2>🛒 Товары Юкими</h2>
-            <p>Быстрый переход к моим услугам на FunPay:</p>
-
-            <div class="shop-grid">
-              <a class="shop-btn" href="https://funpay.com/lots/offer?id=61954569" target="_blank" rel="noopener">
-                <div class="shop-left">
-                  <div class="shop-ic">❤️</div>
-                  <div class="shop-text">
-                    <p class="shop-title">Лайки</p>
-                    <p class="shop-sub">🖼️ 20 ЛАЙКОВ ДЛЯ ВАШЕГО СКРИНШОТА ИЛИ ОБЗОРА STEAM 👍</p>
-                  </div>
-                </div>
-                <div class="shop-go">→</div>
-              </a>
-
-              <a class="shop-btn" href="https://funpay.com/lots/offer?id=61954834" target="_blank" rel="noopener">
-                <div class="shop-left">
-                  <div class="shop-ic">💬</div>
-                  <div class="shop-text">
-                    <p class="shop-title">Комментарии</p>
-                    <p class="shop-sub">🎀 20 КОММЕНТАРИЕВ ДЛЯ ВАШЕГО STEAM ПРОФИЛЯ 🎀</p>
-                  </div>
-                </div>
-                <div class="shop-go">→</div>
-              </a>
-
-              <a class="shop-btn" href="https://funpay.com/lots/offer?id=58877689" target="_blank" rel="noopener">
-                <div class="shop-left">
-                  <div class="shop-ic">⭐</div>
-                  <div class="shop-text">
-                    <p class="shop-title">Лайки на обзоры</p>
-                    <p class="shop-sub">📋 10 ЛАЙКОВ ДЛЯ ВАШЕГО ОБЗОРА ИГРЫ STEAM 👍</p>
-                  </div>
-                </div>
-                <div class="shop-go">→</div>
-              </a>
-            </div>
-          </div>
-
-          <div data-lang="en">
-            <h2>🛒 Yukimi’s Services</h2>
-            <p>Quick links to my FunPay offers:</p>
-
-            <div class="shop-grid">
-              <a class="shop-btn" href="https://funpay.com/lots/offer?id=61954569" target="_blank" rel="noopener">
-                <div class="shop-left">
-                  <div class="shop-ic">❤️</div>
-                  <div class="shop-text">
-                    <p class="shop-title">Likes / reactions</p>
-                    <p class="shop-sub">🖼️ 20 LIKES FOR YOUR STEAM SCREENSHOT 👍</p>
-                  </div>
-                </div>
-                <div class="shop-go">→</div>
-              </a>
-
-              <a class="shop-btn" href="https://funpay.com/lots/offer?id=61954834" target="_blank" rel="noopener">
-                <div class="shop-left">
-                  <div class="shop-ic">💬</div>
-                  <div class="shop-text">
-                    <p class="shop-title">Comments</p>
-                    <p class="shop-sub">🎀 20 COMMENTS FOR YOUR STEAM PROFILE 🎀</p>
-                  </div>
-                </div>
-                <div class="shop-go">→</div>
-              </a>
-
-              <a class="shop-btn" href="https://funpay.com/lots/offer?id=58877689" target="_blank" rel="noopener">
-                <div class="shop-left">
-                  <div class="shop-ic">⭐</div>
-                  <div class="shop-text">
-                    <p class="shop-title">Review likes</p>
-                    <p class="shop-sub">👍 10 LIKES FOR YOUR STEAM REVIEW 👍</p>
-                  </div>
-                </div>
-                <div class="shop-go">→</div>
-              </a>
-            </div>
-          </div>
-        </section>
-
-        <aside class="card">
-          <div data-lang="ru">
-            <h2>✨ Внутрености</h2>
-            <ul class="bullet">
-              <li><span class="ic">🧩</span><span>Комменты <b>скрыты</b> и открываются кнопкой</span></li>
-              <li><span class="ic">🎮</span><span>Категории: <b>КС2 / Дота / Раст</b></span></li>
-              <li><span class="ic">✅</span><span>Репутация: <b>+rep</b> и <b>-rep</b></span></li>
-              <li><span class="ic">📌</span><span>Сделал <a class="credit-link" href="https://funpay.com/users/3472051/" target="_blank" rel="noopener">Yukimi2208 / FunPay</a></span></li>
-            </ul>
-          </div>
-
-          <div data-lang="en">
-            <h2>✨ Info</h2>
-            <ul class="bullet">
-              <li><span class="ic">🧩</span><span>Comments are <b>hidden</b> and open by button</span></li>
-              <li><span class="ic">🎮</span><span>Categories: <b>CS2 / Dota / Rust</b></span></li>
-              <li><span class="ic">✅</span><span>Reputation: <b>+rep</b> and <b>-rep</b></span></li>
-              <li><span class="ic">📌</span><span>Made by <a class="credit-link" href="https://funpay.com/users/3472051/" target="_blank" rel="noopener">Yukimi2208 / FunPay</a></span></li>
-            </ul>
-          </div>
-        </aside>
-      </div>
     </header>
 
-    <!-- Категории витрины (комменты скрыты) -->
+    <!-- Категории -->
     <div class="section-title">💬 Категории</div>
 
     <div class="cats">
@@ -559,10 +458,10 @@
         </div>
       </section>
 
-      <!-- +rep -->
+      <!-- Плюс реп (БЕЗ ФОТО) -->
       <section class="cat" id="cat-plus">
         <div class="cat-head">
-          <img class="cat-thumb" src="assets/games/rep_plus.png" alt="+rep" loading="lazy">
+          <div class="cat-thumb placeholder" aria-hidden="true">+REP</div>
           <div class="cat-info">
             <p class="cat-title">✅ Плюс реп</p>
             <p class="cat-sub">Короткие плюсовые репы (6 штук)</p>
@@ -588,10 +487,10 @@
         </div>
       </section>
 
-      <!-- -rep -->
+      <!-- Минус реп (БЕЗ ФОТО) -->
       <section class="cat" id="cat-minus">
         <div class="cat-head">
-          <img class="cat-thumb" src="assets/games/rep_minus.png" alt="-rep" loading="lazy">
+          <div class="cat-thumb placeholder" aria-hidden="true">-REP</div>
           <div class="cat-info">
             <p class="cat-title">⚠️ Минус реп</p>
             <p class="cat-sub">Мягкие минусы, без оскорблений (6 штук)</p>
@@ -619,11 +518,118 @@
 
     </div>
 
+    <!-- Витрина в самый низ -->
+    <section class="grid" style="margin-top:22px">
+      <section class="card">
+        <div data-lang="ru">
+          <h2>🛒 Товары Юкими</h2>
+          <p>Быстрый переход к моим услугам на FunPay:</p>
+
+          <div class="shop-grid">
+            <a class="shop-btn" href="https://funpay.com/lots/offer?id=61954569" target="_blank" rel="noopener">
+              <div class="shop-left">
+                <div class="shop-ic">❤️</div>
+                <div class="shop-text">
+                  <p class="shop-title">Лайки</p>
+                  <p class="shop-sub">🖼️ 20 ЛАЙКОВ ДЛЯ ВАШЕГО СКРИНШОТА ИЛИ ОБЗОРА STEAM 👍</p>
+                </div>
+              </div>
+              <div class="shop-go">→</div>
+            </a>
+
+            <a class="shop-btn" href="https://funpay.com/lots/offer?id=61954834" target="_blank" rel="noopener">
+              <div class="shop-left">
+                <div class="shop-ic">💬</div>
+                <div class="shop-text">
+                  <p class="shop-title">Комментарии</p>
+                  <p class="shop-sub">🎀 20 КОММЕНТАРИЕВ ДЛЯ ВАШЕГО STEAM ПРОФИЛЯ 🎀</p>
+                </div>
+              </div>
+              <div class="shop-go">→</div>
+            </a>
+
+            <a class="shop-btn" href="https://funpay.com/lots/offer?id=58877689" target="_blank" rel="noopener">
+              <div class="shop-left">
+                <div class="shop-ic">⭐</div>
+                <div class="shop-text">
+                  <p class="shop-title">Лайки на обзоры</p>
+                  <p class="shop-sub">📋 10 ЛАЙКОВ ДЛЯ ВАШЕГО ОБЗОРА ИГРЫ STEAM 👍</p>
+                </div>
+              </div>
+              <div class="shop-go">→</div>
+            </a>
+          </div>
+        </div>
+
+        <div data-lang="en">
+          <h2>🛒 Yukimi’s Services</h2>
+          <p>Quick links to my FunPay offers:</p>
+
+          <div class="shop-grid">
+            <a class="shop-btn" href="https://funpay.com/lots/offer?id=61954569" target="_blank" rel="noopener">
+              <div class="shop-left">
+                <div class="shop-ic">❤️</div>
+                <div class="shop-text">
+                  <p class="shop-title">Likes / reactions</p>
+                  <p class="shop-sub">🖼️ 20 LIKES FOR YOUR STEAM SCREENSHOT 👍</p>
+                </div>
+              </div>
+              <div class="shop-go">→</div>
+            </a>
+
+            <a class="shop-btn" href="https://funpay.com/lots/offer?id=61954834" target="_blank" rel="noopener">
+              <div class="shop-left">
+                <div class="shop-ic">💬</div>
+                <div class="shop-text">
+                  <p class="shop-title">Comments</p>
+                  <p class="shop-sub">🎀 20 COMMENTS FOR YOUR STEAM PROFILE 🎀</p>
+                </div>
+              </div>
+              <div class="shop-go">→</div>
+            </a>
+
+            <a class="shop-btn" href="https://funpay.com/lots/offer?id=58877689" target="_blank" rel="noopener">
+              <div class="shop-left">
+                <div class="shop-ic">⭐</div>
+                <div class="shop-text">
+                  <p class="shop-title">Review likes</p>
+                  <p class="shop-sub">👍 10 LIKES FOR YOUR STEAM REVIEW 👍</p>
+                </div>
+              </div>
+              <div class="shop-go">→</div>
+            </a>
+          </div>
+        </div>
+      </section>
+
+      <aside class="card">
+        <div data-lang="ru">
+          <h2>✨ Внутрености</h2>
+          <ul class="bullet">
+            <li><span class="ic">🧩</span><span>Комменты <b>скрыты</b> и открываются кнопкой</span></li>
+            <li><span class="ic">🎮</span><span>Категории: <b>КС2 / Дота / Раст</b></span></li>
+            <li><span class="ic">✅</span><span>Репутация: <b>+rep</b> и <b>-rep</b></span></li>
+            <li><span class="ic">📌</span><span>Сделал <a class="credit-link" href="https://funpay.com/users/3472051/" target="_blank" rel="noopener">Yukimi2208 / FunPay</a></span></li>
+          </ul>
+        </div>
+
+        <div data-lang="en">
+          <h2>✨ Info</h2>
+          <ul class="bullet">
+            <li><span class="ic">🧩</span><span>Comments are <b>hidden</b> and open by button</span></li>
+            <li><span class="ic">🎮</span><span>Categories: <b>CS2 / Dota / Rust</b></span></li>
+            <li><span class="ic">✅</span><span>Reputation: <b>+rep</b> and <b>-rep</b></span></li>
+            <li><span class="ic">📌</span><span>Made by <a class="credit-link" href="https://funpay.com/users/3472051/" target="_blank" rel="noopener">Yukimi2208 / FunPay</a></span></li>
+          </ul>
+        </div>
+      </aside>
+    </section>
+
     <div class="footer">✨ Выбери комменты • Yukimi2208</div>
   </div>
 
   <script>
-    // RU/EN switch (как раньше)
+    // RU/EN switch
     const btnRu = document.getElementById('btn-ru');
     const btnEn = document.getElementById('btn-en');
 
@@ -646,7 +652,7 @@
     if (saved === 'en' || saved === 'ru') setLang(saved);
     else setLang('ru');
 
-    // Toggle categories (скрыть/показать комменты)
+    // Toggle categories
     function closeAllCats(exceptEl){
       document.querySelectorAll('.cat.open').forEach(el=>{
         if (exceptEl && el === exceptEl) return;
@@ -668,7 +674,6 @@
         cat.classList.toggle('open');
         btn.textContent = cat.classList.contains('open') ? 'Скрыть комментарии' : 'Показать комментарии';
 
-        // плавно прокрутить к открытой секции
         if (willOpen){
           setTimeout(()=>cat.scrollIntoView({behavior:'smooth', block:'start'}), 50);
         }
@@ -677,6 +682,7 @@
   </script>
 </body>
 </html>
+
 
 
 
