@@ -22,10 +22,12 @@
       /* steam-ish */
       --steam-line: rgba(255,255,255,.07);
       --steam-line2: rgba(255,255,255,.05);
-      --steam-panel: rgba(0,0,0,.22);
+      --steam-panel: rgba(0,0,0,.26);
       --steam-panel2: rgba(0,0,0,.16);
       --steam-input: rgba(255,255,255,.06);
       --steam-input2: rgba(255,255,255,.03);
+      --steam-blue: #66c0f4;
+      --steam-blue2: #2a7db0;
     }
 
     *{box-sizing:border-box}
@@ -39,15 +41,10 @@
       line-height:1.55;
     }
 
-    /* Page padding */
     .page-pad{padding:28px 18px 60px;}
-
-    /* Centered header container */
     .wrap{max-width:980px;margin:0 auto;}
-
-    /* Full-width comments container (near screen edges) */
     .comments-wrap{
-      width: min(1800px, calc(100vw - 24px)); /* closer to edges */
+      width: min(1800px, calc(100vw - 24px));
       margin: 0 auto;
     }
 
@@ -92,21 +89,139 @@
     .meta{margin-top:10px;display:flex;flex-wrap:wrap;gap:10px;color:var(--muted);font-size:14px}
     .meta b{color:var(--text);font-weight:600}
 
-    /* sections */
-    .section{margin-top:18px}
-    .section-title{
-      margin:18px 0 10px;
-      font-weight:900;
-      letter-spacing:.3px;
+    /* Steam-like header (Kommentarer / buttons / pagination) */
+    .steam-bar{
+      display:flex;
+      align-items:flex-start;
+      justify-content:space-between;
+      gap:16px;
+      padding:12px 12px;
+      border:1px solid rgba(255,255,255,.06);
+      border-radius:10px;
+      background: linear-gradient(180deg, rgba(0,0,0,.26), rgba(0,0,0,.14));
+      box-shadow: 0 10px 26px rgba(0,0,0,.35);
+      margin: 10px 0 14px;
+    }
+    .steam-bar-left{min-width:240px}
+    .steam-title{
+      margin:0;
       font-size:16px;
-      color:var(--text);
-      opacity:.95;
+      font-weight:900;
+      letter-spacing:.2px;
+      display:flex;
+      align-items:center;
+      gap:10px;
+    }
+    .steam-title .tab{
+      padding:6px 10px;
+      border-radius:3px;
+      border:1px solid rgba(255,255,255,.08);
+      background: rgba(255,255,255,.03);
+      color: rgba(229,231,235,.95);
+      font-weight:900;
+      font-size:13px;
+    }
+    .steam-sub{
+      margin:6px 0 0;
+      color: rgba(156,163,175,.9);
+      font-size:13px;
+    }
+
+    .steam-bar-right{
+      display:flex;
+      flex-direction:column;
+      gap:10px;
+      align-items:flex-end;
+      min-width:260px;
+    }
+    .steam-actions{
       display:flex;
       align-items:center;
       gap:8px;
+      flex-wrap:wrap;
+      justify-content:flex-end;
+    }
+    .steam-btn{
+      cursor:pointer;
+      border:1px solid rgba(255,255,255,.10);
+      background: linear-gradient(180deg, rgba(255,255,255,.06), rgba(255,255,255,.03));
+      color: rgba(229,231,235,.92);
+      padding:7px 10px;
+      border-radius:3px;
+      font-size:12.5px;
+      font-weight:800;
+      box-shadow: 0 8px 18px rgba(0,0,0,.25);
+    }
+    .steam-btn:hover{opacity:.95}
+    .steam-btn:active{transform: translateY(1px)}
+
+    .steam-help{
+      width:26px;height:26px;
+      border-radius:50%;
+      border:1px solid rgba(255,255,255,.10);
+      background: rgba(0,0,0,.18);
+      color: rgba(229,231,235,.9);
+      display:grid;
+      place-items:center;
+      font-weight:900;
+      font-size:13px;
+      cursor:pointer;
+      user-select:none;
+    }
+    .steam-help:hover{opacity:.9}
+
+    .steam-pager{
+      display:flex;
+      gap:8px;
+      align-items:center;
+      color: rgba(156,163,175,.9);
+      font-size:13px;
+      user-select:none;
+    }
+    .pg-arrow{
+      width:30px;height:24px;
+      border-radius:3px;
+      border:1px solid rgba(255,255,255,.10);
+      background: rgba(255,255,255,.03);
+      display:grid;
+      place-items:center;
+      color: rgba(229,231,235,.9);
+      cursor:pointer;
+    }
+    .pg-arrow:hover{opacity:.95}
+    .pg{
+      display:flex;
+      gap:6px;
+      align-items:center;
+      flex-wrap:wrap;
+      justify-content:flex-end;
+      max-width:520px;
+    }
+    .pg a{
+      text-decoration:none;
+      color: rgba(229,231,235,.9);
+      padding:2px 4px;
+      border-radius:3px;
+      border:1px solid transparent;
+      font-weight:800;
+      font-size:13px;
+    }
+    .pg a:hover{border-color: rgba(255,255,255,.10); background: rgba(255,255,255,.03)}
+    .pg a.active{
+      color: var(--steam-blue);
+      border-color: rgba(102,192,244,.25);
+      background: rgba(102,192,244,.08);
+    }
+    .pg .dots{padding:0 2px; opacity:.8}
+
+    @media (max-width:900px){
+      .steam-bar{flex-direction:column; align-items:stretch;}
+      .steam-bar-right{align-items:flex-start; min-width:0;}
+      .steam-actions{justify-content:flex-start;}
+      .pg{justify-content:flex-start; max-width:100%;}
     }
 
-    /* 2 columns page: left group (games), right group (rep) */
+    /* Layout for categories */
     .packs-2col{
       display:grid;
       grid-template-columns: 1fr 1fr;
@@ -117,22 +232,21 @@
     @media (max-width:1100px){ .packs-2col{grid-template-columns:1fr;} }
     .col{display:grid;gap:18px;}
 
-    /* BIG rectangle category: image left, steam comments right */
+    /* Category rectangles */
     .steam-rect{
-      border-radius:14px;
+      border-radius:10px;
       overflow:hidden;
       border:1px solid rgba(255,255,255,.09);
       background: linear-gradient(180deg, rgba(0,0,0,.26), rgba(0,0,0,.14));
       box-shadow: 0 14px 30px rgba(0,0,0,.35);
       display:grid;
       grid-template-columns: 340px minmax(0, 1fr);
-      min-height: 460px;
+      min-height: 480px;
     }
     @media (max-width:1100px){
       .steam-rect{grid-template-columns:1fr; min-height:auto;}
     }
 
-    /* left side */
     .rect-left{
       padding:14px;
       border-right:1px solid var(--steam-line2);
@@ -161,8 +275,8 @@
     }
     .rect-img{
       width:100%;
-      height:240px;            /* bigger so it is visible */
-      border-radius:10px;
+      height:240px;
+      border-radius:6px;
       border:1px solid rgba(255,255,255,.10);
       background: rgba(0,0,0,.25);
       object-fit:cover;
@@ -179,7 +293,6 @@
       white-space:nowrap;
     }
 
-    /* right side: steam thread */
     .rect-right{
       background: rgba(0,0,0,.14);
       display:flex;
@@ -187,7 +300,7 @@
       min-width:0;
     }
 
-    /* "Add a comment" row */
+    /* "Add a comment" */
     .steam-add{
       display:grid;
       grid-template-columns: 38px 1fr;
@@ -199,7 +312,7 @@
     .a-ava{
       width:38px;height:38px;border-radius:4px;
       border:1px solid rgba(255,255,255,.10);
-      background: linear-gradient(135deg, rgba(167,139,250,.18), rgba(34,211,238,.12));
+      background: rgba(255,255,255,.06);
       display:grid;place-items:center;
       font-weight:900;
       color:rgba(229,231,235,.92);
@@ -218,10 +331,9 @@
     .a-input::placeholder{color:rgba(156,163,175,.75)}
     .a-input[disabled]{opacity:.9; cursor:not-allowed}
 
-    /* comments list scroll (like Steam blocks) */
     .steam-thread{
       padding:6px 0;
-      max-height: 360px; /* show more, still scroll */
+      max-height: 380px;
       overflow:auto;
     }
     .steam-thread::-webkit-scrollbar{width:10px}
@@ -258,7 +370,7 @@
       flex-wrap:wrap;
       margin-bottom:3px;
     }
-    .c-name{font-weight:800;font-size:13px;color:rgba(229,231,235,.98)}
+    .c-name{font-weight:900;font-size:13px;color:rgba(229,231,235,.98)}
     .c-time{font-size:12px;color:rgba(156,163,175,.9)}
     .c-text{margin:0;font-size:13.5px;line-height:1.38;color:rgba(229,231,235,.95);white-space:pre-wrap;word-wrap:break-word}
 
@@ -279,7 +391,6 @@
       box-shadow: var(--shadow);
     }
 
-    /* shop */
     .shop-grid{margin-top:12px;display:grid;grid-template-columns:1fr;gap:10px;}
     .shop-btn{
       display:flex;align-items:center;justify-content:space-between;gap:10px;
@@ -299,7 +410,6 @@
     .shop-sub{margin:4px 0 0;color:var(--muted);font-size:13px;line-height:1.25;}
     .shop-go{color: var(--accent2);font-weight:900;flex:0 0 auto;}
 
-    /* bullets */
     .bullet{list-style:none;padding:0;margin:10px 0 0;display:grid;gap:10px;color:var(--muted);}
     .bullet li{display:flex;gap:10px;align-items:flex-start;line-height:1.35;}
     .bullet .ic{width:18px;flex:0 0 18px;opacity:.95}
@@ -359,11 +469,39 @@
     </div>
 
     <!-- COMMENTS (full width near edges) -->
-    <section class="section">
+    <section>
       <div class="comments-wrap">
-        <div class="section-title">
-          <span data-lang="ru">💬 Комментарии</span>
-          <span data-lang="en">💬 Comments</span>
+
+        <!-- Steam-like top bar (Russian only text requested) -->
+        <div class="steam-bar" aria-label="Панель комментариев">
+          <div class="steam-bar-left">
+            <h2 class="steam-title">
+              <span class="tab">Комментарии</span>
+            </h2>
+            <div class="steam-sub">Показать все 116 комментариев</div>
+          </div>
+
+          <div class="steam-bar-right">
+            <div class="steam-actions">
+              <button class="steam-btn" type="button">Подписаться на комментарии</button>
+              <div class="steam-help" title="Справка">(?)</div>
+            </div>
+
+            <div class="steam-pager" aria-label="Страницы">
+              <div class="pg-arrow" title="Назад">&lt;</div>
+              <div class="pg">
+                <a class="active" href="javascript:void(0)">1</a>
+                <a href="javascript:void(0)">2</a>
+                <a href="javascript:void(0)">3</a>
+                <a href="javascript:void(0)">4</a>
+                <a href="javascript:void(0)">5</a>
+                <a href="javascript:void(0)">6</a>
+                <span class="dots">…</span>
+                <a href="javascript:void(0)">20</a>
+              </div>
+              <div class="pg-arrow" title="Вперёд">&gt;</div>
+            </div>
+          </div>
         </div>
 
         <div class="packs-2col">
@@ -382,16 +520,16 @@
               <div class="rect-right">
                 <div class="steam-add">
                   <div class="a-ava">Y</div>
-                  <input class="a-input" type="text" placeholder="Legg til en kommentar" disabled>
+                  <input class="a-input" type="text" placeholder="Добавить комментарий" disabled>
                 </div>
 
                 <div class="steam-thread">
-                  <div class="steam-comment"><div class="c-ava">Y</div><div><div class="c-top"><span class="c-name">yukimi</span><span class="c-time">17 часов назад</span></div><p class="c-text">Чёткий тиммейт, приятно играть 🔥</p></div></div>
-                  <div class="steam-comment"><div class="c-ava">Y</div><div><div class="c-top"><span class="c-name">yukimi</span><span class="c-time">17 часов назад</span></div><p class="c-text">Хорошие коллы и спокойная игра, респект ✅</p></div></div>
-                  <div class="steam-comment"><div class="c-ava">Y</div><div><div class="c-top"><span class="c-name">yukimi</span><span class="c-time">17 часов назад</span></div><p class="c-text">Отличная стрельба, тащит катку 💪</p></div></div>
-                  <div class="steam-comment"><div class="c-ava">Y</div><div><div class="c-top"><span class="c-name">yukimi</span><span class="c-time">17 часов назад</span></div><p class="c-text">Норм общение, без токсика, лайк 👍</p></div></div>
-                  <div class="steam-comment"><div class="c-ava">Y</div><div><div class="c-top"><span class="c-name">yukimi</span><span class="c-time">17 часов назад</span></div><p class="c-text">Стабильный игрок, сыграю ещё 🎯</p></div></div>
-                  <div class="steam-comment"><div class="c-ava">Y</div><div><div class="c-top"><span class="c-name">yukimi</span><span class="c-time">17 часов назад</span></div><p class="c-text">Командная игра на уровне, спасибо за матч ✨</p></div></div>
+                  <div class="steam-comment"><div class="c-ava">Y</div><div><div class="c-top"><span class="c-name">yukimi</span><span class="c-time">18 часов назад</span></div><p class="c-text">Чёткий тиммейт, приятно играть 🔥</p></div></div>
+                  <div class="steam-comment"><div class="c-ava">Y</div><div><div class="c-top"><span class="c-name">yukimi</span><span class="c-time">18 часов назад</span></div><p class="c-text">Хорошие коллы и спокойная игра, респект ✅</p></div></div>
+                  <div class="steam-comment"><div class="c-ava">Y</div><div><div class="c-top"><span class="c-name">yukimi</span><span class="c-time">18 часов назад</span></div><p class="c-text">Отличная стрельба, тащит катку 💪</p></div></div>
+                  <div class="steam-comment"><div class="c-ava">Y</div><div><div class="c-top"><span class="c-name">yukimi</span><span class="c-time">18 часов назад</span></div><p class="c-text">Норм общение, без токсика, лайк 👍</p></div></div>
+                  <div class="steam-comment"><div class="c-ava">Y</div><div><div class="c-top"><span class="c-name">yukimi</span><span class="c-time">18 часов назад</span></div><p class="c-text">Стабильный игрок, сыграю ещё 🎯</p></div></div>
+                  <div class="steam-comment"><div class="c-ava">Y</div><div><div class="c-top"><span class="c-name">yukimi</span><span class="c-time">18 часов назад</span></div><p class="c-text">Командная игра на уровне, спасибо за матч ✨</p></div></div>
                 </div>
               </div>
             </article>
@@ -408,16 +546,16 @@
               <div class="rect-right">
                 <div class="steam-add">
                   <div class="a-ava">Y</div>
-                  <input class="a-input" type="text" placeholder="Legg til en kommentar" disabled>
+                  <input class="a-input" type="text" placeholder="Добавить комментарий" disabled>
                 </div>
 
                 <div class="steam-thread">
-                  <div class="steam-comment"><div class="c-ava">Y</div><div><div class="c-top"><span class="c-name">yukimi</span><span class="c-time">17 часов назад</span></div><p class="c-text">Крутой тимплей, играется легко ✅</p></div></div>
-                  <div class="steam-comment"><div class="c-ava">Y</div><div><div class="c-top"><span class="c-name">yukimi</span><span class="c-time">17 часов назад</span></div><p class="c-text">Отличные решения по карте, респект 🗺️</p></div></div>
-                  <div class="steam-comment"><div class="c-ava">Y</div><div><div class="c-top"><span class="c-name">yukimi</span><span class="c-time">17 часов назад</span></div><p class="c-text">Спокойно и по делу, без лишних эмоций 👍</p></div></div>
-                  <div class="steam-comment"><div class="c-ava">Y</div><div><div class="c-top"><span class="c-name">yukimi</span><span class="c-time">17 часов назад</span></div><p class="c-text">Хорошо отыграл роль, приятно в пати ✨</p></div></div>
-                  <div class="steam-comment"><div class="c-ava">Y</div><div><div class="c-top"><span class="c-name">yukimi</span><span class="c-time">17 часов назад</span></div><p class="c-text">Сильный игрок, уверенно ведёт к победе 💪</p></div></div>
-                  <div class="steam-comment"><div class="c-ava">Y</div><div><div class="c-top"><span class="c-name">yukimi</span><span class="c-time">17 часов назад</span></div><p class="c-text">Спасибо за катку, было кайфово 🎮</p></div></div>
+                  <div class="steam-comment"><div class="c-ava">Y</div><div><div class="c-top"><span class="c-name">yukimi</span><span class="c-time">18 часов назад</span></div><p class="c-text">Крутой тимплей, играется легко ✅</p></div></div>
+                  <div class="steam-comment"><div class="c-ava">Y</div><div><div class="c-top"><span class="c-name">yukimi</span><span class="c-time">18 часов назад</span></div><p class="c-text">Отличные решения по карте, респект 🗺️</p></div></div>
+                  <div class="steam-comment"><div class="c-ava">Y</div><div><div class="c-top"><span class="c-name">yukimi</span><span class="c-time">18 часов назад</span></div><p class="c-text">Спокойно и по делу, без лишних эмоций 👍</p></div></div>
+                  <div class="steam-comment"><div class="c-ava">Y</div><div><div class="c-top"><span class="c-name">yukimi</span><span class="c-time">18 часов назад</span></div><p class="c-text">Хорошо отыграл роль, приятно в пати ✨</p></div></div>
+                  <div class="steam-comment"><div class="c-ava">Y</div><div><div class="c-top"><span class="c-name">yukimi</span><span class="c-time">18 часов назад</span></div><p class="c-text">Сильный игрок, уверенно ведёт к победе 💪</p></div></div>
+                  <div class="steam-comment"><div class="c-ava">Y</div><div><div class="c-top"><span class="c-name">yukimi</span><span class="c-time">18 часов назад</span></div><p class="c-text">Спасибо за катку, было кайфово 🎮</p></div></div>
                 </div>
               </div>
             </article>
@@ -434,16 +572,16 @@
               <div class="rect-right">
                 <div class="steam-add">
                   <div class="a-ava">Y</div>
-                  <input class="a-input" type="text" placeholder="Legg til en kommentar" disabled>
+                  <input class="a-input" type="text" placeholder="Добавить комментарий" disabled>
                 </div>
 
                 <div class="steam-thread">
-                  <div class="steam-comment"><div class="c-ava">Y</div><div><div class="c-top"><span class="c-name">yukimi</span><span class="c-time">17 часов назад</span></div><p class="c-text">Надёжный напарник, держит слово ✅</p></div></div>
-                  <div class="steam-comment"><div class="c-ava">Y</div><div><div class="c-top"><span class="c-name">yukimi</span><span class="c-time">17 часов назад</span></div><p class="c-text">Сильная игра, хорошие мувы на рейде 💥</p></div></div>
-                  <div class="steam-comment"><div class="c-ava">Y</div><div><div class="c-top"><span class="c-name">yukimi</span><span class="c-time">17 часов назад</span></div><p class="c-text">Спокойный и адекватный, приятно в тиме 👍</p></div></div>
-                  <div class="steam-comment"><div class="c-ava">Y</div><div><div class="c-top"><span class="c-name">yukimi</span><span class="c-time">17 часов назад</span></div><p class="c-text">Фармит быстро, не бросает команду ⛏️</p></div></div>
-                  <div class="steam-comment"><div class="c-ava">Y</div><div><div class="c-top"><span class="c-name">yukimi</span><span class="c-time">17 часов назад</span></div><p class="c-text">Хорошая координация, всё по плану 🧠</p></div></div>
-                  <div class="steam-comment"><div class="c-ava">Y</div><div><div class="c-top"><span class="c-name">yukimi</span><span class="c-time">17 часов назад</span></div><p class="c-text">Спасибо за вайп, было весело 😄</p></div></div>
+                  <div class="steam-comment"><div class="c-ava">Y</div><div><div class="c-top"><span class="c-name">yukimi</span><span class="c-time">18 часов назад</span></div><p class="c-text">Надёжный напарник, держит слово ✅</p></div></div>
+                  <div class="steam-comment"><div class="c-ava">Y</div><div><div class="c-top"><span class="c-name">yukimi</span><span class="c-time">18 часов назад</span></div><p class="c-text">Сильная игра, хорошие мувы на рейде 💥</p></div></div>
+                  <div class="steam-comment"><div class="c-ava">Y</div><div><div class="c-top"><span class="c-name">yukimi</span><span class="c-time">18 часов назад</span></div><p class="c-text">Спокойный и адекватный, приятно в тиме 👍</p></div></div>
+                  <div class="steam-comment"><div class="c-ava">Y</div><div><div class="c-top"><span class="c-name">yukimi</span><span class="c-time">18 часов назад</span></div><p class="c-text">Фармит быстро, не бросает команду ⛏️</p></div></div>
+                  <div class="steam-comment"><div class="c-ava">Y</div><div><div class="c-top"><span class="c-name">yukimi</span><span class="c-time">18 часов назад</span></div><p class="c-text">Хорошая координация, всё по плану 🧠</p></div></div>
+                  <div class="steam-comment"><div class="c-ava">Y</div><div><div class="c-top"><span class="c-name">yukimi</span><span class="c-time">18 часов назад</span></div><p class="c-text">Спасибо за вайп, было весело 😄</p></div></div>
                 </div>
               </div>
             </article>
@@ -464,16 +602,16 @@
               <div class="rect-right">
                 <div class="steam-add">
                   <div class="a-ava">Y</div>
-                  <input class="a-input" type="text" placeholder="Legg til en kommentar" disabled>
+                  <input class="a-input" type="text" placeholder="Добавить комментарий" disabled>
                 </div>
 
                 <div class="steam-thread">
-                  <div class="steam-comment"><div class="c-ava">Y</div><div><div class="c-top"><span class="c-name">yukimi</span><span class="c-time">17 часов назад</span></div><p class="c-text">+rep быстро ответил и помог ✅</p></div></div>
-                  <div class="steam-comment"><div class="c-ava">Y</div><div><div class="c-top"><span class="c-name">yukimi</span><span class="c-time">17 часов назад</span></div><p class="c-text">+rep всё честно, рекомендую 👍</p></div></div>
-                  <div class="steam-comment"><div class="c-ava">Y</div><div><div class="c-top"><span class="c-name">yukimi</span><span class="c-time">17 часов назад</span></div><p class="c-text">+rep адекватный и вежливый человек ✨</p></div></div>
-                  <div class="steam-comment"><div class="c-ava">Y</div><div><div class="c-top"><span class="c-name">yukimi</span><span class="c-time">17 часов назад</span></div><p class="c-text">+rep быстро и по делу, спасибо 🙌</p></div></div>
-                  <div class="steam-comment"><div class="c-ava">Y</div><div><div class="c-top"><span class="c-name">yukimi</span><span class="c-time">17 часов назад</span></div><p class="c-text">+rep топ сервис, всё ок ✅</p></div></div>
-                  <div class="steam-comment"><div class="c-ava">Y</div><div><div class="c-top"><span class="c-name">yukimi</span><span class="c-time">17 часов назад</span></div><p class="c-text">+rep приятно общаться, лайк ❤️</p></div></div>
+                  <div class="steam-comment"><div class="c-ava">Y</div><div><div class="c-top"><span class="c-name">yukimi</span><span class="c-time">18 часов назад</span></div><p class="c-text">+rep быстро ответил и помог ✅</p></div></div>
+                  <div class="steam-comment"><div class="c-ava">Y</div><div><div class="c-top"><span class="c-name">yukimi</span><span class="c-time">18 часов назад</span></div><p class="c-text">+rep всё честно, рекомендую 👍</p></div></div>
+                  <div class="steam-comment"><div class="c-ava">Y</div><div><div class="c-top"><span class="c-name">yukimi</span><span class="c-time">18 часов назад</span></div><p class="c-text">+rep адекватный и вежливый человек ✨</p></div></div>
+                  <div class="steam-comment"><div class="c-ava">Y</div><div><div class="c-top"><span class="c-name">yukimi</span><span class="c-time">18 часов назад</span></div><p class="c-text">+rep быстро и по делу, спасибо 🙌</p></div></div>
+                  <div class="steam-comment"><div class="c-ava">Y</div><div><div class="c-top"><span class="c-name">yukimi</span><span class="c-time">18 часов назад</span></div><p class="c-text">+rep топ сервис, всё ок ✅</p></div></div>
+                  <div class="steam-comment"><div class="c-ava">Y</div><div><div class="c-top"><span class="c-name">yukimi</span><span class="c-time">18 часов назад</span></div><p class="c-text">+rep приятно общаться, лайк ❤️</p></div></div>
                 </div>
               </div>
             </article>
@@ -490,149 +628,105 @@
               <div class="rect-right">
                 <div class="steam-add">
                   <div class="a-ava">Y</div>
-                  <input class="a-input" type="text" placeholder="Legg til en kommentar" disabled>
+                  <input class="a-input" type="text" placeholder="Добавить комментарий" disabled>
                 </div>
 
                 <div class="steam-thread">
-                  <div class="steam-comment"><div class="c-ava">Y</div><div><div class="c-top"><span class="c-name">yukimi</span><span class="c-time">17 часов назад</span></div><p class="c-text">-rep долго отвечает, неудобно</p></div></div>
-                  <div class="steam-comment"><div class="c-ava">Y</div><div><div class="c-top"><span class="c-name">yukimi</span><span class="c-time">17 часов назад</span></div><p class="c-text">-rep не вышло договориться по времени</p></div></div>
-                  <div class="steam-comment"><div class="c-ava">Y</div><div><div class="c-top"><span class="c-name">yukimi</span><span class="c-time">17 часов назад</span></div><p class="c-text">-rep обещал, но затянул по срокам</p></div></div>
-                  <div class="steam-comment"><div class="c-ava">Y</div><div><div class="c-top"><span class="c-name">yukimi</span><span class="c-time">17 часов назад</span></div><p class="c-text">-rep ответил не сразу, пришлось ждать</p></div></div>
-                  <div class="steam-comment"><div class="c-ava">Y</div><div><div class="c-top"><span class="c-name">yukimi</span><span class="c-time">17 часов назад</span></div><p class="c-text">-rep коммуникация слабая, мало информации</p></div></div>
-                  <div class="steam-comment"><div class="c-ava">Y</div><div><div class="c-top"><span class="c-name">yukimi</span><span class="c-time">17 часов назад</span></div><p class="c-text">-rep не подошло, возможно, просто не мой формат</p></div></div>
+                  <div class="steam-comment"><div class="c-ava">Y</div><div><div class="c-top"><span class="c-name">yukimi</span><span class="c-time">18 часов назад</span></div><p class="c-text">-rep долго отвечает, неудобно</p></div></div>
+                  <div class="steam-comment"><div class="c-ava">Y</div><div><div class="c-top"><span class="c-name">yukimi</span><span class="c-time">18 часов назад</span></div><p class="c-text">-rep не вышло договориться по времени</p></div></div>
+                  <div class="steam-comment"><div class="c-ava">Y</div><div><div class="c-top"><span class="c-name">yukimi</span><span class="c-time">18 часов назад</span></div><p class="c-text">-rep обещал, но затянул по срокам</p></div></div>
+                  <div class="steam-comment"><div class="c-ava">Y</div><div><div class="c-top"><span class="c-name">yukimi</span><span class="c-time">18 часов назад</span></div><p class="c-text">-rep ответил не сразу, пришлось ждать</p></div></div>
+                  <div class="steam-comment"><div class="c-ava">Y</div><div><div class="c-top"><span class="c-name">yukimi</span><span class="c-time">18 часов назад</span></div><p class="c-text">-rep коммуникация слабая, мало информации</p></div></div>
+                  <div class="steam-comment"><div class="c-ava">Y</div><div><div class="c-top"><span class="c-name">yukimi</span><span class="c-time">18 часов назад</span></div><p class="c-text">-rep не подошло, возможно, просто не мой формат</p></div></div>
                 </div>
               </div>
             </article>
 
           </div>
         </div>
+
+        <!-- Steam-like bottom pager (optional, like Steam has at bottom too) -->
+        <div class="steam-bar" style="margin-top:14px" aria-label="Нижняя навигация">
+          <div class="steam-bar-left">
+            <div class="steam-sub">Страницы</div>
+          </div>
+          <div class="steam-bar-right" style="min-width:0">
+            <div class="steam-pager">
+              <div class="pg-arrow" title="Назад">&lt;</div>
+              <div class="pg">
+                <a class="active" href="javascript:void(0)">1</a>
+                <a href="javascript:void(0)">2</a>
+                <a href="javascript:void(0)">3</a>
+                <a href="javascript:void(0)">4</a>
+                <a href="javascript:void(0)">5</a>
+                <a href="javascript:void(0)">6</a>
+                <span class="dots">…</span>
+                <a href="javascript:void(0)">20</a>
+              </div>
+              <div class="pg-arrow" title="Вперёд">&gt;</div>
+            </div>
+          </div>
+        </div>
+
       </div>
     </section>
 
     <!-- bottom: shop + info (centered like header) -->
     <div class="wrap">
-      <section class="section">
-        <div class="section-title">
-          <span data-lang="ru">🛒 Товары и информация</span>
-          <span data-lang="en">🛒 Shop & info</span>
-        </div>
-
+      <section style="margin-top:18px">
         <div class="grid2">
           <section class="card">
-            <div data-lang="ru">
-              <h2 style="margin:0 0 8px;font-size:18px">🛒 Товары Юкими</h2>
-              <p style="margin:0;color:var(--muted)">Быстрый переход к моим услугам на FunPay:</p>
+            <h2 style="margin:0 0 8px;font-size:18px">🛒 Товары Юкими</h2>
+            <p style="margin:0;color:var(--muted)">Быстрый переход к моим услугам на FunPay:</p>
 
-              <div class="shop-grid">
-                <a class="shop-btn" href="https://funpay.com/lots/offer?id=61954569" target="_blank" rel="noopener">
-                  <div class="shop-left">
-                    <div class="shop-ic">❤️</div>
-                    <div class="shop-text">
-                      <p class="shop-title">Лайки</p>
-                      <p class="shop-sub">🖼️ 20 ЛАЙКОВ ДЛЯ ВАШЕГО СКРИНШОТА ИЛИ ОБЗОРА STEAM 👍</p>
-                    </div>
+            <div class="shop-grid">
+              <a class="shop-btn" href="https://funpay.com/lots/offer?id=61954569" target="_blank" rel="noopener">
+                <div class="shop-left">
+                  <div class="shop-ic">❤️</div>
+                  <div class="shop-text">
+                    <p class="shop-title">Лайки</p>
+                    <p class="shop-sub">🖼️ 20 ЛАЙКОВ ДЛЯ ВАШЕГО СКРИНШОТА ИЛИ ОБЗОРА STEAM 👍</p>
                   </div>
-                  <div class="shop-go">→</div>
-                </a>
+                </div>
+                <div class="shop-go">→</div>
+              </a>
 
-                <a class="shop-btn" href="https://funpay.com/lots/offer?id=61954834" target="_blank" rel="noopener">
-                  <div class="shop-left">
-                    <div class="shop-ic">💬</div>
-                    <div class="shop-text">
-                      <p class="shop-title">Комментарии</p>
-                      <p class="shop-sub">🎀 20 КОММЕНТАРИЕВ ДЛЯ ВАШЕГО STEAM ПРОФИЛЯ 🎀</p>
-                    </div>
+              <a class="shop-btn" href="https://funpay.com/lots/offer?id=61954834" target="_blank" rel="noopener">
+                <div class="shop-left">
+                  <div class="shop-ic">💬</div>
+                  <div class="shop-text">
+                    <p class="shop-title">Комментарии</p>
+                    <p class="shop-sub">🎀 20 КОММЕНТАРИЕВ ДЛЯ ВАШЕГО STEAM ПРОФИЛЯ 🎀</p>
                   </div>
-                  <div class="shop-go">→</div>
-                </a>
+                </div>
+                <div class="shop-go">→</div>
+              </a>
 
-                <a class="shop-btn" href="https://funpay.com/lots/offer?id=58877689" target="_blank" rel="noopener">
-                  <div class="shop-left">
-                    <div class="shop-ic">⭐</div>
-                    <div class="shop-text">
-                      <p class="shop-title">Лайки на обзоры</p>
-                      <p class="shop-sub">📋 10 ЛАЙКОВ ДЛЯ ВАШЕГО ОБЗОРА ИГРЫ STEAM 👍</p>
-                    </div>
+              <a class="shop-btn" href="https://funpay.com/lots/offer?id=58877689" target="_blank" rel="noopener">
+                <div class="shop-left">
+                  <div class="shop-ic">⭐</div>
+                  <div class="shop-text">
+                    <p class="shop-title">Лайки на обзоры</p>
+                    <p class="shop-sub">📋 10 ЛАЙКОВ ДЛЯ ВАШЕГО ОБЗОРА ИГРЫ STEAM 👍</p>
                   </div>
-                  <div class="shop-go">→</div>
-                </a>
-              </div>
-            </div>
-
-            <div data-lang="en">
-              <h2 style="margin:0 0 8px;font-size:18px">🛒 Yukimi’s Services</h2>
-              <p style="margin:0;color:var(--muted)">Quick links to my FunPay offers:</p>
-
-              <div class="shop-grid">
-                <a class="shop-btn" href="https://funpay.com/lots/offer?id=61954569" target="_blank" rel="noopener">
-                  <div class="shop-left">
-                    <div class="shop-ic">❤️</div>
-                    <div class="shop-text">
-                      <p class="shop-title">Likes / reactions</p>
-                      <p class="shop-sub">🖼️ 20 LIKES FOR YOUR STEAM SCREENSHOT 👍</p>
-                    </div>
-                  </div>
-                  <div class="shop-go">→</div>
-                </a>
-
-                <a class="shop-btn" href="https://funpay.com/lots/offer?id=61954834" target="_blank" rel="noopener">
-                  <div class="shop-left">
-                    <div class="shop-ic">💬</div>
-                    <div class="shop-text">
-                      <p class="shop-title">Comments</p>
-                      <p class="shop-sub">🎀 20 COMMENTS FOR YOUR STEAM PROFILE 🎀</p>
-                    </div>
-                  </div>
-                  <div class="shop-go">→</div>
-                </a>
-
-                <a class="shop-btn" href="https://funpay.com/lots/offer?id=58877689" target="_blank" rel="noopener">
-                  <div class="shop-left">
-                    <div class="shop-ic">⭐</div>
-                    <div class="shop-text">
-                      <p class="shop-title">Review likes</p>
-                      <p class="shop-sub">👍 10 LIKES FOR YOUR STEAM REVIEW 👍</p>
-                    </div>
-                  </div>
-                  <div class="shop-go">→</div>
-                </a>
-              </div>
+                </div>
+                <div class="shop-go">→</div>
+              </a>
             </div>
           </section>
 
           <aside class="card">
-            <div data-lang="ru">
-              <h2 style="margin:0 0 8px;font-size:18px">✨ Внутрености</h2>
-              <ul class="bullet">
-                <li><span class="ic">🟦</span><span>Категории растянуты почти на весь экран</span></li>
-                <li><span class="ic">🖼️</span><span>Слева картинка + описание, справа Steam-комменты</span></li>
-                <li><span class="ic">📋</span><span>Слева: CS / Dota / Rust • Справа: +rep / -rep</span></li>
-                <li>
-                  <span class="ic">📌</span>
-                  <span>Сделал <a class="credit-link" href="https://funpay.com/users/3472051/" target="_blank" rel="noopener">Yukimi2208 / FunPay</a></span>
-                </li>
-              </ul>
-            </div>
-
-            <div data-lang="en">
-              <h2 style="margin:0 0 8px;font-size:18px">✨ Info</h2>
-              <ul class="bullet">
-                <li><span class="ic">🟦</span><span>Categories are near full width</span></li>
-                <li><span class="ic">🖼️</span><span>Left: image + title, right: Steam-like comments</span></li>
-                <li><span class="ic">📋</span><span>Left: CS / Dota / Rust • Right: +rep / -rep</span></li>
-                <li>
-                  <span class="ic">📌</span>
-                  <span>Made by <a class="credit-link" href="https://funpay.com/users/3472051/" target="_blank" rel="noopener">Yukimi2208 / FunPay</a></span>
-                </li>
-              </ul>
-            </div>
+            <h2 style="margin:0 0 8px;font-size:18px">✨ Внутрености</h2>
+            <ul class="bullet">
+              <li><span class="ic">🟦</span><span>Добавлена верхняя панель как в Steam: кнопки + страницы</span></li>
+              <li><span class="ic">📌</span><span>Кнопки сделаны визуально, без реальной логики</span></li>
+              <li><span class="ic">🖼️</span><span>Категории — прямоугольники: слева картинка, справа комменты</span></li>
+              <li><span class="ic">👤</span><span>Формат комментариев максимально приближен к Steam</span></li>
+            </ul>
           </aside>
         </div>
 
-        <div class="footer">
-          <span data-lang="ru">✨ Выбери комменты • Yukimi2208</span>
-          <span data-lang="en">✨ Choose comments • Yukimi2208</span>
-        </div>
+        <div class="footer">✨ Выбери комменты • Yukimi2208</div>
       </section>
     </div>
 
@@ -663,6 +757,7 @@
   </script>
 </body>
 </html>
+
 
 
 
